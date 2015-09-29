@@ -15,43 +15,30 @@ public class UdpComunicador extends Thread  {
 	 public void run() 
 	 {
 		 init(9999);
-		 recebe();
+		 //recebe();
 	 }
 	
 	private void init(int porta)
-	{
-		try {
-			serverSocket = new DatagramSocket(porta);
-			Logger.getLogger(UdpComunicador.class.getName()).log(Level.INFO, null, 
-					"Abrindo socket na porta:" + porta);
-			
-			dados = new byte[1024];
-			pacoteRecebido = new DatagramPacket(dados, dados.length);
-			serverSocket.receive(pacoteRecebido);
-			Logger.getLogger(UdpComunicador.class.getName()).log(Level.INFO, null, 
-					pacoteRecebido.getData());
-			
-		} catch (SocketException e) {		
-			Logger.getLogger(UdpComunicador.class.getName()).log(Level.SEVERE, null, e);
-		} catch (IOException e) {
-			Logger.getLogger(UdpComunicador.class.getName()).log(Level.SEVERE, null, e);
-		}
-	}
-	
-	public String recebe()
-	{
-		dados = new byte[1024];
-		pacoteRecebido = new DatagramPacket(dados, dados.length);
-		
-		try {
-			serverSocket.receive(pacoteRecebido);
-			Logger.getLogger(UdpComunicador.class.getName()).log(Level.INFO, null, 
-			"Pacote recebido:" + pacoteRecebido.getData());
-			return pacoteRecebido.getData().toString();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			Logger.getLogger(UdpComunicador.class.getName()).log(Level.SEVERE, null, e);
-			return "";
+	{	
+		System.out.println("SERVER:Abrindo socket na porta:" + porta);
+		while(true)
+		{
+			try {
+				serverSocket = new DatagramSocket(porta);
+				dados = new byte[1024];
+				pacoteRecebido = new DatagramPacket(dados, dados.length);
+				serverSocket.receive(pacoteRecebido);
+				System.out.println("SERVER:Mensagem recebida de " + pacoteRecebido.getAddress().toString().substring(1) + " :" + new String(pacoteRecebido.getData()));
+				
+				
+				
+				serverSocket.close();
+				
+			} catch (SocketException e) {		
+				Logger.getLogger(UdpComunicador.class.getName()).log(Level.SEVERE, null, e);
+			} catch (IOException e) {
+				Logger.getLogger(UdpComunicador.class.getName()).log(Level.SEVERE, null, e);
+			}
 		}
 		
 	}
