@@ -1,4 +1,4 @@
-package net;
+package teste;
 import java.io.*; 
 import java.net.*;
 
