@@ -22,14 +22,14 @@ public class ClienteUdpTester
       try
       {
          // Convert the arguments first, to ensure that they are valid
-         InetAddress host = InetAddress.getByName( "localhost" ) ;
+         InetAddress host = InetAddress.getByName( "192.168.1.43") ;
          int port         = Integer.parseInt( "9999" ) ;
 
          // Construct the socket
          socket = new DatagramSocket() ;
 
          // Construct the datagram packet
-         byte [] data = "Balao".getBytes() ;
+         byte [] data = "01999mensagem".getBytes() ;
          DatagramPacket packet = new DatagramPacket( data, data.length, host, port ) ;
 
          // Send it
