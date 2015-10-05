@@ -1,6 +1,5 @@
 package main;
 
-import roteador.RoteadorOperacao;
 import common.Mensagem;
 import net.NetListener;
 import net.NetService;
