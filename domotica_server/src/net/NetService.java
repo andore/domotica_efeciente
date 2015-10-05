@@ -26,8 +26,8 @@ public class NetService extends Thread
 	
 	 public void run() 
 	 {
+		 //todo passar porta como parametro
 		 recebe(9999);
-		 //recebe();
 	 }
 	
 	private void recebe(int porta)

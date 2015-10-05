@@ -11,11 +11,11 @@ public class RoteadorOperacao
 		{
 			switch (msg.getOperacao()) {
 			case 1:
-				System.out.println("Roteando mensagem para Tratador Operação Cadastro");
+				System.out.println("Roteando mensagem para Tratador Cadastro");
 				break;
 				
 			case 2:
-				System.out.println("Roteando mensagem para Tratador Operação Monitoramento");
+				System.out.println("Roteando mensagem para Tratador Monitoramento");
 				break;
 
 			default:

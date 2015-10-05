@@ -9,11 +9,15 @@ public class ControleServer implements NetListener {
 	private NetService net;
 	private RoteadorOperacao roteador;
 	
-	public void init()
+	public ControleServer()
 	{
 		net = new NetService(this);
-		net.start();
 		roteador = new RoteadorOperacao();
+	}
+	
+	public void init()
+	{
+		net.start();	
 	}
 	
 	public void netRecebe(Mensagem msg) {
