@@ -1,12 +1,9 @@
 package dao;
 
-import javax.transaction.HeuristicMixedException;
-import javax.transaction.HeuristicRollbackException;
-import javax.transaction.RollbackException;
-import javax.transaction.SystemException;
-import javax.transaction.Transaction;
+
 
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 public abstract class AbstractDao 
 {
@@ -19,26 +16,8 @@ public abstract class AbstractDao
 	
 	protected void insert(Object obj)
 	{
-		try {
-			Transaction trans = (Transaction) this.sessao.beginTransaction();
-			this.sessao.save(obj);
-			trans.commit();
-		} catch (SecurityException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (HeuristicMixedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (HeuristicRollbackException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (RollbackException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SystemException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-				
+		Transaction trans = this.sessao.beginTransaction();
+		this.sessao.save(obj);
+		trans.commit();
 	}
 }

@@ -12,5 +12,6 @@
 	<classpathentry kind="lib" path="D:/git/domotica_efeciente/domotica_server/libs/hibernate-release-5.0.2.Final/lib/required/jandex-1.2.2.Final.jar"/>
 	<classpathentry kind="lib" path="D:/git/domotica_efeciente/domotica_server/libs/hibernate-release-5.0.2.Final/lib/required/javassist-3.18.1-GA.jar"/>
 	<classpathentry kind="lib" path="D:/git/domotica_efeciente/domotica_server/libs/hibernate-release-5.0.2.Final/lib/required/jboss-logging-3.3.0.Final.jar"/>
+	<classpathentry kind="lib" path="C:/Users/André/Desktop/Jaybird-2.2.8-JDK_1.8/jaybird-full-2.2.8.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
