@@ -29,7 +29,7 @@ public class TesteDB {
 		
 		List<Sensor>  sensores = new ArrayList<Sensor>();
 		Sensor sensor = new Sensor();
-	    sensor.setDescicao("Temperatura");
+	    sensor.setDescricao("Temperatura");
 		sensor.setId(999);
 		sensores.add(sensor);
 		arduino.setSensores(sensores);
@@ -37,7 +37,7 @@ public class TesteDB {
 		
 		List<Atuador>  atuadores = new ArrayList<Atuador>();
 		Atuador atuador = new Atuador();
-	    atuador.setDescicao("Temperatura");
+	    atuador.setDescricao("Temperatura");
 	    atuador.setId(1);
 	    atuadores.add(atuador);
 		arduino.setAtuadores(atuadores);

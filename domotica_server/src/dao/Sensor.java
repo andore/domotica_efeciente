@@ -25,10 +25,10 @@ public class Sensor implements Serializable{
 	public void setCod(int cod) {
 		this.cod = cod;
 	}
-	public String getDescicao() {
+	public String getDescricao() {
 		return descricao;
 	}
-	public void setDescicao(String descicao) {
+	public void setDescricao(String descicao) {
 		this.descricao = descicao;
 	}
 }
