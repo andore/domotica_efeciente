@@ -25,7 +25,6 @@ public class StrCadastraArduino extends Struct {
 		idArduino = getInt(3);
 		descricaoArduino = getString(10);
 		qtdSensor = getInt(2);
-		qtdAtuador = getInt(2);
 		sensores = new ArrayList<Sensor>();
 		for(int i=0; i< qtdSensor; i++)
 		{
@@ -36,6 +35,7 @@ public class StrCadastraArduino extends Struct {
 		
 			sensores.add(s);
 		}
+		qtdAtuador = getInt(2);
 		atuadores = new ArrayList<Atuador>();
 		for(int i=0; i< qtdAtuador; i++)
 		{
