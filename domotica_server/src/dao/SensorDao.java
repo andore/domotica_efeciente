@@ -2,8 +2,6 @@ package dao;
 
 import org.hibernate.Session;
 
-import common.Sensor;
-
 public class SensorDao extends AbstractDao {
 
 	public SensorDao(Session sessao) {

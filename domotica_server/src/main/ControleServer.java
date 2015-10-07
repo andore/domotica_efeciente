@@ -5,11 +5,11 @@ import java.util.List;
 
 import teste.TesteDB;
 import hbn.ControleHbn;
-import common.Arduino;
-import common.Atuador;
 import common.Mensagem;
-import common.Sensor;
+import dao.Arduino;
 import dao.ArduinoDao;
+import dao.Atuador;
+import dao.Sensor;
 import net.NetListener;
 import net.NetService;
 

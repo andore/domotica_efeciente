@@ -5,11 +5,11 @@ import hbn.ControleHbn;
 import java.util.ArrayList;
 import java.util.List;
 
-import common.Arduino;
-import common.Atuador;
 import common.Mensagem;
-import common.Sensor;
+import dao.Arduino;
 import dao.ArduinoDao;
+import dao.Atuador;
+import dao.Sensor;
 
 public class TesteDB {
 	private ControleHbn bd;	

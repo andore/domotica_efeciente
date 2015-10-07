@@ -2,8 +2,6 @@ package dao;
 
 import org.hibernate.Session;
 
-import common.Arduino;
-
 public class ArduinoDao extends AbstractDao 
 {
 	public ArduinoDao(Session sessao) 
