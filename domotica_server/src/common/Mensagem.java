@@ -25,8 +25,7 @@ public class Mensagem
 			this.idArduino = Integer.parseInt(pacote.substring(OPERACAO_SIZE, OPERACAO_SIZE + IDARDUINO_SIZE));
 			this.mensagem = pacote.substring(OPERACAO_SIZE + IDARDUINO_SIZE);
 		}catch(Exception e)
-		{
-			System.out.println("Erro ao quebrar mensagem:" + "[" + pacote.toString() + "]");
+		{			
 			throw new MensagemException("Erro ao quebrar mensagem:" + "[" + pacote.toString() + "]", e.getMessage());
 		}
 		
@@ -66,6 +65,8 @@ public class Mensagem
 		this.operacao = operacao;
 	}
 	
+	
+	/**Serve somente para teste*/
 	public static void main(String[] args) {
 		Mensagem teste;
 		try {

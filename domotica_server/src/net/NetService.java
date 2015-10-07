@@ -44,17 +44,19 @@ public class NetService extends Thread
 				serverSocket.close();
 				System.out.println("Mensagem recebida de " + pacoteRecebido.getAddress().toString().substring(1) + " :[" + new String(pacoteRecebido.getData())+"]");
 				Mensagem msg = new Mensagem(new String(pacoteRecebido.getData()), pacoteRecebido.getAddress().toString().substring(1));
+				
 				System.out.println("\n"
 						+"idArduino:[" + msg.getIdArduino() + "]\n"
 						+ "operacao:[" + msg.getOperacao() + "]\n"
 						+ "mensagem:[" + msg.getMensagem() + "]\n"
 				);
+				
 				listener.netRecebe(msg);
 				
 			} 
 			catch (MensagemException e)
 			{
-				
+				System.out.println(e.getMessage());
 			}
 			catch (SocketException e) 
 			{		
@@ -63,6 +65,10 @@ public class NetService extends Thread
 			catch (IOException e) 
 			{
 				Logger.getLogger(NetService.class.getName()).log(Level.SEVERE, null, e);
+			}
+			finally
+			{
+				serverSocket.close();
 			}
 		}
 		

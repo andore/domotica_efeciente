@@ -29,7 +29,7 @@ public class ClienteUdpTester
          socket = new DatagramSocket() ;
 
          // Construct the datagram packet
-         byte [] data = "01999mensagem".getBytes() ;
+         byte [] data = "ji01999mensagem".getBytes() ;
          DatagramPacket packet = new DatagramPacket( data, data.length, host, port ) ;
 
          // Send it

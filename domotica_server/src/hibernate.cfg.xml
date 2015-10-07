@@ -12,11 +12,13 @@
         <property name="connection.username">sysdba</property>  
         <property name="connection.password">masterkey</property>  
         <property name="dialect">org.hibernate.dialect.FirebirdDialect</property>  
-  
         <property name="hibernate.show_sql">true</property>  
         <property name="hibernate.hbm2ddl.auto">update</property>  
         
+        <!-- mapeamento das classes que sao persistidas no banco --> 
         <mapping class = "common.Arduino"/>
+        <mapping class = "common.Sensor"/>
+        <mapping class = "common.Atuador"/>
   
     </session-factory>      
 </hibernate-configuration>  

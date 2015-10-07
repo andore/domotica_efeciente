@@ -11,7 +11,7 @@ public class ArduinoDao extends AbstractDao
 		super(sessao);
 	}
 	
-	public void InsereArduino(Arduino arduino)
+	public void insereArduino(Arduino arduino)
 	{
 		if(arduino != null)
 		{
