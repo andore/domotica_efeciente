@@ -31,7 +31,7 @@ public class ControleServer implements NetListener {
 	
 	public void netRecebe(Mensagem msg) {
 		roteador.getOperacao(msg);
-		new TesteDB().testeInsere(msg);
+		//new TesteDB().testeInsere(msg);
 	}
 
 }

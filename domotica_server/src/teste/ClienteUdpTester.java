@@ -2,6 +2,8 @@ package teste;
 
 import java.net.* ;
 
+import javax.swing.JOptionPane;
+
 /**
  *  A simple datagram client
  *  Shows how to send and receive UDP packets in Java
@@ -21,19 +23,35 @@ public class ClienteUdpTester
 
       try
       {
-         // Convert the arguments first, to ensure that they are valid
-         InetAddress host = InetAddress.getByName( "192.168.1.35") ;
+         
+    	 String ip = JOptionPane.showInputDialog("Digite o endereco", "localhost");
+    	  
+    	  // Convert the arguments first, to ensure that they are valid
+         InetAddress host = InetAddress.getByName(ip) ;
          int port         = Integer.parseInt( "9999" ) ;
 
          // Construct the socket
          socket = new DatagramSocket() ;
 
          // Construct the datagram packet
-         byte [] data = "01999mensagem".getBytes() ;
-         DatagramPacket packet = new DatagramPacket( data, data.length, host, port ) ;
+         
+         while(true)
+         {
+        	 String msg = JOptionPane.showInputDialog("mensagem:", "01999mensagem");
+        	 {
+        		 if(msg==null)
+        		 {
+        			 break;
+        		 }
+        	 }
+        	 byte [] data = msg.getBytes() ;
+             DatagramPacket packet = new DatagramPacket( data, data.length, host, port ) ;
 
-         // Send it
-         socket.send( packet ) ;
+             // Send it
+             socket.send( packet ) ;
+         }
+         
+
 
          // Set a receive timeout, 2000 milliseconds
          //socket.setSoTimeout( 2000 ) ;
