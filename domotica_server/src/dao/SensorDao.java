@@ -8,7 +8,7 @@ public class SensorDao extends AbstractDao {
 		super(sessao);
 	}
 	
-	public void insereArduino(Sensor sensor)
+	public void insereArduino(Sensor sensor) throws DbException
 	{
 		if(sensor != null)
 		{

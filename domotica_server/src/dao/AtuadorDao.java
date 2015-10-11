@@ -8,7 +8,7 @@ public class AtuadorDao extends AbstractDao {
 		super(sessao);
 	}
 	
-	public void insereArduino(Atuador atuador)
+	public void insereArduino(Atuador atuador) throws DbException
 	{
 		if(atuador != null)
 		{

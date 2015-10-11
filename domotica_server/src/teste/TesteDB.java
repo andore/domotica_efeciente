@@ -9,6 +9,7 @@ import common.Mensagem;
 import dao.Arduino;
 import dao.ArduinoDao;
 import dao.Atuador;
+import dao.DbException;
 import dao.Sensor;
 
 public class TesteDB {
@@ -42,7 +43,12 @@ public class TesteDB {
 	    atuadores.add(atuador);
 		arduino.setAtuadores(atuadores);
 		
-		perssist.insereArduino(arduino);
+		try {
+			perssist.insereArduino(arduino);
+		} catch (DbException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	}
 

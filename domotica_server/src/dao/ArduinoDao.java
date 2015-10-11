@@ -9,7 +9,7 @@ public class ArduinoDao extends AbstractDao
 		super(sessao);
 	}
 	
-	public void insereArduino(Arduino arduino)
+	public void insereArduino(Arduino arduino) throws DbException
 	{
 		if(arduino != null)
 		{

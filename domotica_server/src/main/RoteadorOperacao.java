@@ -3,12 +3,13 @@ package main;
 import tratador.TratadorCadastramento;
 import common.Mensagem;
 import common.StructException;
+import dao.DbException;
 
 public class RoteadorOperacao 
 {
 	private TratadorCadastramento cadastra; 
 	
-	public void getOperacao(Mensagem msg) throws StructException
+	public void getOperacao(Mensagem msg) throws StructException, DbException
 	{
 		
 		if(msg != null)

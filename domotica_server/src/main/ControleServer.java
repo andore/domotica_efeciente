@@ -10,6 +10,7 @@ import common.StructException;
 import dao.Arduino;
 import dao.ArduinoDao;
 import dao.Atuador;
+import dao.DbException;
 import dao.Sensor;
 import net.NetListener;
 import net.NetService;
@@ -38,6 +39,9 @@ public class ControleServer implements NetListener {
 		
 		
 		catch (StructException e) {
+		
+			e.printStackTrace();
+		} catch (DbException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
