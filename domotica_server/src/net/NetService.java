@@ -4,14 +4,14 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.SocketException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
+import org.apache.log4j.Logger;
+import main.RoteadorOperacao;
 import common.Mensagem;
 import common.MensagemException;
 
 public class NetService extends Thread  
 {
+	final static Logger logger = Logger.getLogger(NetService.class);
 	private DatagramSocket serverSocket;
 	private DatagramPacket pacoteRecebido;
 	private byte[] dados; 
@@ -19,7 +19,7 @@ public class NetService extends Thread
 	
 	public NetService (NetListener listener)
 	{
-		System.out.println("Iniciando Serviço de Comunicação.");
+		logger.debug("Iniciando Serviço de Comunicação.");
 		this.listener = listener;
 	}
 	
@@ -32,7 +32,7 @@ public class NetService extends Thread
 	
 	private void recebe(int porta)
 	{	
-		System.out.println("Abrindo socket na porta:" + porta);
+		logger.debug("Abrindo socket na porta:" + porta);
 		while(true)
 		{
 			try 
@@ -42,10 +42,10 @@ public class NetService extends Thread
 				pacoteRecebido = new DatagramPacket(dados, dados.length);
 				serverSocket.receive(pacoteRecebido);
 				serverSocket.close();
-				System.out.println("Mensagem recebida de " + pacoteRecebido.getAddress().toString().substring(1) + " :[" + new String(pacoteRecebido.getData())+"]");
+				logger.debug("Mensagem recebida de " + pacoteRecebido.getAddress().toString().substring(1) + " :[" + new String(pacoteRecebido.getData())+"]");
 				Mensagem msg = new Mensagem(new String(pacoteRecebido.getData()), pacoteRecebido.getAddress().toString().substring(1));
 				
-				System.out.println("\n"
+				logger.debug("\n"
 						+"idArduino:[" + msg.getIdArduino() + "]\n"
 						+ "operacao:[" + msg.getOperacao() + "]\n"
 						+ "mensagem:[" + msg.getMensagem() + "]\n"
@@ -56,15 +56,15 @@ public class NetService extends Thread
 			} 
 			catch (MensagemException e)
 			{
-				System.out.println(e.getMessage());
+				logger.error(e);
 			}
 			catch (SocketException e) 
 			{		
-				Logger.getLogger(NetService.class.getName()).log(Level.SEVERE, null, e);
+				logger.error(e);
 			} 
 			catch (IOException e) 
 			{
-				Logger.getLogger(NetService.class.getName()).log(Level.SEVERE, null, e);
+				logger.error(e);
 			}
 			finally
 			{

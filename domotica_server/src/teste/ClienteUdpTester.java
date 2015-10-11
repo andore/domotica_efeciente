@@ -1,6 +1,7 @@
 package teste;
 
 import java.net.* ;
+import java.text.DecimalFormat;
 
 import javax.swing.JOptionPane;
 
@@ -34,10 +35,22 @@ public class ClienteUdpTester
          socket = new DatagramSocket() ;
 
          // Construct the datagram packet
-         
+         int contSensor = 0;
+         int contAtuador = 0;
+         int contArduino = 0;
          while(true)
          {
-        	 String msg = JOptionPane.showInputDialog("mensagem:", "01001quarto    010201luz       010201lampada   ");
+        	     		 
+        	 String msg = JOptionPane.showInputDialog("mensagem:", "010" + new DecimalFormat("00").format(contArduino) + "quarto    "
+        	 		+ "02" 
+        			+ new DecimalFormat("00").format(contSensor+=1) + "02luz       "
+        		  + new DecimalFormat("00").format(contSensor+=1) + "03temp      "
+        	 		
+        			+ "02" 
+        			+ new DecimalFormat("00").format(contAtuador+=1) + "02lampada   "
+        		  + new DecimalFormat("00").format(contAtuador+=1) + "03ventilador"
+        			 
+        			 );
         	 {
         		 if(msg==null)
         		 {
@@ -49,6 +62,8 @@ public class ClienteUdpTester
 
              // Send it
              socket.send( packet ) ;
+             
+             contArduino++;
          }
          
 

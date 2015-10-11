@@ -9,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 
 @Entity
@@ -24,7 +25,7 @@ public class Arduino  implements Serializable{
 	private int qtd_atuador;
 	
 	@OneToMany (cascade=CascadeType.ALL, fetch=FetchType.EAGER)
-	@JoinColumn (name="id_arduino")
+	@JoinTable ( name = "ARDUINO_HAS_SENSORS", joinColumns={@JoinColumn(name="id_arduino", referencedColumnName="id_arduino")}, inverseJoinColumns={@JoinColumn(name="id_sensor", referencedColumnName="id_sensor")})
 	private List <Sensor>sensores ;
 	
 	@OneToMany (cascade=CascadeType.ALL, fetch=FetchType.EAGER)
