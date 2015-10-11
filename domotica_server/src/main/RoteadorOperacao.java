@@ -1,10 +1,14 @@
 package main;
 
+import tratador.TratadorCadastramento;
 import common.Mensagem;
+import common.StructException;
 
 public class RoteadorOperacao 
 {
-	public void getOperacao(Mensagem msg)
+	private TratadorCadastramento cadastra; 
+	
+	public void getOperacao(Mensagem msg) throws StructException
 	{
 		
 		if(msg != null)
@@ -12,6 +16,8 @@ public class RoteadorOperacao
 			switch (msg.getOperacao()) {
 			case 1:
 				System.out.println("Roteando mensagem para Tratador Cadastro");
+				cadastra = new TratadorCadastramento();
+				cadastra.processa(msg);
 				break;
 				
 			case 2:

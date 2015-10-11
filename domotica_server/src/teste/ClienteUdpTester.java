@@ -37,7 +37,7 @@ public class ClienteUdpTester
          
          while(true)
          {
-        	 String msg = JOptionPane.showInputDialog("mensagem:", "01999mensagem");
+        	 String msg = JOptionPane.showInputDialog("mensagem:", "01001quarto    010201luz       010201lampada   ");
         	 {
         		 if(msg==null)
         		 {

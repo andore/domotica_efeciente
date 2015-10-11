@@ -6,6 +6,7 @@ import java.util.List;
 import teste.TesteDB;
 import hbn.ControleHbn;
 import common.Mensagem;
+import common.StructException;
 import dao.Arduino;
 import dao.ArduinoDao;
 import dao.Atuador;
@@ -30,8 +31,17 @@ public class ControleServer implements NetListener {
 	}
 	
 	public void netRecebe(Mensagem msg) {
-		roteador.getOperacao(msg);
-		//new TesteDB().testeInsere(msg);
+		try
+		{
+			roteador.getOperacao(msg);
+		}
+		
+		
+		catch (StructException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 	}
 
 }

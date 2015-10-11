@@ -42,8 +42,8 @@ public class NetService extends Thread
 				pacoteRecebido = new DatagramPacket(dados, dados.length);
 				serverSocket.receive(pacoteRecebido);
 				serverSocket.close();
-				System.out.println("Mensagem recebida de " + pacoteRecebido.getAddress().toString().substring(1) + " :[" + new String(pacoteRecebido.getData()).trim()+"]");
-				Mensagem msg = new Mensagem(new String(pacoteRecebido.getData()).trim(), pacoteRecebido.getAddress().toString().substring(1));
+				System.out.println("Mensagem recebida de " + pacoteRecebido.getAddress().toString().substring(1) + " :[" + new String(pacoteRecebido.getData())+"]");
+				Mensagem msg = new Mensagem(new String(pacoteRecebido.getData()), pacoteRecebido.getAddress().toString().substring(1));
 				
 				System.out.println("\n"
 						+"idArduino:[" + msg.getIdArduino() + "]\n"

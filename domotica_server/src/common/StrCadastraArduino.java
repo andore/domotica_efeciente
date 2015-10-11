@@ -14,7 +14,7 @@ public class StrCadastraArduino extends Struct {
 	}
 	
 	private String descricaoArduino;
-	private int idArduino;
+
 	private int qtdSensor;
 	private int qtdAtuador;
 	private List<Sensor> sensores;
@@ -22,7 +22,7 @@ public class StrCadastraArduino extends Struct {
 	
 	private void quebra() throws StructException
 	{
-		idArduino = getInt(3);
+	
 		descricaoArduino = getString(10);
 		qtdSensor = getInt(2);
 		sensores = new ArrayList<Sensor>();
@@ -56,12 +56,36 @@ public class StrCadastraArduino extends Struct {
 		this.descricaoArduino = descricaoArduino;
 	}
 
-	public int getIdArduino() {
-		return idArduino;
+	public int getQtdSensor() {
+		return qtdSensor;
 	}
 
-	public void setIdArduino(int idArduino) {
-		this.idArduino = idArduino;
+	public void setQtdSensor(int qtdSensor) {
+		this.qtdSensor = qtdSensor;
+	}
+
+	public int getQtdAtuador() {
+		return qtdAtuador;
+	}
+
+	public void setQtdAtuador(int qtdAtuador) {
+		this.qtdAtuador = qtdAtuador;
+	}
+
+	public List<Sensor> getSensores() {
+		return sensores;
+	}
+
+	public void setSensores(List<Sensor> sensores) {
+		this.sensores = sensores;
+	}
+
+	public List<Atuador> getAtuadores() {
+		return atuadores;
+	}
+
+	public void setAtuadores(List<Atuador> atuadores) {
+		this.atuadores = atuadores;
 	}
 
 }
