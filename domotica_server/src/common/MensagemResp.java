@@ -1,5 +1,7 @@
 package common;
 
+import java.text.DecimalFormat;
+
 public class MensagemResp 
 {
 	private int operacao;
@@ -14,8 +16,7 @@ public class MensagemResp
 	
 	public String getPacote()
 	{
-		pacote.append(operacao);
-		
+		pacote.append(new DecimalFormat("00").format(operacao));
 		if(mensagem!=null)
 		{
 			pacote.append(mensagem);

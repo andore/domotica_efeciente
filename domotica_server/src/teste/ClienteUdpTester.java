@@ -75,8 +75,12 @@ public class ClienteUdpTester
             // Wait for a response from the server
             socket.receive( packet ) ;
 
+            String resposta =  new String(packet.getData());
+            
             // Print the response
-            System.out.println( new String(packet.getData()) ) ;
+            System.out.println("Recebido do Servidor:");
+            System.out.println("Operacao:[" + resposta.substring(0, 2) + "]");
+            System.out.println("Mensagem:[" + resposta.substring(2) + "]");
          }
          socket.close() ;
          
