@@ -1,17 +1,10 @@
 package main;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import teste.TesteDB;
-import hbn.ControleHbn;
+import org.apache.log4j.Logger;
 import common.Mensagem;
+import common.MensagemResp;
 import common.StructException;
-import dao.Arduino;
-import dao.ArduinoDao;
-import dao.Atuador;
 import dao.DbException;
-import dao.Sensor;
 import net.NetListener;
 import net.NetService;
 
@@ -19,6 +12,7 @@ public class ControleServer implements NetListener {
 	
 	private NetService net;
 	private RoteadorOperacao roteador;
+	final static Logger logger = Logger.getLogger(ControleServer.class);
 	
 	public ControleServer()
 	{
@@ -34,15 +28,21 @@ public class ControleServer implements NetListener {
 	public void netRecebe(Mensagem msg) {
 		try
 		{
-			roteador.getOperacao(msg);
-		}
-		
-		
-		catch (StructException e) {
-		
+			MensagemResp resp;
+			resp = roteador.getOperacao(msg);
+			if(resp != null)
+			{
+				net.envia(resp);
+			}
+		}		
+		catch (StructException e)
+		{
+			logger.error("Erro ao provessar mensagem:", e);
 			e.printStackTrace();
-		} catch (DbException e) {
-			// TODO Auto-generated catch block
+		} 
+		catch (DbException e)
+		{
+			logger.error("Erro ao provessar mensagem:", e);
 			e.printStackTrace();
 		}
 

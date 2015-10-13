@@ -3,11 +3,15 @@ package net;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
+import java.net.InetAddress;
 import java.net.SocketException;
+
 import org.apache.log4j.Logger;
+
 import main.RoteadorOperacao;
 import common.Mensagem;
 import common.MensagemException;
+import common.MensagemResp;
 
 public class NetService extends Thread  
 {
@@ -16,6 +20,7 @@ public class NetService extends Thread
 	private DatagramPacket pacoteRecebido;
 	private byte[] dados; 
 	private NetListener listener;
+	private int porta = 9999;
 	
 	public NetService (NetListener listener)
 	{
@@ -27,7 +32,7 @@ public class NetService extends Thread
 	 public void run() 
 	 {
 		 //todo passar porta como parametro
-		 recebe(9999);
+		 recebe(porta);
 	 }
 	
 	private void recebe(int porta)
@@ -71,6 +76,36 @@ public class NetService extends Thread
 				serverSocket.close();
 			}
 		}
+		
+	}
+	
+	public void envia(MensagemResp resp)
+	{
+		try 
+		{
+			if(serverSocket == null)
+			{
+				serverSocket = new DatagramSocket(porta);
+			}
+			else
+			{
+				InetAddress IPAddress = pacoteRecebido.getAddress();
+				int port = pacoteRecebido.getPort();	
+				byte [] data = resp.getPacote().getBytes() ;
+				DatagramPacket sendPacket = new DatagramPacket(data, data.length, IPAddress, port);                   
+				serverSocket.send(sendPacket);
+				
+			}
+			
+		} 
+		catch (SocketException e) 
+		{
+			logger.error("Falha ao enviar mensagem.", e);
+		}
+		catch (IOException e)
+		{
+			logger.error("Falha ao enviar mensagem.", e);
+		} 
 		
 	}
 	

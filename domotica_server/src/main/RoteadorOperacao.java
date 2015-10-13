@@ -4,6 +4,7 @@ import org.apache.log4j.Logger;
 
 import tratador.TratadorCadastramento;
 import common.Mensagem;
+import common.MensagemResp;
 import common.StructException;
 import dao.DbException;
 
@@ -18,30 +19,34 @@ public class RoteadorOperacao
 		cadastra = new TratadorCadastramento();
 	}
 	
-	public void getOperacao(Mensagem msg) throws StructException, DbException
+	public MensagemResp getOperacao(Mensagem msg) throws StructException, DbException
 	{
 		
+		MensagemResp resp = null;
 		if(msg != null)
 		{
-			switch (msg.getOperacao()) {
-			case 1:
-				logger.debug("Roteando mensagem para Tratador Cadastro");
-				cadastra.processa(msg);
-				break;
-				
-			case 2:
-				logger.debug("Roteando mensagem para Tratador Monitoramento");
-				break;
-
-			default:
-				logger.debug("Operação não reconhecida!");
-				break;
+			switch (msg.getOperacao())
+			{
+				case 1:
+					logger.debug("Roteando mensagem para Tratador Cadastro");
+					resp = cadastra.processa(msg);
+					break;
+					
+				case 2:
+					logger.debug("Roteando mensagem para Tratador Monitoramento");
+					break;
+	
+				default:
+					logger.debug("Operação não reconhecida!");
+					break;
 			}
+			
 		}
 		else
 		{
 			logger.info("Mensagem vazia!");
 		}
+		return resp;
 	}
 
 }

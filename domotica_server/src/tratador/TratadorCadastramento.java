@@ -3,6 +3,7 @@ package tratador;
 import org.apache.log4j.Logger;
 
 import common.Mensagem;
+import common.MensagemResp;
 import common.StrCadastraArduino;
 import common.StructException;
 import dao.AbstractDao;
@@ -20,7 +21,7 @@ public class TratadorCadastramento
 		db  = new ControleHbn();
 	}
 	
-	public String processa(Mensagem msg) throws StructException, DbException
+	public MensagemResp processa(Mensagem msg) throws StructException, DbException
 	{
 		if(msg==null)
 		{
@@ -30,6 +31,8 @@ public class TratadorCadastramento
 		StrCadastraArduino cadastra = new StrCadastraArduino(msg.getMensagem());
 		Arduino arduino = new Arduino();
 		ArduinoDao dao = new ArduinoDao(db.getSession());
+		MensagemResp resp = new MensagemResp();
+		
 		
 		if(cadastra!=null)
 		{
@@ -47,7 +50,10 @@ public class TratadorCadastramento
 			logger.debug("Cadastrado com Sucesso");
 		}
 		
-		return"ok";
+		resp.setOperacao(msg.getOperacao());
+		resp.setIp(msg.getIp());
+		resp.setMensagem("0");
+		return resp;
 	}
 	
 }
