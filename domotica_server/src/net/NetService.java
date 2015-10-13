@@ -46,7 +46,7 @@ public class NetService extends Thread
 				dados = new byte[1024];
 				pacoteRecebido = new DatagramPacket(dados, dados.length);
 				serverSocket.receive(pacoteRecebido);
-				serverSocket.close();
+				//serverSocket.close();
 				logger.debug("Mensagem recebida de " + pacoteRecebido.getAddress().toString().substring(1) + " :[" + new String(pacoteRecebido.getData())+"]");
 				Mensagem msg = new Mensagem(new String(pacoteRecebido.getData()), pacoteRecebido.getAddress().toString().substring(1));
 				

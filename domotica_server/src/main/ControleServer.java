@@ -26,24 +26,33 @@ public class ControleServer implements NetListener {
 	}
 	
 	public void netRecebe(Mensagem msg) {
+		MensagemResp resp =  null;
 		try
 		{
-			MensagemResp resp;
 			resp = roteador.getOperacao(msg);
+		}		
+		catch (StructException e)
+		{
+			resp = new MensagemResp();
+			resp.setOperacao(msg.getOperacao());
+			resp.setIp(msg.getIp());
+			resp.setMensagem("1");
+			logger.error("Erro ao provessar mensagem:", e);
+		} 
+		catch (DbException e)
+		{
+			resp = new MensagemResp();
+			resp.setOperacao(msg.getOperacao());
+			resp.setIp(msg.getIp());
+			resp.setMensagem("1");
+			logger.error("Erro ao provessar mensagem:", e);
+		}
+		finally
+		{
 			if(resp != null)
 			{
 				net.envia(resp);
 			}
-		}		
-		catch (StructException e)
-		{
-			logger.error("Erro ao provessar mensagem:", e);
-			e.printStackTrace();
-		} 
-		catch (DbException e)
-		{
-			logger.error("Erro ao provessar mensagem:", e);
-			e.printStackTrace();
 		}
 
 	}

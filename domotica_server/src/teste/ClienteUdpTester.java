@@ -64,23 +64,22 @@ public class ClienteUdpTester
              socket.send( packet ) ;
              
              contArduino++;
+             
+             
+             //Set a receive timeout, 2000 milliseconds
+             socket.setSoTimeout( 2000 ) ;
+
+            // Prepare the packet for receive
+            packet.setData( new byte[PACKETSIZE] ) ;
+
+            // Wait for a response from the server
+            socket.receive( packet ) ;
+
+            // Print the response
+            System.out.println( new String(packet.getData()) ) ;
          }
-         
-
-
-         // Set a receive timeout, 2000 milliseconds
-         //socket.setSoTimeout( 2000 ) ;
-
-         // Prepare the packet for receive
-         //packet.setData( new byte[PACKETSIZE] ) ;
-
-         // Wait for a response from the server
-         //socket.receive( packet ) ;
-
-         // Print the response
-         //System.out.println( new String(packet.getData()) ) ;
          socket.close() ;
-
+         
       }
       catch( Exception e )
       {
