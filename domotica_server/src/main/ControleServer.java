@@ -92,6 +92,8 @@ public class ControleServer implements NetListener, ListenerCadastraCenario {
 	
 	public void setJanela(ControleGui gui)
 	{
+		logger.debug("Setando Janela: " + gui.getJanela().getClass().getSimpleName());
+		
 		JFrame j = new JFrame();
 		j.setBounds(800, 300, 800, 600);
 		j.add(gui.getJanela());

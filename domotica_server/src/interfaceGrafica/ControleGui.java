@@ -2,11 +2,8 @@ package interfaceGrafica;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.JPanel;
-
+import org.apache.log4j.Logger;
 import common.Status;
 import common.CodAtuador;
 import dao.Arduino;
@@ -21,6 +18,7 @@ public class ControleGui implements ListenerGuiCadastraCenario
 	private List <Atuador> lampadas;
 	public Arduino arduinoSelecionado;
 	private ListenerCadastraCenario listener;
+	final static Logger logger = Logger.getLogger(ControleGui.class);
 	
 	public ControleGui(ListenerCadastraCenario listener)
 	{
@@ -276,6 +274,7 @@ public class ControleGui implements ListenerGuiCadastraCenario
 
 	public void salvar()
 	{
+		logger.debug("Salvando cenário.");
 		cenario.setNome_cenario(janela.nomeCenario.getText());
 		cenario.setId_arduino(arduinoSelecionado.getId());
 		cenario.setValor_iluminacao(janela.ilum.getValue());

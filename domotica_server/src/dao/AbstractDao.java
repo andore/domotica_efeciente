@@ -27,10 +27,9 @@ public abstract class AbstractDao
 			
 			logger.debug("Inserindo no banco:" + obj.toString());
 			trans.commit();
-			sessao.close();
+			
 		}catch(Exception e)
 		{
-			sessao.close();
 			throw new DbException ("Erro ao inserir no banco.",e.getMessage());
 		}
 		

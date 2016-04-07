@@ -331,7 +331,10 @@ public class GuiCadastraCenario extends JPanel
 			@Override
 			public void mouseReleased(MouseEvent arg0) 
 			{
-				listener.salvar();
+				if(btnSalvar.isEnabled())
+				{
+					listener.salvar();
+				}
 			}
 		});
 		btnSalvar.setEnabled(false);
@@ -340,6 +343,8 @@ public class GuiCadastraCenario extends JPanel
 		btnSalvar.setBackground(new Color(169, 169, 169));
 		btnSalvar.setBounds(309, 512, 89, 23);
 		add(btnSalvar);
+		
+		btnSalvar.setEnabled(false);
 		
 		btnCancelar = new JButton("CANCELAR");
 		btnCancelar.addActionListener(new ActionListener() {
