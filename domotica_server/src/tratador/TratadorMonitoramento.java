@@ -1,5 +1,6 @@
 package tratador;
 
-public class TratadorMonitoramento {
+public class TratadorMonitoramento 
+{
 
 }

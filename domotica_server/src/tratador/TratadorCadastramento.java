@@ -1,24 +1,27 @@
 package tratador;
 
 import org.apache.log4j.Logger;
+import org.hibernate.Session;
 
 import common.Mensagem;
 import common.MensagemResp;
+import common.Status;
 import common.StrCadastraArduino;
 import common.StructException;
 import dao.AbstractDao;
 import dao.Arduino;
 import dao.ArduinoDao;
 import dao.DbException;
+import dao.Sensor;
 import hbn.ControleHbn;
 
 public class TratadorCadastramento 
 {
-	private ControleHbn db;
+	private Session sessao;
 	final static Logger logger = Logger.getLogger(TratadorCadastramento.class);
-	public TratadorCadastramento()
+	public TratadorCadastramento(Session sessao)
 	{
-		db  = new ControleHbn();
+		this.sessao = sessao;
 	}
 	
 	public MensagemResp processa(Mensagem msg) throws StructException, DbException
@@ -30,7 +33,7 @@ public class TratadorCadastramento
 		
 		StrCadastraArduino cadastra = new StrCadastraArduino(msg.getMensagem());
 		Arduino arduino = new Arduino();
-		ArduinoDao dao = new ArduinoDao(db.getSession());
+		ArduinoDao dao = new ArduinoDao(sessao);
 		MensagemResp resp = new MensagemResp();
 		
 		
@@ -41,12 +44,10 @@ public class TratadorCadastramento
 			arduino.setId(msg.getIdArduino());
 			arduino.setIp(msg.getIp());
 			arduino.setDescricao(cadastra.getDescricaoArduino());
-			arduino.setQtdSensor(cadastra.getQtdSensor());
 			arduino.setSensores(cadastra.getSensores());
-			arduino.setQtdAtuador(cadastra.getQtdAtuador());
 			arduino.setAtuadores(cadastra.getAtuadores());
 			
-			dao.insereArduino(arduino);	
+			dao.insere(arduino);	
 			logger.debug("Cadastrado com Sucesso");
 		}
 		

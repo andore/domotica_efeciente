@@ -94,7 +94,7 @@ public class NetService extends Thread
 				byte [] data = resp.getPacote().getBytes() ;
 				DatagramPacket sendPacket = new DatagramPacket(data, data.length, IPAddress, port);                   
 				serverSocket.send(sendPacket);
-				logger.debug("Enviando mensagem para " + pacoteRecebido.getAddress() +":["+resp.getPacote()+"]");
+				
 			}
 			
 		} 

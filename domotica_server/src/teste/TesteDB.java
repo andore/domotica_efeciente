@@ -9,6 +9,7 @@ import common.Mensagem;
 import dao.Arduino;
 import dao.ArduinoDao;
 import dao.Atuador;
+import dao.CenarioDao;
 import dao.DbException;
 import dao.Sensor;
 
@@ -25,8 +26,6 @@ public class TesteDB {
 		arduino.setId(msg.getIdArduino());
 		arduino.setDescricao("Sala");
 		arduino.setIp(msg.getIp());;
-		arduino.setQtdAtuador(0);
-		arduino.setQtdAtuador(0);
 		
 		List<Sensor>  sensores = new ArrayList<Sensor>();
 		Sensor sensor = new Sensor();
@@ -44,12 +43,33 @@ public class TesteDB {
 		arduino.setAtuadores(atuadores);
 		
 		try {
-			perssist.insereArduino(arduino);
+			perssist.insere(arduino);
 		} catch (DbException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
+	}
+	
+	public void TesteCarregaDados()
+	{
+		ArduinoDao dao = new ArduinoDao(bd.getSession());
+		
+		try
+		{
+			try
+			{
+				dao.loadArduino();
+			} catch (DbException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		} catch (Exception e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }

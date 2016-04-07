@@ -20,5 +20,7 @@
         <mapping class = "dao.Arduino"/>
         <mapping class = "dao.Sensor"/>
         <mapping class = "dao.Atuador"/>
+        <mapping class = "dao.Cenario"/>
+        <mapping class = "dao.Usuario"/>
     </session-factory>
 </hibernate-configuration>

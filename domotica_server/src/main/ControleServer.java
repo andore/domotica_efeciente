@@ -1,28 +1,44 @@
 package main;
 
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
+import hbn.ControleHbn;
+import interfaceGrafica.ControleGui;
+import interfaceGrafica.ListenerCadastraCenario;
+
 import org.apache.log4j.Logger;
+import org.hibernate.Session;
+
 import common.Mensagem;
 import common.MensagemResp;
 import common.StructException;
+import dao.ArduinoDao;
+import dao.Cenario;
+import dao.CenarioDao;
 import dao.DbException;
 import net.NetListener;
 import net.NetService;
 
-public class ControleServer implements NetListener {
+public class ControleServer implements NetListener, ListenerCadastraCenario {
 	
 	private NetService net;
 	private RoteadorOperacao roteador;
+	private ControleGui guiteste;
 	final static Logger logger = Logger.getLogger(ControleServer.class);
+	private Session sessao;
 	
-	public ControleServer()
+	public ControleServer(Session sessao)
 	{
+		this.sessao = sessao;
 		net = new NetService(this);
-		roteador = new RoteadorOperacao();
+		roteador = new RoteadorOperacao(this.sessao);
 	}
 	
 	public void init()
 	{
-		net.start();	
+		net.start();
+		mostraJanelaCadastraCenario();
 	}
 	
 	public void netRecebe(Mensagem msg) {
@@ -37,7 +53,7 @@ public class ControleServer implements NetListener {
 			resp.setOperacao(msg.getOperacao());
 			resp.setIp(msg.getIp());
 			resp.setMensagem("1");
-			logger.error("Erro ao provessar mensagem:", e);
+			logger.error("Erro ao processar mensagem:", e);
 		} 
 		catch (DbException e)
 		{
@@ -45,7 +61,7 @@ public class ControleServer implements NetListener {
 			resp.setOperacao(msg.getOperacao());
 			resp.setIp(msg.getIp());
 			resp.setMensagem("1");
-			logger.error("Erro ao provessar mensagem:", e);
+			logger.error("Erro ao processar mensagem:", e);
 		}
 		finally
 		{
@@ -55,6 +71,53 @@ public class ControleServer implements NetListener {
 			}
 		}
 
+	}
+	
+	public void mostraJanelaCadastraCenario()
+	{
+		guiteste = new ControleGui(this);
+		ArduinoDao ardDao = new ArduinoDao(sessao);
+		try
+		{
+			guiteste.setDados(ardDao.loadArduino());
+			setJanela(guiteste);
+			//db.getSession().close();
+			
+		} catch (DbException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void setJanela(ControleGui gui)
+	{
+		JFrame j = new JFrame();
+		j.setBounds(800, 300, 800, 600);
+		j.add(gui.getJanela());
+		j.setVisible(true);
+		j.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	}
+
+	public void cadastraCenarioCancelar()
+	{
+		
+		
+	}
+
+	public void cadastraCenarioSalvar(Cenario cenario)
+	{
+		CenarioDao cenDao = new CenarioDao(sessao);
+		try
+		{
+			cenDao.insere(cenario);
+			JOptionPane.showMessageDialog(null,"Cenário salvado com sucesso!","SALVAR", JOptionPane.INFORMATION_MESSAGE);
+		} 
+		catch (DbException e)
+		{
+			JOptionPane.showMessageDialog(null,"Erro ao salvar cenário, tente novamente.","ERRO", JOptionPane.ERROR_MESSAGE);
+			logger.error("Erro ao gravar cenário no banco!", e);
+		}
 	}
 
 }

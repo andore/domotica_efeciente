@@ -1,5 +1,7 @@
 package dao;
 
+import java.util.List;
+
 import org.hibernate.Session;
 
 public class ArduinoDao extends AbstractDao 
@@ -9,13 +11,19 @@ public class ArduinoDao extends AbstractDao
 		super(sessao);
 	}
 	
-	public void insereArduino(Arduino arduino) throws DbException
+	public void insere(Arduino arduino) throws DbException
 	{
 		if(arduino != null)
 		{
 			super.insert(arduino);
 		}
 		
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Arduino> loadArduino() throws DbException
+	{
+		return super.load("Arduino");		
 	}
 
 }

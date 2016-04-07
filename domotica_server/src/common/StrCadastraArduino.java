@@ -6,13 +6,18 @@ import java.util.List;
 import dao.Atuador;
 import dao.Sensor;
 
-public class StrCadastraArduino extends Struct {
+public class StrCadastraArduino extends AbstractStruct {
 
 	public StrCadastraArduino(String str) throws StructException {
 		super(str);
 		quebra();
 	}
 	
+	public StrCadastraArduino()
+	{
+		super("");
+	}
+
 	private String descricaoArduino;
 
 	private int qtdSensor;
@@ -46,6 +51,30 @@ public class StrCadastraArduino extends Struct {
 		
 			atuadores.add(a);
 		}		
+	}
+	
+	public String getString() throws StructException
+	{
+		put(descricaoArduino, 10);
+		put(qtdSensor, 2);
+		
+		for(Sensor s: sensores)
+		{
+			put(s.getId(), 2);
+			put(s.getCod(), 2);
+			put(s.getDescricao(), 10);
+		}
+		
+		put(qtdAtuador, 2);
+		
+		for(Atuador s: atuadores)
+		{
+			put(s.getId(), 2);
+			put(s.getCod(), 2);
+			put(s.getDescricao(), 10);
+		}
+		
+		return super.out.toString();
 	}
 
 	public String getDescricaoArduino() {

@@ -1,6 +1,7 @@
 package main;
 
 import org.apache.log4j.Logger;
+import org.hibernate.Session;
 
 import tratador.TratadorCadastramento;
 import common.Mensagem;
@@ -10,13 +11,15 @@ import dao.DbException;
 
 public class RoteadorOperacao 
 {
-	private TratadorCadastramento cadastra; 
+	private TratadorCadastramento cadastra;
+	private Session sessao;
 	final static Logger logger = Logger.getLogger(RoteadorOperacao.class);
 	
 	
-	public RoteadorOperacao()
+	public RoteadorOperacao(Session sessao)
 	{
-		cadastra = new TratadorCadastramento();
+		this.sessao = sessao;
+		cadastra = new TratadorCadastramento(this.sessao);
 	}
 	
 	public MensagemResp getOperacao(Mensagem msg) throws StructException, DbException

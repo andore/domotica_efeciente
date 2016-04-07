@@ -1,10 +1,9 @@
 package dao;
 
-
-
-import hbn.ControleHbn;
+import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -36,4 +35,22 @@ public abstract class AbstractDao
 		}
 		
 	}
+	
+
+	@SuppressWarnings("rawtypes")
+	protected List load(String nomeCalsse) throws DbException
+	{
+		try
+		{
+			Query query = sessao.createQuery("from " + nomeCalsse); 
+			List list = query.list();
+			return list;
+		}
+		catch (Exception e)
+		{
+			throw new DbException("Erro ao carregad dados do banco.", e.getMessage());
+		}
+		
+	}
+	
 }

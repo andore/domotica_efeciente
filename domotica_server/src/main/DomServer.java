@@ -4,8 +4,7 @@ import hbn.ControleHbn;
 
 import org.apache.log4j.Logger;
 
-import common.StrCadastraArduino;
-import common.StructException;
+import teste.TesteDB;
 
 public class DomServer {
 	final static Logger logger = Logger.getLogger(DomServer.class);
@@ -13,8 +12,12 @@ public class DomServer {
 	public static void main(String[] args) 
 	{	
 		logger.debug("Iniciando Servidor.");
-		ControleServer controleServer = new ControleServer();
+		ControleHbn db = new ControleHbn();
+		ControleServer controleServer = new ControleServer(db.getSession());
 		controleServer.init();	
+		
+		//TesteDB testedb = new TesteDB();
+		//testedb.TesteCarregaDados();
 	}
 	
 }
