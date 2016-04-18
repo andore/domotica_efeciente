@@ -38,7 +38,7 @@ public class ControleServer implements NetListener, ListenerCadastraCenario {
 	public void init()
 	{
 		net.start();
-		mostraJanelaCadastraCenario();
+		//mostraJanelaCadastraCenario();
 	}
 	
 	public void netRecebe(Mensagem msg) {

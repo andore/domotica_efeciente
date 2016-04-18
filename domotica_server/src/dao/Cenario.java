@@ -24,11 +24,11 @@ public class Cenario
 	
 	
 	@OneToMany (cascade=CascadeType.ALL, fetch=FetchType.EAGER)
-	@JoinTable ( name = "arduino_sensor", joinColumns={@JoinColumn(name="id_arduino", referencedColumnName="id_arduino")}, inverseJoinColumns={@JoinColumn(name="id_sensor", referencedColumnName="id_sensor")})
+	
 	private List <Sensor>sensores;
 	
 	@OneToMany (cascade=CascadeType.ALL, fetch=FetchType.EAGER)
-	@JoinTable ( name = "arduino_atuador", joinColumns={@JoinColumn(name="id_arduino", referencedColumnName="id_arduino")}, inverseJoinColumns={@JoinColumn(name="id_atuador", referencedColumnName="id_atuador")})
+	
 	private List <Atuador>atuadores;
 	
 	public int getId_cenario() {

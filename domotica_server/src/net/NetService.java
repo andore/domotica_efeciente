@@ -1,10 +1,14 @@
 package net;
 
 import java.io.IOException;
+import java.io.PrintStream;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.net.SocketException;
+import java.util.Scanner;
 
 import org.apache.log4j.Logger;
 
@@ -20,7 +24,9 @@ public class NetService extends Thread
 	private DatagramPacket pacoteRecebido;
 	private byte[] dados; 
 	private NetListener listener;
-	private int porta = 9999;
+	private int porta = 9991;
+	private Scanner s = null;
+	private PrintStream p = null;
 	
 	public NetService (NetListener listener)
 	{
@@ -29,17 +35,85 @@ public class NetService extends Thread
 	}
 	
 	
-	 public void run() 
-	 {
-		 //todo passar porta como parametro
-		 recebe(porta);
-	 }
+	private void tcpService()
+	{
+		ServerSocket servidor = null;
+		Socket cliente = null;
+		String msgStr;
+		
+		try 
+		{
+			servidor = new ServerSocket(porta);
+			logger.debug("Aguardando conexao");
+			cliente = servidor.accept();
+			logger.debug("Conectado com:" + cliente.getInetAddress().getHostAddress());
+			cliente.getInetAddress().getHostAddress();
+			s = new Scanner(cliente.getInputStream());
+			p = new PrintStream(cliente.getOutputStream());
+		    
+			while (s.hasNextLine()) 
+		    {
+		    	msgStr = s.nextLine();		    	
+		    	logger.debug("Mensagem recebida de " + cliente.getInetAddress().getHostAddress() + " :[" + msgStr + "]");
+		    	
+		    	Mensagem msg = new Mensagem(msgStr, cliente.getInetAddress().getHostAddress());
+		    	logger.debug("\n"
+						+"idArduino:[" + msg.getIdArduino() + "]\n"
+						+ "operacao:[" + msg.getOperacao() + "]\n"
+						+ "mensagem:[" + msg.getMensagem() + "]\n"
+				);
+		    	listener.netRecebe(msg);
+		       //logger.info(s.nextLine());
+		       //p.println("Surdo eh a voh =P");
+		       //logger.debug("Enviado");
+		    }
+		} 
+		catch (IOException e)
+		{
+			logger.error("Erro Socket TCP", e);
+		}
+		catch (MensagemException e)
+		{
+			MensagemResp resp =  null;
+			resp = new MensagemResp();
+			resp.setOperacao(0);
+			resp.setIp(cliente.getInetAddress().getHostAddress());
+			resp.setMensagem("001");
+			p.println(resp.getMensagem());
+			logger.error("Erro ao provessar mensagem:", e);
+			//envia(resp);
+		}
+		finally
+		{
+			logger.debug("Fechando Socket");
+			s.close();
+		    try 
+		    {
+				servidor.close();
+				cliente.close();
+			} 
+		    catch (IOException e)
+		    {
+			
+				e.printStackTrace();
+			}    
+		}
+	}
+	
+	public void run() 
+	{
+		//todo passar porta como parametro
+		recebe(porta);
+	}
 	
 	private void recebe(int porta)
 	{	
 		logger.debug("Abrindo socket na porta:" + porta);
 		while(true)
 		{
+			tcpService();
+			
+			/*
 			try 
 			{
 				serverSocket = new DatagramSocket(porta);
@@ -61,7 +135,25 @@ public class NetService extends Thread
 			} 
 			catch (MensagemException e)
 			{
-				logger.error(e);
+				while(true)
+				{
+					try {
+						Thread.sleep(5000);
+					} catch (InterruptedException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					MensagemResp resp =  null;
+					resp = new MensagemResp();
+					resp.setOperacao(0);
+					resp.setIp("192.168.10.59");
+					resp.setMensagem(" OlA Mundo");
+					//logger.error("Erro ao provessar mensagem:", e);
+					envia(resp);
+				}
+				
+				
+				
 			}
 			catch (SocketException e) 
 			{		
@@ -74,39 +166,15 @@ public class NetService extends Thread
 			finally
 			{
 				serverSocket.close();
-			}
+			}*/
 		}
 		
 	}
 	
 	public void envia(MensagemResp resp)
 	{
-		try 
-		{
-			if(serverSocket == null)
-			{
-				serverSocket = new DatagramSocket(porta);
-			}
-			else
-			{
-				InetAddress IPAddress = pacoteRecebido.getAddress();
-				int port = pacoteRecebido.getPort();	
-				byte [] data = resp.getPacote().getBytes() ;
-				DatagramPacket sendPacket = new DatagramPacket(data, data.length, IPAddress, port);                   
-				serverSocket.send(sendPacket);
-				
-			}
-			
-		} 
-		catch (SocketException e) 
-		{
-			logger.error("Falha ao enviar mensagem.", e);
-		}
-		catch (IOException e)
-		{
-			logger.error("Falha ao enviar mensagem.", e);
-		} 
-		
+		p.println(resp.getMensagem());
+		logger.debug("Enviando mensagem para " + resp.getIp() + ":[" + resp.getMensagem() + "]");
 	}
 	
 	

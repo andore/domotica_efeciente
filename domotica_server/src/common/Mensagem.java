@@ -14,6 +14,10 @@ public class Mensagem
 	private int idArduino;
 	private String mensagem;
 	
+	public Mensagem ()
+	{
+	}
+	
 	public Mensagem (String pacote, String ip) throws MensagemException
 	{		
 		this.ip = ip;

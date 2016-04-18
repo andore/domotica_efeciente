@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import common.Mensagem;
+import common.MensagemResp;
 import dao.Arduino;
 import dao.ArduinoDao;
 import dao.Atuador;
@@ -70,6 +71,22 @@ public class TesteDB {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	public static void main(String[] args) 
+	{	
+		
+		TesteDB teste = new TesteDB();
+		
+		
+		Mensagem resp =  null;
+		resp = new Mensagem();
+		resp.setOperacao(0);
+		resp.setIp("192.168.1.2");
+		resp.setMensagem("001");
+		resp.setIdArduino(0);
+		
+		teste.testeInsere(resp);
 	}
 
 }
