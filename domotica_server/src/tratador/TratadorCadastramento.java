@@ -19,6 +19,7 @@ public class TratadorCadastramento
 {
 	private Session sessao;
 	final static Logger logger = Logger.getLogger(TratadorCadastramento.class);
+	private static final String SQL_STATE_UNIQUE_KEY = "23000";
 	public TratadorCadastramento(Session sessao)
 	{
 		this.sessao = sessao;
@@ -47,7 +48,22 @@ public class TratadorCadastramento
 			arduino.setSensores(cadastra.getSensores());
 			arduino.setAtuadores(cadastra.getAtuadores());
 			
-			dao.insere(arduino);	
+			try
+			{
+				dao.insere(arduino);
+			}
+			catch (DbException e)
+			{
+				if(e.getSqlState()!=null && 
+						e.getSqlState().equals(SQL_STATE_UNIQUE_KEY))
+				{
+					logger.info("Arduino já cadastrador");
+				}
+				else
+				{
+					throw e;
+				}
+			}			
 			logger.debug("Cadastrado com Sucesso");
 		}
 		

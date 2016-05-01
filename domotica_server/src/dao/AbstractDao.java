@@ -6,6 +6,7 @@ import org.apache.log4j.Logger;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.exception.ConstraintViolationException;
 
 public abstract class AbstractDao 
 {
@@ -28,7 +29,12 @@ public abstract class AbstractDao
 			logger.debug("Inserindo no banco:" + obj.toString());
 			trans.commit();
 			
-		}catch(Exception e)
+		}
+		catch(ConstraintViolationException e)
+		{
+			throw new DbException ("Erro ao inserir no banco.",e.getMessage(), e.getSQLState());
+		}
+		catch(Exception e)
 		{
 			throw new DbException ("Erro ao inserir no banco.",e.getMessage());
 		}
