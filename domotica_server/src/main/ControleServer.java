@@ -26,13 +26,11 @@ public class ControleServer implements NetListener, ListenerCadastraCenario {
 	private RoteadorOperacao roteador;
 	private ControleGui guiteste;
 	final static Logger logger = Logger.getLogger(ControleServer.class);
-	private Session sessao;
 	
-	public ControleServer(Session sessao)
+	public ControleServer()
 	{
-		this.sessao = sessao;
 		net = new NetService(this);
-		roteador = new RoteadorOperacao(this.sessao);
+		roteador = new RoteadorOperacao();
 	}
 	
 	public void init()
@@ -76,11 +74,11 @@ public class ControleServer implements NetListener, ListenerCadastraCenario {
 	public void mostraJanelaCadastraCenario()
 	{
 		guiteste = new ControleGui(this);
-		ArduinoDao ardDao = new ArduinoDao(sessao);
+		ArduinoDao ardDao = new ArduinoDao();
 		try
 		{
-			guiteste.setDados(ardDao.loadArduino());
 			setJanela(guiteste);
+			guiteste.setDados(ardDao.loadArduino());
 			//db.getSession().close();
 			
 		} catch (DbException e)
@@ -108,8 +106,9 @@ public class ControleServer implements NetListener, ListenerCadastraCenario {
 	}
 
 	public void cadastraCenarioSalvar(Cenario cenario)
-	{
-		CenarioDao cenDao = new CenarioDao(sessao);
+	{	
+		CenarioDao cenDao = new CenarioDao();
+		cenDao.sessao.clear();
 		try
 		{
 			cenDao.insere(cenario);

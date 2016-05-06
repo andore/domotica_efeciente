@@ -6,8 +6,8 @@ import common.Status;
 
 public class AtuadorDao extends AbstractDao {
 
-	public AtuadorDao(Session sessao) {
-		super(sessao);
+	public AtuadorDao() {
+		super();
 	}
 	
 	public void insere(Atuador atuador) throws DbException

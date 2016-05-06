@@ -168,7 +168,7 @@ public class ControleGui implements ListenerGuiCadastraCenario
 	public void setComodo(int index)
 	{
 		arduinoSelecionado = arduinos.get(index);
-		cenario.setId_arduino(arduinoSelecionado.getId());
+		//cenario.setId_arduino(arduinoSelecionado.getId());
 		setDispositivos(this.arduinos.get(index));
 		setLampadas(lampadas);
 	}

@@ -1,24 +1,19 @@
 package teste;
 
-import hbn.ControleHbn;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import common.Mensagem;
-import common.MensagemResp;
 import dao.Arduino;
 import dao.ArduinoDao;
 import dao.Atuador;
-import dao.CenarioDao;
 import dao.DbException;
 import dao.Sensor;
 
-public class TesteDB {
-	private ControleHbn bd;	
-	
+public class TesteDB 
+{
 	public TesteDB() {
-		bd = new ControleHbn();
+		
 	}
 	
 	public void testeInsere(Mensagem msg)
@@ -34,7 +29,7 @@ public class TesteDB {
 		sensor.setId(999);
 		sensores.add(sensor);
 		arduino.setSensores(sensores);
-		ArduinoDao perssist = new ArduinoDao(bd.getSession());
+		ArduinoDao perssist = new ArduinoDao();
 		
 		List<Atuador>  atuadores = new ArrayList<Atuador>();
 		Atuador atuador = new Atuador();
@@ -54,7 +49,7 @@ public class TesteDB {
 	
 	public void TesteCarregaDados()
 	{
-		ArduinoDao dao = new ArduinoDao(bd.getSession());
+		ArduinoDao dao = new ArduinoDao();
 		
 		try
 		{

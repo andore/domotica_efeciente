@@ -3,11 +3,12 @@ package dao;
 import java.util.List;
 import org.hibernate.Session;
 
+import hbn.ControleHbn;
+
 public class CenarioDao extends AbstractDao {
 
-	public CenarioDao(Session sessao) {
-		super(sessao);
-		
+	public CenarioDao() {
+		super();
 	}
 	
 	public void insere(Cenario cenario) throws DbException

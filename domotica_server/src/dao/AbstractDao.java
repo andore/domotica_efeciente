@@ -8,14 +8,17 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.exception.ConstraintViolationException;
 
+import hbn.ControleHbn;
+
 public abstract class AbstractDao 
 {
-	protected final Session sessao;
+	public final Session sessao;
 	final static Logger logger = Logger.getLogger(AbstractDao.class);
+	private static ControleHbn hbn = new ControleHbn();
 	
-	public AbstractDao(Session sessao)
+	public AbstractDao()
 	{
-		this.sessao = sessao;
+		this.sessao = hbn.getSession();
 	}
 	
 	protected void insert(Object obj) throws DbException
@@ -23,8 +26,8 @@ public abstract class AbstractDao
 		
 		try
 		{
-			Transaction trans = this.sessao.beginTransaction();
-			this.sessao.save(obj);
+			Transaction trans = this.hbn.getSession().beginTransaction();
+			this.hbn.getSession().save(obj);
 			
 			logger.debug("Inserindo no banco:" + obj.toString());
 			trans.commit();

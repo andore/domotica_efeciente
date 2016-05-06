@@ -1,9 +1,6 @@
 package main;
 
-import hbn.ControleHbn;
-
 import org.apache.log4j.Logger;
-
 import teste.TesteDB;
 
 public class DomServer {
@@ -12,8 +9,7 @@ public class DomServer {
 	public static void main(String[] args) 
 	{	
 		logger.debug("Iniciando Servidor.");
-		ControleHbn db = new ControleHbn();
-		ControleServer controleServer = new ControleServer(db.getSession());
+		ControleServer controleServer = new ControleServer();
 		controleServer.init();	
 		
 		//TesteDB testedb = new TesteDB();

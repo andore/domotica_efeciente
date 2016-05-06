@@ -6,8 +6,8 @@ import common.Status;
 
 public class SensorDao extends AbstractDao {
 
-	public SensorDao(Session sessao) {
-		super(sessao);
+	public SensorDao() {
+		super();
 	}
 	
 	public void insere(Sensor sensor) throws DbException

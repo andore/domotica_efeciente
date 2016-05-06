@@ -5,15 +5,27 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
+import javax.persistence.TableGenerator;
 
 @Entity
 public class Cenario 
 {
+	
+	@TableGenerator(name="CENARIO_GENERATOR",
+	            table="GENERATED_KEYS",
+	            pkColumnName="PK_COLUMN",
+	            valueColumnName="VALUE_COLUMN",
+	            pkColumnValue="id_cenario",
+	            allocationSize=1
+	)	
 	@Id
+	@GeneratedValue(strategy = GenerationType.TABLE, generator="CENARIO_GENERATOR")
 	private int id_cenario;
 	
 	private int id_arduino;
@@ -22,13 +34,10 @@ public class Cenario
 	private double valor_iluminacao;
 	private boolean privado;
 	
+	//@OneToMany (cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+	//private List <Sensor>sensores;
 	
 	@OneToMany (cascade=CascadeType.ALL, fetch=FetchType.EAGER)
-	
-	private List <Sensor>sensores;
-	
-	@OneToMany (cascade=CascadeType.ALL, fetch=FetchType.EAGER)
-	
 	private List <Atuador>atuadores;
 	
 	public int getId_cenario() {
@@ -67,12 +76,12 @@ public class Cenario
 	public void setPrivado(boolean privado) {
 		this.privado = privado;
 	}
-	public List<Sensor> getSensores() {
-		return sensores;
-	}
-	public void setSensores(List<Sensor> sensores) {
-		this.sensores = sensores;
-	}
+	//public List<Sensor> getSensores() {
+	//	return sensores;
+	//}
+	//public void setSensores(List<Sensor> sensores) {
+	//	this.sensores = sensores;
+//	}
 	public List<Atuador> getAtuadores() {
 		return atuadores;
 	}

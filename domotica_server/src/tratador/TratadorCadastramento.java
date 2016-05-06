@@ -17,12 +17,12 @@ import hbn.ControleHbn;
 
 public class TratadorCadastramento 
 {
-	private Session sessao;
 	final static Logger logger = Logger.getLogger(TratadorCadastramento.class);
 	private static final String SQL_STATE_UNIQUE_KEY = "23000";
-	public TratadorCadastramento(Session sessao)
+	
+	public TratadorCadastramento()
 	{
-		this.sessao = sessao;
+		
 	}
 	
 	public MensagemResp processa(Mensagem msg) throws StructException, DbException
@@ -34,7 +34,7 @@ public class TratadorCadastramento
 		
 		StrCadastraArduino cadastra = new StrCadastraArduino(msg.getMensagem());
 		Arduino arduino = new Arduino();
-		ArduinoDao dao = new ArduinoDao(sessao);
+		ArduinoDao dao = new ArduinoDao();
 		MensagemResp resp = new MensagemResp();
 		
 		

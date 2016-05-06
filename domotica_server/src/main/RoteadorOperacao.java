@@ -12,14 +12,12 @@ import dao.DbException;
 public class RoteadorOperacao 
 {
 	private TratadorCadastramento cadastra;
-	private Session sessao;
 	final static Logger logger = Logger.getLogger(RoteadorOperacao.class);
 	
 	
-	public RoteadorOperacao(Session sessao)
+	public RoteadorOperacao()
 	{
-		this.sessao = sessao;
-		cadastra = new TratadorCadastramento(this.sessao);
+		cadastra = new TratadorCadastramento();
 	}
 	
 	public MensagemResp getOperacao(Mensagem msg) throws StructException, DbException

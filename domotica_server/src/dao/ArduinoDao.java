@@ -6,9 +6,9 @@ import org.hibernate.Session;
 
 public class ArduinoDao extends AbstractDao 
 {
-	public ArduinoDao(Session sessao) 
+	public ArduinoDao() 
 	{
-		super(sessao);
+		super();
 	}
 	
 	public void insere(Arduino arduino) throws DbException
