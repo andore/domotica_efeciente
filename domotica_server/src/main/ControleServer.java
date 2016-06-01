@@ -105,13 +105,18 @@ public class ControleServer implements NetListener, ListenerCtrlCadastraCenario,
 	public void setJanela(AbstractControleGui gui)
 	{
 		logger.debug("Setando Janela: " + gui.getJanela().getClass().getSimpleName());
+		int posXAnt = 0;
+		int posYAnt = 0;
+		
 		if(j!=null)
 		{
+			posXAnt = j.getX();
+			posYAnt = j.getY();
 			j.removeAll();
 			j.dispose();
 		}
 		j = new JFrame();
-		j.setBounds(j.getX(), j.getY(), 800, 600);
+		j.setBounds(posXAnt, posYAnt, 800, 600);
 		j.add(gui.getJanela());
 		j.setVisible(true);
 		j.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

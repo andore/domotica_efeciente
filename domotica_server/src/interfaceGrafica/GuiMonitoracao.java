@@ -301,6 +301,7 @@ public class GuiMonitoracao extends JPanel
 		add(btnSair);
 		
 		temp = new JSlider();
+		temp.setMaximum(32);
 		temp.setEnabled(false);
 		temp.addMouseMotionListener(new MouseMotionAdapter() {
 			@Override
@@ -308,7 +309,7 @@ public class GuiMonitoracao extends JPanel
 				textField_1.setText(String.valueOf(temp.getValue()));
 			}
 		});
-		temp.setValue(60);
+		temp.setValue(21);
 		temp.setBackground(SystemColor.textHighlightText);
 		temp.setBounds(338, 242, 179, 23);
 		add(temp);
@@ -438,7 +439,7 @@ public class GuiMonitoracao extends JPanel
 		add(lblIluminaoAtual);
 		
 		tempAtual = new JTextField();
-		tempAtual.setText("60");
+		tempAtual.setText("21");
 		tempAtual.setHorizontalAlignment(SwingConstants.CENTER);
 		tempAtual.setForeground(SystemColor.textHighlight);
 		tempAtual.setFont(new Font("Calibri", Font.BOLD, 16));

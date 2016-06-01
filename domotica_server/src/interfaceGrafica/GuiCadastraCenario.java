@@ -360,6 +360,7 @@ public class GuiCadastraCenario extends JPanel
 		add(btnCancelar);
 		
 		temp = new JSlider();
+		temp.setMaximum(32);
 		temp.setEnabled(false);
 		temp.addMouseMotionListener(new MouseMotionAdapter() {
 			@Override
@@ -367,7 +368,7 @@ public class GuiCadastraCenario extends JPanel
 				textField_1.setText(String.valueOf(temp.getValue()));
 			}
 		});
-		temp.setValue(60);
+		temp.setValue(21);
 		temp.setBackground(SystemColor.textHighlightText);
 		temp.setBounds(353, 127, 179, 23);
 		add(temp);
