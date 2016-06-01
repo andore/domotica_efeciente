@@ -7,7 +7,7 @@ import hbn.ControleHbn;
 
 public class CenarioDao extends AbstractDao {
 
-	public CenarioDao() {
+	public CenarioDao() throws DbException {
 		super();
 	}
 	

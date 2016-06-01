@@ -4,7 +4,7 @@ import org.hibernate.Session;
 
 public class UsuarioDao extends AbstractDao {
 
-	public UsuarioDao() {
+	public UsuarioDao() throws DbException {
 		super();
 	}
 	

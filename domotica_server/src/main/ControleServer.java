@@ -2,10 +2,18 @@ package main;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.xml.transform.Source;
 
 import hbn.ControleHbn;
-import interfaceGrafica.ControleGui;
-import interfaceGrafica.ListenerCadastraCenario;
+import interfaceGrafica.AbstractControleGui;
+import interfaceGrafica.ControleGuiCadastraCenario;
+import interfaceGrafica.ControleGuiMensagem;
+import interfaceGrafica.ControleGuiPrincipal;
+import interfaceGrafica.ListenerCtrlCadastraCenario;
+import interfaceGrafica.ListenerCtrlGuiMensagem;
+import interfaceGrafica.ListenerCtrlGuiPrincipal;
+import interfaceGrafica.ListenerGuiMensagem;
+import interfaceGrafica.ListenerGuiPrincipal;
 
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
@@ -20,12 +28,15 @@ import dao.DbException;
 import net.NetListener;
 import net.NetService;
 
-public class ControleServer implements NetListener, ListenerCadastraCenario {
+public class ControleServer implements NetListener, ListenerCtrlCadastraCenario, ListenerCtrlGuiPrincipal, ListenerCtrlGuiMensagem {
 	
 	private NetService net;
 	private RoteadorOperacao roteador;
-	private ControleGui guiteste;
+	private ControleGuiCadastraCenario guiteste;
+	private ControleGuiPrincipal janelaPrincipal;
 	final static Logger logger = Logger.getLogger(ControleServer.class);
+	final static int TEMPO_ESPERA_TELA_MESAGEM = 1000;
+	JFrame j;
 	
 	public ControleServer()
 	{
@@ -36,7 +47,7 @@ public class ControleServer implements NetListener, ListenerCadastraCenario {
 	public void init()
 	{
 		net.start();
-		mostraJanelaCadastraCenario();
+		mostraJanelaPrincipal();
 	}
 	
 	public void netRecebe(Mensagem msg) {
@@ -73,27 +84,34 @@ public class ControleServer implements NetListener, ListenerCadastraCenario {
 	
 	public void mostraJanelaCadastraCenario()
 	{
-		guiteste = new ControleGui(this);
-		ArduinoDao ardDao = new ArduinoDao();
+		guiteste = new ControleGuiCadastraCenario(this);
+		
 		try
 		{
+			ArduinoDao ardDao = new ArduinoDao();
 			setJanela(guiteste);
 			guiteste.setDados(ardDao.loadArduino());
 			//db.getSession().close();
 			
-		} catch (DbException e)
+		}
+		catch (Exception e)
 		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("ERRO ao popular janela Cadastra Cenarios", e);
+			JOptionPane.showMessageDialog(null,"Opa, tem alguma coisa errada =(\nFalha ao consultar banco de dados.","Ocorreu um Erro =(",JOptionPane.ERROR_MESSAGE);
+			mostraJanelaPrincipal();
 		}
 	}
 	
-	public void setJanela(ControleGui gui)
+	public void setJanela(AbstractControleGui gui)
 	{
 		logger.debug("Setando Janela: " + gui.getJanela().getClass().getSimpleName());
-		
-		JFrame j = new JFrame();
-		j.setBounds(800, 300, 800, 600);
+		if(j!=null)
+		{
+			j.removeAll();
+			j.dispose();
+		}
+		j = new JFrame();
+		j.setBounds(j.getX(), j.getY(), 800, 600);
 		j.add(gui.getJanela());
 		j.setVisible(true);
 		j.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -101,16 +119,17 @@ public class ControleServer implements NetListener, ListenerCadastraCenario {
 
 	public void cadastraCenarioCancelar()
 	{
-		
-		
+		mostraJanelaPrincipal();
 	}
 
 	public void cadastraCenarioSalvar(Cenario cenario)
 	{	
-		CenarioDao cenDao = new CenarioDao();
-		cenDao.sessao.clear();
+		CenarioDao cenDao;
+		
 		try
 		{
+			cenDao = new CenarioDao();
+			cenDao.sessao.clear();
 			cenDao.insere(cenario);
 			JOptionPane.showMessageDialog(null,"Cenário salvado com sucesso!","SALVAR", JOptionPane.INFORMATION_MESSAGE);
 		} 
@@ -119,6 +138,38 @@ public class ControleServer implements NetListener, ListenerCadastraCenario {
 			JOptionPane.showMessageDialog(null,"Erro ao salvar cenário, tente novamente.","ERRO", JOptionPane.ERROR_MESSAGE);
 			logger.error("Erro ao gravar cenário no banco!", e);
 		}
+	}
+	
+	public void mostraJanelaPrincipal()
+	{
+		janelaPrincipal = new ControleGuiPrincipal(this);
+		setJanela(janelaPrincipal);
+	}
+
+	public void acaoMonitoramento()
+	{
+		
+	}
+
+	public void acaoCadastraCenario()
+	{
+		mostraJanelaMensagem("<HTML><center>Aguarde...<BR>Consultando Banco de Dados",TEMPO_ESPERA_TELA_MESAGEM);
+	}
+
+	public void acaoUsuario() {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	public void mostraJanelaMensagem(String mensagem, int tempoEspera)
+	{
+		ControleGuiMensagem janelaMensagem = new ControleGuiMensagem(this, mensagem, tempoEspera);
+		setJanela(janelaMensagem);
+	}
+
+	public void acaoTimeOutMensagem()
+	{
+		mostraJanelaCadastraCenario();
 	}
 
 }

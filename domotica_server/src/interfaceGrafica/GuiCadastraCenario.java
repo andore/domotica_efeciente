@@ -348,7 +348,9 @@ public class GuiCadastraCenario extends JPanel
 		
 		btnCancelar = new JButton("CANCELAR");
 		btnCancelar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
+			public void actionPerformed(ActionEvent arg0)
+			{
+				listener.cancelar();
 			}
 		});
 		btnCancelar.setForeground(SystemColor.windowBorder);

@@ -5,6 +5,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
+import dao.DbException;
 import teste.TesteLog;
 
 public class ControleHbn {
@@ -12,10 +13,18 @@ public class ControleHbn {
 	final static Logger logger = Logger.getLogger(ControleHbn.class);
 	private Session s;
 	
-	public ControleHbn()
+	public ControleHbn() throws DbException
 	{
-		factory = new Configuration().configure().buildSessionFactory();
-		s = factory.openSession();
+		try
+		{
+			factory = new Configuration().configure().buildSessionFactory();
+			s = factory.openSession();
+		}
+		catch(Exception e)
+		{
+			throw new DbException ("Erro ao inserir no banco.",e.getMessage());
+		}
+		
 	}
 	
 	public Session getSession()

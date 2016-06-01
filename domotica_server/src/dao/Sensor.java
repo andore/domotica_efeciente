@@ -17,6 +17,9 @@ public class Sensor implements Serializable{
 	private int cod;
 	private String descricao;
 	
+	@Column(name="valor", columnDefinition="int default 0")
+	private int valor;
+	
 	@Column(columnDefinition = "int default 2")
 	private Status status;
 	
@@ -44,6 +47,13 @@ public class Sensor implements Serializable{
 	public void setStatus(Status status) {
 		this.status = status;
 	}
+	public int getValor() {
+		return valor;
+	}
+	public void setValor(int valor) {
+		this.valor = valor;
+	}
+	
 }	
 
 

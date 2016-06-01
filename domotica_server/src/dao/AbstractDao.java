@@ -14,10 +14,11 @@ public abstract class AbstractDao
 {
 	public final Session sessao;
 	final static Logger logger = Logger.getLogger(AbstractDao.class);
-	private static ControleHbn hbn = new ControleHbn();
+	private static ControleHbn hbn;
 	
-	public AbstractDao()
+	public AbstractDao() throws DbException
 	{
+		hbn = new ControleHbn();
 		this.sessao = hbn.getSession();
 	}
 	

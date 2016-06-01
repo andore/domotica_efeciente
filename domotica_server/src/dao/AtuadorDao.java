@@ -6,7 +6,7 @@ import common.Status;
 
 public class AtuadorDao extends AbstractDao {
 
-	public AtuadorDao() {
+	public AtuadorDao() throws DbException {
 		super();
 	}
 	

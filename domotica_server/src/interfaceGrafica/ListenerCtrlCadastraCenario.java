@@ -2,7 +2,7 @@ package interfaceGrafica;
 
 import dao.Cenario;
 
-public interface ListenerCadastraCenario
+public interface ListenerCtrlCadastraCenario
 {
 	public void cadastraCenarioCancelar();
 	public void cadastraCenarioSalvar(Cenario cenario);

@@ -10,17 +10,17 @@ import dao.Arduino;
 import dao.Atuador;
 import dao.Cenario;
 
-public class ControleGui implements ListenerGuiCadastraCenario
+public class ControleGuiCadastraCenario extends AbstractControleGui implements ListenerGuiCadastraCenario
 {
 	private GuiCadastraCenario janela;
 	private Cenario cenario;
 	private List <Arduino> arduinos;
 	private List <Atuador> lampadas;
 	public Arduino arduinoSelecionado;
-	private ListenerCadastraCenario listener;
-	final static Logger logger = Logger.getLogger(ControleGui.class);
+	private ListenerCtrlCadastraCenario listener;
+	final static Logger logger = Logger.getLogger(ControleGuiCadastraCenario.class);
 	
-	public ControleGui(ListenerCadastraCenario listener)
+	public ControleGuiCadastraCenario(ListenerCtrlCadastraCenario listener)
 	{
 		this.listener = listener;
 		janela = new GuiCadastraCenario(this);
@@ -286,8 +286,7 @@ public class ControleGui implements ListenerGuiCadastraCenario
 
 	public void cancelar()
 	{
-		// TODO Auto-generated method stub
-		
+		listener.cadastraCenarioCancelar();
 	}
 
 	public GuiCadastraCenario getJanela()

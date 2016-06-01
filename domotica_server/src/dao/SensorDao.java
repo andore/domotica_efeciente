@@ -6,7 +6,7 @@ import common.Status;
 
 public class SensorDao extends AbstractDao {
 
-	public SensorDao() {
+	public SensorDao() throws DbException {
 		super();
 	}
 	

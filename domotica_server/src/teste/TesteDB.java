@@ -29,7 +29,13 @@ public class TesteDB
 		sensor.setId(999);
 		sensores.add(sensor);
 		arduino.setSensores(sensores);
-		ArduinoDao perssist = new ArduinoDao();
+		ArduinoDao perssist = null;
+		try {
+			perssist = new ArduinoDao();
+		} catch (DbException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		
 		List<Atuador>  atuadores = new ArrayList<Atuador>();
 		Atuador atuador = new Atuador();
@@ -49,7 +55,13 @@ public class TesteDB
 	
 	public void TesteCarregaDados()
 	{
-		ArduinoDao dao = new ArduinoDao();
+		ArduinoDao dao = null;
+		try {
+			dao = new ArduinoDao();
+		} catch (DbException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		
 		try
 		{
