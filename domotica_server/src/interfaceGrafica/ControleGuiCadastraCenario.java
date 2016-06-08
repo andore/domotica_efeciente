@@ -29,6 +29,23 @@ public class ControleGuiCadastraCenario extends AbstractControleGui implements L
 		lampadas = new ArrayList<Atuador>();
 	}
 	
+	/*
+	public void carregaCenario(Cenario cen)
+	{
+		janela.aquecedor.setEnabled(b);
+		janela.arCond.setEnabled(b);
+		janela.ilum.setEnabled(enabled);
+		janela.janela.setEnabled(b);
+		janela.lampIndex.setEditable(aFlag);
+		janela.lampPorcent.setEnabled(enabled);
+		janela.lampSli.setEnabled(enabled);
+		janela.lampSta.setEnabled(b);
+		janela.perciana.setEnabled(b);
+		janela.temp.setEnabled(enabled);
+		janela.ventilador.setEnabled(b);
+		
+	}*/
+	
 	public void setDados(List <Arduino> arduinos)
 	{
 		this.arduinos = arduinos;
