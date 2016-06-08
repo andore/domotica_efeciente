@@ -12,15 +12,12 @@ public class SensorDao extends AbstractDao {
 	
 	public void insere(Sensor sensor) throws DbException
 	{
-		if(sensor != null)
-		{
-			if(sensor.getStatus()==null)
-			{
-				sensor.setStatus(Status.AUTO);
-			}
-			super.insert(sensor);
-		}
-		
+		super.insert(sensor);	
+	}
+	
+	public void update(Sensor sensor) throws DbException
+	{
+		super.update(sensor);
 	}
 
 }

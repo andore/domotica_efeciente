@@ -4,6 +4,6 @@ import dao.Cenario;
 
 public interface ListenerCtrlCadastraCenario
 {
-	public void cadastraCenarioCancelar();
-	public void cadastraCenarioSalvar(Cenario cenario);
+	public void acaoCadastraCenarioCancelar();
+	public void acaoCadastraCenarioSalvar(Cenario cenario);
 }

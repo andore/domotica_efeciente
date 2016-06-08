@@ -20,17 +20,17 @@ public class ControleGuiPrincipal extends AbstractControleGui implements Listene
 
 	public void acaoMonitoramento()
 	{
-		listener.acaoMonitoramento();
+		listener.acaoPrincipalMonitoramento();
 	}
 
 	public void acaoCadastraCenario()
 	{
-		listener.acaoCadastraCenario();
+		listener.acaoPrincipalCadastraCenario();
 	}
 
 	public void acaoUsuario()
 	{
-		listener.acaoUsuario();
+		listener.acaoPrincipalUsuario();
 	}
 
 }

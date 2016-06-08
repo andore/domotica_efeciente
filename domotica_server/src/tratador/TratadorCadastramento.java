@@ -1,21 +1,17 @@
 package tratador;
 
 import org.apache.log4j.Logger;
-import org.hibernate.Session;
 
 import common.Mensagem;
 import common.MensagemResp;
-import common.Status;
 import common.StrCadastraArduino;
 import common.StructException;
-import dao.AbstractDao;
 import dao.Arduino;
 import dao.ArduinoDao;
 import dao.DbException;
-import dao.Sensor;
-import hbn.ControleHbn;
 
-public class TratadorCadastramento 
+
+public class TratadorCadastramento extends AbstractTratador 
 {
 	final static Logger logger = Logger.getLogger(TratadorCadastramento.class);
 	private static final String SQL_STATE_UNIQUE_KEY = "23000";
@@ -47,6 +43,7 @@ public class TratadorCadastramento
 			arduino.setDescricao(cadastra.getDescricaoArduino());
 			arduino.setSensores(cadastra.getSensores());
 			arduino.setAtuadores(cadastra.getAtuadores());
+			arduino.setId_cenario_ativo(0);
 			
 			try
 			{

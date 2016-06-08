@@ -35,7 +35,7 @@ public class GuiMonitoracao extends JPanel
 	protected JTextField textField_2;
 	protected JTextField lampPorcent;
 	public final JSlider lampSli;
-	private ListenerGuiCadastraCenario listener;
+	private ListenerGuiMonitoracao listener;
 	protected JComboBox arCond;
 	protected JComboBox ventilador;
 	protected JComboBox aquecedor;
@@ -51,13 +51,14 @@ public class GuiMonitoracao extends JPanel
 	protected JComboBox perciana;
 	private JLabel lblTemperaturaAtual;
 	private JLabel lblIluminaoAtual;
-	private JTextField tempAtual;
-	private JTextField iluAtual;
+	protected JTextField tempAtual;
+	protected JTextField iluAtual;
+
 
 	/**
 	 * Create the panel.
 	 */
-	public GuiMonitoracao(final ListenerGuiCadastraCenario listener)
+	public GuiMonitoracao(final ListenerGuiMonitoracao listener)
 	{
 		this.listener = listener;
 		
@@ -291,7 +292,8 @@ public class GuiMonitoracao extends JPanel
 		
 		btnSair = new JButton("SAIR");
 		btnSair.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
+			public void actionPerformed(ActionEvent arg0){
+				listener.cancelar();
 			}
 		});
 		btnSair.setForeground(SystemColor.windowBorder);
@@ -471,6 +473,5 @@ public class GuiMonitoracao extends JPanel
 		label_4.setFont(new Font("Calibri", Font.BOLD, 18));
 		label_4.setBounds(349, 153, 18, 23);
 		add(label_4);
-
 	}
 }

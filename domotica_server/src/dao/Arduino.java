@@ -22,6 +22,8 @@ public class Arduino  implements Serializable{
 	private String ip;
 	private int qtd_sensor;
 	private int qtd_atuador;
+	private int id_cenario_ativo;
+	
 	
 	@OneToMany (cascade=CascadeType.ALL, fetch=FetchType.EAGER)
 	@JoinColumn (name="id_arduino")
@@ -73,5 +75,13 @@ public class Arduino  implements Serializable{
 	public void setAtuadores(List<Atuador> atuadores) {
 		this.atuadores = atuadores;
 	}
+	public int getId_cenario_ativo() {
+		return id_cenario_ativo;
+	}
+	public void setId_cenario_ativo(int id_cenario_ativo) {
+		this.id_cenario_ativo = id_cenario_ativo;
+	}
+	
+	
 
 }

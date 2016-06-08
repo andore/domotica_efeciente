@@ -12,15 +12,11 @@ public class AtuadorDao extends AbstractDao {
 	
 	public void insere(Atuador atuador) throws DbException
 	{
-		if(atuador != null)
-		{
-			if(atuador.getStatus()==null)
-			{
-				atuador.setStatus(Status.AUTO);
-			}
-			super.insert(atuador);
-		}
-		
+		super.insert(atuador);	
 	}
-
+	
+	public void update(Atuador atuador) throws DbException
+	{
+		super.update(atuador);	
+	}
 }

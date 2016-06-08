@@ -8,8 +8,10 @@ import hbn.ControleHbn;
 import interfaceGrafica.AbstractControleGui;
 import interfaceGrafica.ControleGuiCadastraCenario;
 import interfaceGrafica.ControleGuiMensagem;
+import interfaceGrafica.ControleGuiMonitoracao;
 import interfaceGrafica.ControleGuiPrincipal;
 import interfaceGrafica.ListenerCtrlCadastraCenario;
+import interfaceGrafica.ListenerCtrlCadastraMonitoracao;
 import interfaceGrafica.ListenerCtrlGuiMensagem;
 import interfaceGrafica.ListenerCtrlGuiPrincipal;
 import interfaceGrafica.ListenerGuiMensagem;
@@ -28,15 +30,18 @@ import dao.DbException;
 import net.NetListener;
 import net.NetService;
 
-public class ControleServer implements NetListener, ListenerCtrlCadastraCenario, ListenerCtrlGuiPrincipal, ListenerCtrlGuiMensagem {
+public class ControleServer implements NetListener, ListenerCtrlCadastraCenario, ListenerCtrlGuiPrincipal, ListenerCtrlGuiMensagem, ListenerCtrlCadastraMonitoracao {
 	
 	private NetService net;
 	private RoteadorOperacao roteador;
-	private ControleGuiCadastraCenario guiteste;
+	private ControleGuiCadastraCenario janelaCadastraCenario;
 	private ControleGuiPrincipal janelaPrincipal;
+	private ControleGuiMonitoracao janelaMonitoracao;
+	private int janelaProx;
 	final static Logger logger = Logger.getLogger(ControleServer.class);
 	final static int TEMPO_ESPERA_TELA_MESAGEM = 1000;
 	JFrame j;
+	
 	
 	public ControleServer()
 	{
@@ -84,13 +89,13 @@ public class ControleServer implements NetListener, ListenerCtrlCadastraCenario,
 	
 	public void mostraJanelaCadastraCenario()
 	{
-		guiteste = new ControleGuiCadastraCenario(this);
+		janelaCadastraCenario = new ControleGuiCadastraCenario(this);
 		
 		try
 		{
 			ArduinoDao ardDao = new ArduinoDao();
-			setJanela(guiteste);
-			guiteste.setDados(ardDao.loadArduino());
+			setJanela(janelaCadastraCenario);
+			janelaCadastraCenario.setDados(ardDao.loadArduino());
 			//db.getSession().close();
 			
 		}
@@ -105,6 +110,7 @@ public class ControleServer implements NetListener, ListenerCtrlCadastraCenario,
 	public void setJanela(AbstractControleGui gui)
 	{
 		logger.debug("Setando Janela: " + gui.getJanela().getClass().getSimpleName());
+
 		int posXAnt = 0;
 		int posYAnt = 0;
 		
@@ -122,19 +128,18 @@ public class ControleServer implements NetListener, ListenerCtrlCadastraCenario,
 		j.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 
-	public void cadastraCenarioCancelar()
+	public void acaoCadastraCenarioCancelar()
 	{
 		mostraJanelaPrincipal();
 	}
 
-	public void cadastraCenarioSalvar(Cenario cenario)
+	public void acaoCadastraCenarioSalvar(Cenario cenario)
 	{	
 		CenarioDao cenDao;
 		
 		try
 		{
 			cenDao = new CenarioDao();
-			cenDao.sessao.clear();
 			cenDao.insere(cenario);
 			JOptionPane.showMessageDialog(null,"Cenário salvado com sucesso!","SALVAR", JOptionPane.INFORMATION_MESSAGE);
 		} 
@@ -142,6 +147,10 @@ public class ControleServer implements NetListener, ListenerCtrlCadastraCenario,
 		{
 			JOptionPane.showMessageDialog(null,"Erro ao salvar cenário, tente novamente.","ERRO", JOptionPane.ERROR_MESSAGE);
 			logger.error("Erro ao gravar cenário no banco!", e);
+		}
+		finally 
+		{
+			mostraJanelaPrincipal();
 		}
 	}
 	
@@ -151,17 +160,20 @@ public class ControleServer implements NetListener, ListenerCtrlCadastraCenario,
 		setJanela(janelaPrincipal);
 	}
 
-	public void acaoMonitoramento()
+	public void acaoPrincipalMonitoramento()
 	{
+		janelaProx = 1;
+		mostraJanelaMensagem("<HTML><center>Aguarde...<BR>Consultando Banco de Dados",TEMPO_ESPERA_TELA_MESAGEM);
 		
 	}
 
-	public void acaoCadastraCenario()
+	public void acaoPrincipalCadastraCenario()
 	{
+		janelaProx = 2;
 		mostraJanelaMensagem("<HTML><center>Aguarde...<BR>Consultando Banco de Dados",TEMPO_ESPERA_TELA_MESAGEM);
 	}
 
-	public void acaoUsuario() {
+	public void acaoPrincipalUsuario() {
 		// TODO Auto-generated method stub
 		
 	}
@@ -174,7 +186,45 @@ public class ControleServer implements NetListener, ListenerCtrlCadastraCenario,
 
 	public void acaoTimeOutMensagem()
 	{
-		mostraJanelaCadastraCenario();
+		if(janelaProx == 1)
+		{
+			mostraJanelaMonitoracao();
+		}
+		else if (janelaProx == 2)
+		{
+			mostraJanelaCadastraCenario();
+		}
+		else
+		{
+			mostraJanelaPrincipal();
+		}
+	}
+	
+	public void mostraJanelaMonitoracao()
+	{
+		try
+		{
+			janelaMonitoracao = new ControleGuiMonitoracao(this);
+			ArduinoDao ardDao = new ArduinoDao();
+			janelaMonitoracao.setDados(ardDao.loadArduino());			
+			setJanela(janelaMonitoracao);
+		} 
+		catch (DbException e)
+		{
+			logger.error("ERRO ao popular janela Monitoracao", e);
+			JOptionPane.showMessageDialog(null,"Opa, tem alguma coisa errada =(\nFalha ao consultar banco de dados.","Ocorreu um Erro =(",JOptionPane.ERROR_MESSAGE);
+			mostraJanelaPrincipal();
+		}
+	}
+
+	public void acaoMonitoracaoCancelar()
+	{
+		mostraJanelaPrincipal();
+	}
+
+	public void acaoMonitoracaoCenarioSalvar(Cenario cenario)
+	{
+		
 	}
 
 }

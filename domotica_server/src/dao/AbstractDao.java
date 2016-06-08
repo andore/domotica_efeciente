@@ -45,9 +45,32 @@ public abstract class AbstractDao
 		
 	}
 	
+	protected void update(Object obj) throws DbException
+	{
+		
+		try
+		{
+			Transaction trans = this.hbn.getSession().beginTransaction();
+			this.hbn.getSession().update(obj);
+			
+			logger.debug("Atualizando registro no banco:" + obj.toString());
+			trans.commit();
+			
+		}
+		catch(ConstraintViolationException e)
+		{
+			throw new DbException ("Erro ao tentar atualizar registro no banco.",e.getMessage(), e.getSQLState());
+		}
+		catch(Exception e)
+		{
+			throw new DbException ("Erro ao tentar atualizar registro no banco.",e.getMessage());
+		}
+		
+	}
+	
 
 	@SuppressWarnings("rawtypes")
-	protected List load(String nomeCalsse) throws DbException
+	public List load(String nomeCalsse) throws DbException
 	{
 		try
 		{

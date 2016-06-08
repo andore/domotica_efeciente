@@ -25,7 +25,7 @@ public class Cenario
 	            allocationSize=1
 	)	
 	@Id
-	@GeneratedValue(strategy = GenerationType.TABLE, generator="CENARIO_GENERATOR")
+	@GeneratedValue(strategy = GenerationType.AUTO, generator="CENARIO_GENERATOR")
 	private int id_cenario;
 	
 	private int id_arduino;
@@ -33,9 +33,10 @@ public class Cenario
 	private double valor_temperatura;
 	private double valor_iluminacao;
 	private boolean privado;
+	private int id_usuario;
 	
-	//@OneToMany (cascade=CascadeType.ALL, fetch=FetchType.EAGER)
-	//private List <Sensor>sensores;
+	@OneToMany (cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+	private List <Sensor>sensores;
 	
 	@OneToMany (cascade=CascadeType.ALL, fetch=FetchType.EAGER)
 	private List <Atuador>atuadores;
@@ -76,17 +77,22 @@ public class Cenario
 	public void setPrivado(boolean privado) {
 		this.privado = privado;
 	}
-	//public List<Sensor> getSensores() {
-	//	return sensores;
-	//}
-	//public void setSensores(List<Sensor> sensores) {
-	//	this.sensores = sensores;
-//	}
+	public List<Sensor> getSensores() {
+		return sensores;
+	}
+	public void setSensores(List<Sensor> sensores) {
+		this.sensores = sensores;
+	}
 	public List<Atuador> getAtuadores() {
 		return atuadores;
 	}
 	public void setAtuadores(List<Atuador> atuadores) {
 		this.atuadores = atuadores;
 	}
-	
+	public int getId_usuario() {
+		return id_usuario;
+	}
+	public void setId_usuario(int id_usuario) {
+		this.id_usuario = id_usuario;
+	}
 }

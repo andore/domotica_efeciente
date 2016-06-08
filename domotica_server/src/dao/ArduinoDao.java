@@ -20,6 +20,15 @@ public class ArduinoDao extends AbstractDao
 		
 	}
 	
+	public void update(Arduino arduino) throws DbException
+	{
+		if(arduino != null)
+		{
+			super.update(arduino);
+		}
+		
+	}
+	
 	@SuppressWarnings("unchecked")
 	public List<Arduino> loadArduino() throws DbException
 	{

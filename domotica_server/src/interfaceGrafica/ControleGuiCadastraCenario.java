@@ -64,9 +64,9 @@ public class ControleGuiCadastraCenario extends AbstractControleGui implements L
 			List<Atuador> atuadores = arduino.getAtuadores();
 			for(Atuador atuador: atuadores)
 			{
-				if(atuador.getStatus()==null)
+				//if(atuador.getStatus()==null)
 				{
-					atuador.setStatus(Status.AUTO);
+					//atuador.setStatus(Status.AUTO);
 				}
 				switch(atuador.getCod())
 				{
@@ -197,7 +197,7 @@ public class ControleGuiCadastraCenario extends AbstractControleGui implements L
 		{
 			if(a.getCod()==CodAtuador.AR_CONDICIONADO)
 			{
-				a.setStatus(s);
+				//a.setStatus(s);
 			}
 		}
 		
@@ -209,7 +209,7 @@ public class ControleGuiCadastraCenario extends AbstractControleGui implements L
 		{
 			if(a.getCod()==CodAtuador.VENTILADOR)
 			{
-				a.setStatus(s);
+				//a.setStatus(s);
 			}
 		}
 	}
@@ -220,7 +220,7 @@ public class ControleGuiCadastraCenario extends AbstractControleGui implements L
 		{
 			if(a.getCod()==CodAtuador.AQUECEDOR)
 			{
-				a.setStatus(s);
+				//a.setStatus(s);
 			}
 		}
 		
@@ -229,7 +229,7 @@ public class ControleGuiCadastraCenario extends AbstractControleGui implements L
 	public void setLampada(int index, Status s, int value)
 	{
 		
-		lampadas.get(index).setStatus(s);
+		//lampadas.get(index).setStatus(s);
 		if(lampadas.get(index).getCod() == CodAtuador.LAMPADA_DIMERIZAVEL)
 		{
 			janela.lampSli.setEnabled(true);
@@ -249,7 +249,7 @@ public class ControleGuiCadastraCenario extends AbstractControleGui implements L
 		{
 			if(a.getCod()==CodAtuador.JANELA)
 			{
-				a.setStatus(s);
+				//a.setStatus(s);
 			}
 		}
 		
@@ -261,7 +261,7 @@ public class ControleGuiCadastraCenario extends AbstractControleGui implements L
 		{
 			if(a.getCod()==CodAtuador.PERCIANA)
 			{
-				a.setStatus(s);
+				//a.setStatus(s);
 			}
 		}
 		
@@ -281,12 +281,12 @@ public class ControleGuiCadastraCenario extends AbstractControleGui implements L
 		cenario.setValor_temperatura(janela.temp.getValue());
 		cenario.setPrivado(janela.usuario.getSelectedIndex()==1);
 		cenario.setAtuadores(arduinoSelecionado.getAtuadores());
-		listener.cadastraCenarioSalvar(cenario);
+		listener.acaoCadastraCenarioSalvar(cenario);
 	}
 
 	public void cancelar()
 	{
-		listener.cadastraCenarioCancelar();
+		listener.acaoCadastraCenarioCancelar();
 	}
 
 	public GuiCadastraCenario getJanela()

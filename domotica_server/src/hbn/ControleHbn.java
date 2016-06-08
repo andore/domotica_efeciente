@@ -22,7 +22,7 @@ public class ControleHbn {
 		}
 		catch(Exception e)
 		{
-			throw new DbException ("Erro ao inserir no banco.",e.getMessage());
+			throw new DbException ("Erro ao consultar banco.",e.getMessage());
 		}
 		
 	}
