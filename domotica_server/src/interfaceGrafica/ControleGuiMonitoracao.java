@@ -38,7 +38,23 @@ public class ControleGuiMonitoracao extends AbstractControleGui implements Liste
 		this.listener = listener;
 		janela = new GuiMonitoracao(this);
 		lampadas = new ArrayList<Atuador>();
-		cenarioPadrao = new CenarioDao().loadCenario().get(0);
+		
+		CenarioDao cenarioDao = new CenarioDao();
+		
+		if(cenarioDao.loadCenario()!= null && !cenarioDao.loadCenario().isEmpty() )
+		{
+			cenarioPadrao = new CenarioDao().loadCenario().get(0);
+		}	
+		else
+		{
+			cenarioPadrao = new Cenario();
+			cenarioPadrao.setId_arduino(0);
+			cenarioPadrao.setNome_cenario("Cenario Padrao");
+			cenarioPadrao.setValor_iluminacao(100);
+			cenarioPadrao.setValor_temperatura(24);
+			cenarioDao.insere(cenarioPadrao);
+		}
+		
 		atuailza = true;
 		atualizaMonitoramento = new AtualizaJanelaMonitoracao();
 		atualizaMonitoramento.run();

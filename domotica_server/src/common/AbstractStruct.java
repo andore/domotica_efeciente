@@ -42,7 +42,7 @@ public abstract class AbstractStruct
 		{
 			buf = in.substring(pos, pos + length);
 			pos+=length;
-			return Integer.parseInt(buf);
+			return Integer.parseInt(buf.trim());
 		}
 		catch(Exception e)
 		{

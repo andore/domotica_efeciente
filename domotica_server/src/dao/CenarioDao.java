@@ -23,9 +23,16 @@ public class CenarioDao extends AbstractDao {
 	
 	private int getNextId()
 	{
-		String sql = "SELECT ID_CENARIO FROM " + Cenario.class.getSimpleName();
-		SQLQuery query = super.sessao.createSQLQuery(sql);
-		return Integer.parseInt(query.list().get(query.list().size()-1).toString()) +1;	
+		try
+		{
+			String sql = "SELECT ID_CENARIO FROM " + Cenario.class.getSimpleName();
+			SQLQuery query = super.sessao.createSQLQuery(sql);
+			return Integer.parseInt(query.list().get(query.list().size()-1).toString()) +1;
+		}
+		catch(Exception e)
+		{
+			return 0;
+		}	
 	}
 	
 	private void insere_tabela_cenario(Cenario cenario) throws DbException
