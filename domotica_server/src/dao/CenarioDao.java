@@ -55,6 +55,27 @@ public class CenarioDao extends AbstractDao {
 		tx.commit();
 	}
 	
+	private void insereSensorStatus(Cenario cenario)
+	{
+		Transaction tx = sessao.beginTransaction();
+		
+		
+		
+		for(Atuador s:cenario.getAtuadores())
+		{
+			String sql = "INSERT INTO " + "cenario_atuador" + 
+			         " VALUES (:id_cenario,:id_atuador,:sta_atuador) ";
+			
+			SQLQuery query = super.sessao.createSQLQuery(sql);
+			query.setParameter("id_cenario", cenario.getId_cenario());
+			query.setParameter("id_atuador", s.getId());
+			//query.setParameter("sta_atuador", s.get);
+			
+			logger.info("Linhas afetadas: " + query.executeUpdate());
+		}
+		tx.commit();
+	}
+	
 	@SuppressWarnings("unchecked")
 	public List<Cenario> loadCenario() throws DbException
 	{

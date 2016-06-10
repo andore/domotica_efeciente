@@ -32,7 +32,8 @@ public class ControleHbn {
 		else if(!s.isOpen())
 		{
 			logger.debug("Abrindo Sessão no Banco.");
-			factory = new Configuration().configure().buildSessionFactory();
+			if(factory == null)
+				factory = new Configuration().configure().buildSessionFactory();
 			s.clear();
 			s = factory.openSession();
 		}
