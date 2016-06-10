@@ -9,21 +9,12 @@ import dao.DbException;
 import teste.TesteLog;
 
 public class ControleHbn {
-	private final SessionFactory factory;
+	private static SessionFactory factory;
 	final static Logger logger = Logger.getLogger(ControleHbn.class);
 	private Session s;
 	
 	public ControleHbn() throws DbException
 	{
-		try
-		{
-			factory = new Configuration().configure().buildSessionFactory();
-			s = factory.openSession();
-		}
-		catch(Exception e)
-		{
-			throw new DbException ("Erro ao consultar banco.",e.getMessage());
-		}
 		
 	}
 	
@@ -31,14 +22,21 @@ public class ControleHbn {
 	{		
 		if(s==null)
 		{
+			logger.debug("Abrindo Sessão no Banco.");
+			if(factory == null)
+			{
+				factory = new Configuration().configure().buildSessionFactory();
+			}
 			s = factory.openSession();
 		}
 		else if(!s.isOpen())
 		{
+			logger.debug("Abrindo Sessão no Banco.");
+			factory = new Configuration().configure().buildSessionFactory();
 			s.clear();
 			s = factory.openSession();
 		}
-		logger.debug("Abrindo Sessão no Banco.");
+		
 		return s;
 	}
 	

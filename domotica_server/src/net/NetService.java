@@ -1,5 +1,7 @@
 package net;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.net.DatagramPacket;
@@ -8,66 +10,112 @@ import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketException;
+import java.net.UnknownHostException;
 import java.util.Scanner;
+
+import javax.swing.Timer;
 
 import org.apache.log4j.Logger;
 
 import main.RoteadorOperacao;
+import common.CodigoSensores;
 import common.Mensagem;
 import common.MensagemException;
 import common.MensagemResp;
+import dao.Arduino;
+import dao.ArduinoDao;
+import dao.DbException;
+import dao.Sensor;
 
 public class NetService extends Thread  
 {
-	final static Logger logger = Logger.getLogger(NetService.class);
-	private DatagramSocket serverSocket;
-	private DatagramPacket pacoteRecebido;
-	private byte[] dados; 
+	final static Logger logger = Logger.getLogger(NetService.class); 
 	private NetListener listener;
 	private int porta = 9991;
 	private Scanner s = null;
 	private PrintStream p = null;
+	private ServerSocket servidor = null;
+	private Socket cliente = null;
+	private int tempoEspera;
+	private Timer time;
+	private boolean timeOut;
+	
 	
 	public NetService (NetListener listener)
 	{
 		logger.debug("Iniciando Serviço de Comunicação.");
+		timeOut = false;
+		tempoEspera = 10000;
 		this.listener = listener;
+		try 
+		{
+			servidor = new ServerSocket(porta);
+		} 
+		catch (IOException e)
+		{
+			logger.debug("ERRO ao abrir socket.");
+		}
+		
 	}
 	
 	
 	private void tcpService()
 	{
-		ServerSocket servidor = null;
-		Socket cliente = null;
 		String msgStr;
 		
 		try 
 		{
-			servidor = new ServerSocket(porta);
+			if(servidor == null || servidor.isClosed())
+			{
+				logger.debug("Recuperando conexao...");
+				servidor = new ServerSocket(porta);
+			}
+			timeOut = false;
+			
 			logger.debug("Aguardando conexao");
 			cliente = servidor.accept();
 			logger.debug("Conectado com:" + cliente.getInetAddress().getHostAddress());
+			
+			timeOut();
+			
 			cliente.getInetAddress().getHostAddress();
 			s = new Scanner(cliente.getInputStream());
 			p = new PrintStream(cliente.getOutputStream());
 		    
-			while (s.hasNextLine()) 
+			while (s.hasNextLine() && !timeOut) 
 		    {
-		    	msgStr = s.nextLine();		    	
+				time.restart();
+				msgStr = s.nextLine();		    	
 		    	logger.debug("Mensagem recebida de " + cliente.getInetAddress().getHostAddress() + " :[" + msgStr + "]");
 		    	
-		    	Mensagem msg = new Mensagem(msgStr, cliente.getInetAddress().getHostAddress());
-		    	logger.debug("\n"
-						+"idArduino:[" + msg.getIdArduino() + "]\n"
-						+ "operacao:[" + msg.getOperacao() + "]\n"
-						+ "mensagem:[" + msg.getMensagem() + "]\n"
-				);
-		    	listener.netRecebe(msg);
-		       //logger.info(s.nextLine());
-		       //p.println("Surdo eh a voh =P");
-		       //logger.debug("Enviado");
+		    	if(msgStr.contains("GET / HTTP/1.1"))
+				{
+		    		logger.info("Requisicao HTML");
+				}
+		    	else if(msgStr.equals(""))
+		    	{
+		    		listener.netRecebe(msgStr);
+					p.close();
+					break;
+		    	}
+		    	else if(!msgStr.contains("00"))
+		    	{
+		    		
+		    	}
+				else
+				{
+					logger.info("Requisicao ARDUINO");
+					
+					Mensagem msg = new Mensagem(msgStr, cliente.getInetAddress().getHostAddress());
+			    	logger.debug("\n"
+							+"idArduino:[" + msg.getIdArduino() + "]\n"
+							+ "operacao:[" + msg.getOperacao() + "]\n"
+							+ "mensagem:[" + msg.getMensagem() + "]\n"
+					);
+					listener.netRecebe(msg);
+				}
 		    }
-		} 
+		}
 		catch (IOException e)
 		{
 			logger.error("Erro Socket TCP", e);
@@ -79,24 +127,34 @@ public class NetService extends Thread
 			resp.setOperacao(0);
 			resp.setIp(cliente.getInetAddress().getHostAddress());
 			resp.setMensagem("001");
+			
 			p.println(resp.getMensagem());
 			logger.error("Erro ao provessar mensagem:", e);
-			//envia(resp);
-		}
-		finally
-		{
+			
 			logger.debug("Fechando Socket");
+			s.reset();
 			s.close();
 		    try 
 		    {
 				servidor.close();
 				cliente.close();
 			} 
-		    catch (IOException e)
+		    catch (IOException x)
 		    {
-			
-				e.printStackTrace();
+				x.printStackTrace();
 			}    
+		}
+		finally
+		{
+			try
+			{
+				time.stop();
+			}
+			catch(Exception e)
+			{
+				logger.debug("Erro timeout");
+			}
+			
 		}
 	}
 	
@@ -112,61 +170,14 @@ public class NetService extends Thread
 		while(true)
 		{
 			tcpService();
-			
-			/*
-			try 
+			try
 			{
-				serverSocket = new DatagramSocket(porta);
-				dados = new byte[1024];
-				pacoteRecebido = new DatagramPacket(dados, dados.length);
-				serverSocket.receive(pacoteRecebido);
-				//serverSocket.close();
-				logger.debug("Mensagem recebida de " + pacoteRecebido.getAddress().toString().substring(1) + " :[" + new String(pacoteRecebido.getData())+"]");
-				Mensagem msg = new Mensagem(new String(pacoteRecebido.getData()), pacoteRecebido.getAddress().toString().substring(1));
-				
-				logger.debug("\n"
-						+"idArduino:[" + msg.getIdArduino() + "]\n"
-						+ "operacao:[" + msg.getOperacao() + "]\n"
-						+ "mensagem:[" + msg.getMensagem() + "]\n"
-				);
-				
-				listener.netRecebe(msg);
-				
-			} 
-			catch (MensagemException e)
+				Thread.sleep(1000);
+			}
+			catch (InterruptedException e)
 			{
-				while(true)
-				{
-					try {
-						Thread.sleep(5000);
-					} catch (InterruptedException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-					MensagemResp resp =  null;
-					resp = new MensagemResp();
-					resp.setOperacao(0);
-					resp.setIp("192.168.10.59");
-					resp.setMensagem(" OlA Mundo");
-					//logger.error("Erro ao provessar mensagem:", e);
-					envia(resp);
-				}
-				
-				
 				
 			}
-			catch (SocketException e) 
-			{		
-				logger.error(e);
-			} 
-			catch (IOException e) 
-			{
-				logger.error(e);
-			}
-			finally
-			{
-				serverSocket.close();
-			}*/
 		}
 		
 	}
@@ -174,8 +185,25 @@ public class NetService extends Thread
 	public void envia(MensagemResp resp)
 	{
 		p.println(resp.getMensagem());
-		logger.debug("Enviando mensagem para " + resp.getIp() + ":[" + resp.getMensagem() + "]");
+		logger.debug("Enviando mensagem para " + resp.getIp() + ":[" + resp.getMensagem() + "]");	
 	}
 	
+	public void timeOut()
+	{
+		ActionListener taskPerformer = new ActionListener()
+		{
+			public void actionPerformed(ActionEvent evt)
+			{
+				logger.warn("Time-Out na Conexao");
+				logger.debug("Encerrando Conexao com cliente:" + cliente.getInetAddress());
+				
+				s.reset();
+				p.close();
+				timeOut = true;
+			}
+		};
+		time = new Timer(tempoEspera, taskPerformer);
+		time.start();	
+	}
 	
 }

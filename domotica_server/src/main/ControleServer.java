@@ -84,7 +84,38 @@ public class ControleServer implements NetListener, ListenerCtrlCadastraCenario,
 				net.envia(resp);
 			}
 		}
-
+	}
+	
+	public void netRecebe(String msg)
+	{
+		MensagemResp resp =  null;
+		try 
+		{
+			resp = roteador.getOperacao(msg);
+		} 
+		catch (StructException e) 
+		{
+			resp = new MensagemResp();
+			resp.setOperacao(0);
+			resp.setIp("");
+			resp.setMensagem("<HTML><font size=\"5\">Ops, ocorreu uma falha -_-' <BR>Detalhes:<i> " + e.getMessage());
+			logger.error("Erro ao processar mensagem:", e);
+		} 
+		catch (DbException e)
+		{
+			resp = new MensagemResp();
+			resp.setOperacao(0);
+			resp.setIp("");
+			resp.setMensagem("<HTML><font size=\"5\">Ops, tem algo errado que não está certo -_-' <BR>Detalhes:<i> " + e.getMessage());
+			logger.error("Erro ao processar mensagem:", e);
+		}
+		finally
+		{
+			if(resp != null)
+			{
+				net.envia(resp);
+			}
+		}
 	}
 	
 	public void mostraJanelaCadastraCenario()
@@ -226,5 +257,4 @@ public class ControleServer implements NetListener, ListenerCtrlCadastraCenario,
 	{
 		
 	}
-
 }

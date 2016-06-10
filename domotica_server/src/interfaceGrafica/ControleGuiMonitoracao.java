@@ -30,6 +30,7 @@ public class ControleGuiMonitoracao extends AbstractControleGui implements Liste
 	private Cenario cenarioPadrao;
 	private AtualizaJanelaMonitoracao atualizaMonitoramento;
 	boolean atuailza;
+	boolean primeiraVez;
 	
 	private ListenerCtrlCadastraMonitoracao listener;
 	
@@ -38,6 +39,7 @@ public class ControleGuiMonitoracao extends AbstractControleGui implements Liste
 		this.listener = listener;
 		janela = new GuiMonitoracao(this);
 		lampadas = new ArrayList<Atuador>();
+		primeiraVez = true;
 		
 		CenarioDao cenarioDao = new CenarioDao();
 		
@@ -78,24 +80,32 @@ public class ControleGuiMonitoracao extends AbstractControleGui implements Liste
 	
 	public void setDados(List <Arduino> arduinos)
 	{
+		
 		this.arduinos = arduinos;
 		
 		if(arduinos!=null && arduinos.size()>0)
 		{
-			
-			habilitaDesabilitaCampo(janela.comodo, true);
-			
-			if(!janela.comodo.hasFocus())
+			if(primeiraVez)
 			{
+				primeiraVez = false;
+				habilitaDesabilitaCampo(janela.comodo, true);
 				janela.comodo.setModel(new DefaultComboBoxModel(getDescriArduino(arduinos)));
+				setDispositivos(this.arduinos.get(0));
+				setLampadas(this.lampadas);
+				
+				habilitaDesabilitaCampo(janela.temp, true);
+				habilitaDesabilitaCampo(janela.ilum, true);
 			}
 				
-			setDispositivos(this.arduinos.get(0));
-			setLampadas(this.lampadas);
 			
-			habilitaDesabilitaCampo(janela.temp, true);
-			habilitaDesabilitaCampo(janela.ilum, true);
-	
+			for(Arduino a: arduinos)
+			{
+				if(a.getId() == arduinoSelecionado.getId())
+				{
+					arduinoSelecionado = a;
+				}
+			}
+			
 			janela.tempAtual.setText(buscaValorSensor(this.arduinoSelecionado, CodigoSensores.TEMPERATURA));
 			janela.iluAtual.setText(buscaValorSensor(this.arduinoSelecionado, CodigoSensores.LUZ));
 		}
@@ -258,6 +268,10 @@ public class ControleGuiMonitoracao extends AbstractControleGui implements Liste
 		//cenario.setId_arduino(arduinoSelecionado.getId());
 		setDispositivos(this.arduinos.get(index));
 		setLampadas(lampadas);
+		
+		janela.tempAtual.setText(buscaValorSensor(this.arduinoSelecionado, CodigoSensores.TEMPERATURA));
+		janela.iluAtual.setText(buscaValorSensor(this.arduinoSelecionado, CodigoSensores.LUZ));
+		
 	}
 
 	public void setNomeCenario(String nomeCenario)
@@ -384,7 +398,7 @@ public class ControleGuiMonitoracao extends AbstractControleGui implements Liste
 		
 		public AtualizaJanelaMonitoracao()
 		{
-			tempoEspera = 10000;
+			tempoEspera = 3000;
 		}
 		
 		public void run()
@@ -396,6 +410,10 @@ public class ControleGuiMonitoracao extends AbstractControleGui implements Liste
 			        	try 
 			        	{
 			        		atualiza();
+			        		if(!atuailza)
+							 {
+								 time.stop();
+							 }
 						} 
 			        	catch (DbException e)
 			        	{
@@ -404,7 +422,11 @@ public class ControleGuiMonitoracao extends AbstractControleGui implements Liste
 			        }
 				 };
 				 time = new Timer(tempoEspera, taskPerformer);
-				 time.start();	
+				 time.start();
+				 if(!atuailza)
+				 {
+					 time.stop();
+				 }
 		}
 		
 		//public void setClasseGui(ControleGuiMonitoracao gui)

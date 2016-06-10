@@ -5,6 +5,7 @@ import org.hibernate.Session;
 
 import tratador.TratadorCadastramento;
 import tratador.TratadorMonitoramento;
+import tratador.TratadorMonitoramentoHtml;
 import common.Mensagem;
 import common.MensagemResp;
 import common.StructException;
@@ -14,6 +15,7 @@ public class RoteadorOperacao
 {
 	private TratadorCadastramento cadastra;
 	private TratadorMonitoramento monitora;
+	private TratadorMonitoramentoHtml monitoraHtml;
 	final static Logger logger = Logger.getLogger(RoteadorOperacao.class);
 	
 	
@@ -21,6 +23,7 @@ public class RoteadorOperacao
 	{
 		cadastra = new TratadorCadastramento();
 		monitora = new TratadorMonitoramento();
+		monitoraHtml = new TratadorMonitoramentoHtml();
 		
 	}
 	
@@ -47,6 +50,21 @@ public class RoteadorOperacao
 					break;
 			}
 			
+		}
+		else
+		{
+			logger.info("Mensagem vazia!");
+		}
+		return resp;
+	}
+	
+	public MensagemResp getOperacao(String msg) throws StructException, DbException
+	{
+		
+		MensagemResp resp = null;
+		if(msg != null)
+		{
+			resp = monitoraHtml.processa(new Mensagem());
 		}
 		else
 		{
