@@ -17,6 +17,7 @@ public class RoteadorOperacao
 	private TratadorMonitoramento monitora;
 	private TratadorMonitoramentoHtml monitoraHtml;
 	final static Logger logger = Logger.getLogger(RoteadorOperacao.class);
+	private final int delay = 2000;
 	
 	
 	public RoteadorOperacao()
@@ -37,7 +38,17 @@ public class RoteadorOperacao
 			{
 				case 1:
 					logger.debug("Roteando mensagem para Tratador Cadastro");
+					try 
+					{
+						logger.debug("Espera de " + delay/1000 + "s");
+						Thread.sleep(delay);
+					} 
+					catch (InterruptedException e)
+					{
+					
+					}
 					resp = cadastra.processa(msg);
+					resp.setMensagem("+" + resp.getMensagem());
 					break;
 					
 				case 2:

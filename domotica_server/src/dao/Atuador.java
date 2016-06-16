@@ -16,6 +16,7 @@ public class Atuador implements Serializable{
 	private int id_Atuador;
 	private int cod;
 	private String descricao;
+	private int status;
 		
 	public int getId() {
 		return id_Atuador;
@@ -34,5 +35,12 @@ public class Atuador implements Serializable{
 	}
 	public void setDescricao(String descicao) {
 		this.descricao = descicao;
-	}	
+	}
+	public int getStatus() {
+		return status;
+	}
+	public void setStatus(int status) {
+		this.status = status;
+	}
+	
 }

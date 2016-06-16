@@ -81,9 +81,9 @@ public class ControleGuiCadastraCenario extends AbstractControleGui implements L
 			List<Atuador> atuadores = arduino.getAtuadores();
 			for(Atuador atuador: atuadores)
 			{
-				//if(atuador.getStatus()==null)
+				if(atuador.getStatus()==0)
 				{
-					//atuador.setStatus(Status.AUTO);
+					atuador.setStatus(Status.AUTO_);
 				}
 				switch(atuador.getCod())
 				{
@@ -214,7 +214,7 @@ public class ControleGuiCadastraCenario extends AbstractControleGui implements L
 		{
 			if(a.getCod()==CodAtuador.AR_CONDICIONADO)
 			{
-				//a.setStatus(s);
+				a.setStatus(s.ordinal());
 			}
 		}
 		
@@ -226,7 +226,7 @@ public class ControleGuiCadastraCenario extends AbstractControleGui implements L
 		{
 			if(a.getCod()==CodAtuador.VENTILADOR)
 			{
-				//a.setStatus(s);
+				a.setStatus(s.ordinal());
 			}
 		}
 	}
@@ -237,7 +237,7 @@ public class ControleGuiCadastraCenario extends AbstractControleGui implements L
 		{
 			if(a.getCod()==CodAtuador.AQUECEDOR)
 			{
-				//a.setStatus(s);
+				a.setStatus(s.ordinal());
 			}
 		}
 		
@@ -246,7 +246,7 @@ public class ControleGuiCadastraCenario extends AbstractControleGui implements L
 	public void setLampada(int index, Status s, int value)
 	{
 		
-		//lampadas.get(index).setStatus(s);
+		lampadas.get(index).setStatus(s.ordinal());
 		if(lampadas.get(index).getCod() == CodAtuador.LAMPADA_DIMERIZAVEL)
 		{
 			janela.lampSli.setEnabled(true);
@@ -266,7 +266,7 @@ public class ControleGuiCadastraCenario extends AbstractControleGui implements L
 		{
 			if(a.getCod()==CodAtuador.JANELA)
 			{
-				//a.setStatus(s);
+				a.setStatus(s.ordinal());
 			}
 		}
 		
@@ -278,7 +278,7 @@ public class ControleGuiCadastraCenario extends AbstractControleGui implements L
 		{
 			if(a.getCod()==CodAtuador.PERCIANA)
 			{
-				//a.setStatus(s);
+				a.setStatus(s.ordinal());
 			}
 		}
 		

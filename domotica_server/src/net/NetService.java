@@ -9,6 +9,7 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.SocketAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.util.Scanner;
@@ -31,7 +32,7 @@ public class NetService extends Thread
 {
 	final static Logger logger = Logger.getLogger(NetService.class); 
 	private NetListener listener;
-	private int porta = 9991;
+	private int porta = 9994;
 	private Scanner s = null;
 	private PrintStream p = null;
 	private ServerSocket servidor = null;
@@ -72,7 +73,7 @@ public class NetService extends Thread
 			}
 			timeOut = false;
 			
-			logger.debug("Aguardando conexao");
+			logger.debug("Abrindo Socket Cliente e Aguardando conexao");
 			cliente = servidor.accept();
 			logger.debug("Conectado com:" + cliente.getInetAddress().getHostAddress());
 			
@@ -82,27 +83,27 @@ public class NetService extends Thread
 			s = new Scanner(cliente.getInputStream());
 			p = new PrintStream(cliente.getOutputStream());
 		    
+			boolean isRequisicaoHtml = false;
+			
 			while (s.hasNextLine() && !timeOut) 
 		    {
 				time.restart();
 				msgStr = s.nextLine();		    	
 		    	logger.debug("Mensagem recebida de " + cliente.getInetAddress().getHostAddress() + " :[" + msgStr + "]");
 		    	
-		    	if(msgStr.contains("GET / HTTP/1.1"))
+		    	if(msgStr.contains("GET / HTTP/1.1") || msgStr.contains("GET /favicon.ico HTTP/1.1") )
 				{
+		    		isRequisicaoHtml = true;
 		    		logger.info("Requisicao HTML");
 				}
-		    	else if(msgStr.equals(""))
+		    	else if(msgStr.equals("") && isRequisicaoHtml)
 		    	{
 		    		listener.netRecebe(msgStr);
 					p.close();
+					time.stop();
 					break;
 		    	}
-		    	else if(!msgStr.contains("00"))
-		    	{
-		    		
-		    	}
-				else
+				else if(!isRequisicaoHtml)
 				{
 					logger.info("Requisicao ARDUINO");
 					
@@ -112,7 +113,12 @@ public class NetService extends Thread
 							+ "operacao:[" + msg.getOperacao() + "]\n"
 							+ "mensagem:[" + msg.getMensagem() + "]\n"
 					);
+			    	time.stop();
 					listener.netRecebe(msg);
+				}
+				else
+				{
+					logger.debug("Mensagem nao tratada");
 				}
 		    }
 		}
@@ -146,10 +152,17 @@ public class NetService extends Thread
 		}
 		finally
 		{
+			
 			try
 			{
 				time.stop();
+				logger.debug("Fechando Socket Cliente");
+				cliente.close();
 			}
+			catch (IOException x)
+		    {
+				logger.warn("Erro fechando socket");
+			}    
 			catch(Exception e)
 			{
 				logger.debug("Erro timeout");
@@ -185,7 +198,21 @@ public class NetService extends Thread
 	public void envia(MensagemResp resp)
 	{
 		p.println(resp.getMensagem());
-		logger.debug("Enviando mensagem para " + resp.getIp() + ":[" + resp.getMensagem() + "]");	
+		logger.debug("Enviando mensagem para " + resp.getIp() + ":[" + resp.getMensagem() + "]");
+		/*while(true)
+		{
+			try 
+			{
+				Thread.sleep(1000);
+				p.println(resp.getMensagem());
+				logger.debug("Enviando mensagem para " + resp.getIp() + ":[" + resp.getMensagem() + "]");
+			} 
+			catch (InterruptedException e)
+			{
+				e.printStackTrace();
+			}
+			
+		}*/
 	}
 	
 	public void timeOut()
@@ -204,6 +231,14 @@ public class NetService extends Thread
 		};
 		time = new Timer(tempoEspera, taskPerformer);
 		time.start();	
+	}
+	
+	
+	private void enviaCliente(String ip, int porta, String mensagem)
+	{
+		Socket soc = new Socket();
+		//SocketAddress end -
+		
 	}
 	
 }

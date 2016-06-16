@@ -19,7 +19,7 @@ public class TratadorMonitoramentoHtml extends AbstractTratador {
 
 	final static Logger logger = Logger.getLogger(TratadorMonitoramentoHtml.class); 
 	private String ipServer;
-	private int porta = 9991;
+	private int porta = 9994;
 	
 	
 	public TratadorMonitoramentoHtml()
