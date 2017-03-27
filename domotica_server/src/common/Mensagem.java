@@ -18,7 +18,7 @@ public class Mensagem
 	{
 	}
 	
-	public Mensagem (String pacote, String ip) throws MensagemException
+	public Mensagem (String pacote, String ip) throws EstruturaException
 	{		
 		this.ip = ip;
 		
@@ -30,7 +30,7 @@ public class Mensagem
 			this.mensagem = pacote.substring(OPERACAO_SIZE + IDARDUINO_SIZE);
 		}catch(Exception e)
 		{			
-			throw new MensagemException("Erro ao quebrar mensagem:" + "[" + pacote.toString() + "]", e.getMessage());
+			throw new EstruturaException("Erro ao quebrar mensagem:" + "[" + pacote.toString() + "]", e.getMessage());
 		}
 		
 		
@@ -79,7 +79,7 @@ public class Mensagem
 			System.out.println("id_arduino:" + teste.getIdArduino());
 			System.out.println("operacao:" + teste.getOperacao());
 			System.out.println("mensagem:" + teste.getMensagem());
-		} catch (MensagemException e) {
+		} catch (EstruturaException e) {
 			// TODO Auto-generated catch block
 		
 		}

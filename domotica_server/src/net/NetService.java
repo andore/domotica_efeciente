@@ -21,7 +21,7 @@ import org.apache.log4j.Logger;
 import main.RoteadorOperacao;
 import common.CodigoSensores;
 import common.Mensagem;
-import common.MensagemException;
+import common.EstruturaException;
 import common.MensagemResp;
 import dao.Arduino;
 import dao.ArduinoDao;
@@ -126,7 +126,7 @@ public class NetService extends Thread
 		{
 			logger.error("Erro Socket TCP", e);
 		}
-		catch (MensagemException e)
+		catch (EstruturaException e)
 		{
 			MensagemResp resp =  null;
 			resp = new MensagemResp();
