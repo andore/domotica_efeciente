@@ -12,7 +12,7 @@ class TCPClient
 		DataOutputStream outToServer = null;
 		BufferedReader inFromServer = null;
 		
-		while(true)
+		//while(true)
 		{
 			try
 			{

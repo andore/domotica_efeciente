@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.firebirdsql.jdbc.FBSQLException;
 import org.firebirdsql.jdbc.parser.JaybirdSqlParser.nextValueExpression_return;
+import org.firebirdsql.jdbc.parser.JaybirdSqlParser.returningClause_return;
 import org.hibernate.Query;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
@@ -53,7 +54,7 @@ public class CenarioDao extends AbstractDao {
 		try
 		{
 			String sql = "INSERT INTO " + Cenario.class.getSimpleName() + 
-			         " VALUES (:id_cenario,:id_arduino,:id_usuario,:nome_cenario,:privado,:valor_iluminacao,:valor_temperatura) ";
+			         " VALUES (:id_cenario,:id_arduino,:nome_cenario,:privado,:valor_iluminacao,:valor_temperatura,:id_usuario) ";
 			
 			SQLQuery query = super.sessao.createSQLQuery(sql);
 			query.setParameter("id_cenario", cenario.getId_cenario());
@@ -132,6 +133,29 @@ public class CenarioDao extends AbstractDao {
 					}
 				}
 			}
+		}
+	}
+	
+	public Cenario serachById(int id_cenario)
+	{
+		String sql = "from " + Cenario.class.getSimpleName() + " C WHERE C.id_cenario = :id_cenario";
+		List cenarios = sessao.createQuery(sql).setParameter("id_cenario", id_cenario).list();
+		if( cenarios!=null && cenarios.size() > 0)
+		{
+			if(cenarios.size() == 1)
+			{
+				return (Cenario) cenarios.get(0);
+			}
+			else
+			{
+				logger.warn("Exeiste mais de um Cenario com ID:" + id_cenario);
+				return null;
+			}
+		}
+		else
+		{
+			logger.warn("Nenhum Cenario encontrado com ID:" + id_cenario);
+			return null;
 		}
 	}
 	

@@ -1,9 +1,9 @@
 package common;
 
-public class MensagemException extends Exception
+public class EstruturaException extends Exception
 {
 	private String msg;
-	public MensagemException(String msg, String cause) {
+	public EstruturaException(String msg, String cause) {
         super(msg, new Exception(cause));
         this.msg = msg;
     }
