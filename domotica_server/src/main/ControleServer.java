@@ -23,6 +23,8 @@ import org.apache.log4j.Logger;
 import org.apache.log4j.spi.ThrowableRendererSupport;
 import org.hibernate.Session;
 
+import common.EstMensagem;
+import common.EstruturaException;
 import common.Mensagem;
 import common.MensagemResp;
 import common.StructException;
@@ -73,7 +75,7 @@ public class ControleServer implements NetListener, ListenerCtrlCadastraCenario,
 		mostraJanelaPrincipal();
 	}
 	
-	public void netRecebe(Mensagem msg) {
+	public void netRecebe(EstMensagem msg) {
 		MensagemResp resp =  null;
 		try
 		{
@@ -91,7 +93,6 @@ public class ControleServer implements NetListener, ListenerCtrlCadastraCenario,
 		{
 			resp = new MensagemResp();
 			resp.setOperacao(msg.getOperacao());
-			resp.setIp(msg.getIp());
 			resp.setMensagem("1");
 			logger.error("Erro ao processar mensagem:", e);
 		}
@@ -104,7 +105,7 @@ public class ControleServer implements NetListener, ListenerCtrlCadastraCenario,
 		}
 	}
 	
-	public void netRecebe(String msg)
+	public void netRecebe(String msg) throws EstruturaException
 	{
 		MensagemResp resp =  null;
 		try 

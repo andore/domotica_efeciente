@@ -1,11 +1,11 @@
 package tratador;
 
-import common.Mensagem;
+import common.EstMensagem;
 import common.MensagemResp;
 import common.StructException;
 import dao.DbException;
 
 public abstract class AbstractTratador
 {
-	abstract public MensagemResp processa(Mensagem msg) throws StructException, DbException;
+	abstract public MensagemResp processa(EstMensagem msg) throws StructException, DbException;
 }

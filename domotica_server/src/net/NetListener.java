@@ -1,9 +1,10 @@
 package net;
 
-import common.Mensagem;
+import common.EstMensagem;
+import common.EstruturaException;
 
 public interface NetListener 
 {	
-	public void netRecebe(Mensagem msg);
-	public void netRecebe(String msg);
+	public void netRecebe(EstMensagem msg);
+	public void netRecebe(String msg) throws EstruturaException;
 }

@@ -6,6 +6,7 @@ import java.net.UnknownHostException;
 import org.apache.log4j.Logger;
 
 import common.CodigoSensores;
+import common.EstMensagem;
 import common.Mensagem;
 import common.MensagemResp;
 import common.StructException;
@@ -28,7 +29,7 @@ public class TratadorMonitoramentoHtml extends AbstractTratador {
 	}
 	
 	@Override
-	public MensagemResp processa(Mensagem msg) throws StructException, DbException
+	public MensagemResp processa(EstMensagem msg) throws StructException, DbException
 	{
 		
 		MensagemResp resp = new MensagemResp();

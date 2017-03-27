@@ -2,6 +2,8 @@ package common;
 
 public class EstMensagem extends Estrutura{
 	
+	private String ip;
+	
 	private int operacao;
 	private int idArduino;
 	
@@ -21,6 +23,16 @@ public class EstMensagem extends Estrutura{
 		put(idArduino);
 	}
 	
+	
+	
+	public String getIp() {
+		return ip;
+	}
+
+	public void setIp(String ip) {
+		this.ip = ip;
+	}
+
 	public int getOperacao() {
 		return operacao;
 	}

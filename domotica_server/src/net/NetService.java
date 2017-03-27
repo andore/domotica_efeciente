@@ -20,6 +20,7 @@ import org.apache.log4j.Logger;
 
 import main.RoteadorOperacao;
 import common.CodigoSensores;
+import common.EstMensagem;
 import common.Mensagem;
 import common.EstruturaException;
 import common.MensagemResp;
@@ -107,11 +108,14 @@ public class NetService extends Thread
 				{
 					logger.info("Requisicao ARDUINO");
 					
-					Mensagem msg = new Mensagem(msgStr, cliente.getInetAddress().getHostAddress());
+					EstMensagem msg = new EstMensagem(msgStr);
+					msg.setIp(cliente.getInetAddress().getHostAddress());
+					
+					//Mensagem msg = new Mensagem(msgStr, cliente.getInetAddress().getHostAddress());
 			    	logger.debug("\n"
 							+"idArduino:[" + msg.getIdArduino() + "]\n"
 							+ "operacao:[" + msg.getOperacao() + "]\n"
-							+ "mensagem:[" + msg.getMensagem() + "]\n"
+							//+ "mensagem:[" + msg.getMensagem() + "]\n"
 					);
 			    	time.stop();
 					listener.netRecebe(msg);

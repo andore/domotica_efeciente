@@ -6,6 +6,8 @@ import org.hibernate.Session;
 import tratador.TratadorCadastramento;
 import tratador.TratadorMonitoramento;
 import tratador.TratadorMonitoramentoHtml;
+import common.EstMensagem;
+import common.EstruturaException;
 import common.Mensagem;
 import common.MensagemResp;
 import common.StructException;
@@ -28,7 +30,7 @@ public class RoteadorOperacao
 		
 	}
 	
-	public MensagemResp getOperacao(Mensagem msg) throws StructException, DbException
+	public MensagemResp getOperacao(EstMensagem msg) throws StructException, DbException
 	{
 		
 		MensagemResp resp = null;
@@ -69,13 +71,13 @@ public class RoteadorOperacao
 		return resp;
 	}
 	
-	public MensagemResp getOperacao(String msg) throws StructException, DbException
+	public MensagemResp getOperacao(String msg) throws StructException, DbException, EstruturaException
 	{
 		
 		MensagemResp resp = null;
 		if(msg != null)
 		{
-			resp = monitoraHtml.processa(new Mensagem());
+			resp = monitoraHtml.processa(new EstMensagem(msg));
 		}
 		else
 		{
