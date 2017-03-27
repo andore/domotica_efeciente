@@ -61,4 +61,12 @@ public abstract class Estrutura {
 		strOut.append(valor == null ? " " : valor);
 		strOut.append('#');
 	}
+
+	public String getStrIn() {
+		return strIn;
+	}
+
+	public void setStrIn(String strIn) {
+		this.strIn = strIn;
+	}
 }

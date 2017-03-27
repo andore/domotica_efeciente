@@ -4,6 +4,7 @@ import org.apache.log4j.Logger;
 
 import common.EstCadastra;
 import common.EstMensagem;
+import common.EstruturaException;
 import common.Mensagem;
 import common.MensagemResp;
 import common.StrCadastraArduino;
@@ -23,14 +24,14 @@ public class TratadorCadastramento extends AbstractTratador
 		
 	}
 	
-	public MensagemResp processa(EstMensagem msg) throws StructException, DbException
+	public MensagemResp processa(EstMensagem msg) throws StructException, DbException, EstruturaException
 	{
 		if(msg==null)
 		{
 			return null;
 		}
 		
-		EstCadastra cadastra = (EstCadastra) msg;
+		EstCadastra cadastra = new EstCadastra(msg.getStrIn());
 		Arduino arduino = new Arduino();
 		ArduinoDao dao = new ArduinoDao();
 		MensagemResp resp = new MensagemResp();

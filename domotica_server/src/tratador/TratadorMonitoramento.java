@@ -7,6 +7,7 @@ import org.apache.log4j.Logger;
 
 import common.EstMensagem;
 import common.EstMonitora;
+import common.EstruturaException;
 import common.Mensagem;
 import common.MensagemResp;
 import common.StrMonitoramento;
@@ -29,7 +30,7 @@ public class TratadorMonitoramento extends AbstractTratador
 		
 	}
 	
-	public MensagemResp processa(EstMensagem msg) throws StructException, DbException
+	public MensagemResp processa(EstMensagem msg) throws StructException, DbException, EstruturaException
 	{
 		atualizaSensores(msg);
 		mantemIluminacao(ControleServer.getCenarioAtual());
@@ -37,9 +38,9 @@ public class TratadorMonitoramento extends AbstractTratador
 		return resp;
 	}
 	
-	private void atualizaSensores(EstMensagem msg) throws StructException, DbException
+	private void atualizaSensores(EstMensagem msg) throws StructException, DbException, EstruturaException
 	{
-		EstMonitora vo = (EstMonitora) msg;
+		EstMonitora vo = new EstMonitora(msg.getStrIn());
 		
 		for(Sensor sensor: vo.getSensores())
 		{

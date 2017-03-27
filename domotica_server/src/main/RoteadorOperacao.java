@@ -30,7 +30,7 @@ public class RoteadorOperacao
 		
 	}
 	
-	public MensagemResp getOperacao(EstMensagem msg) throws StructException, DbException
+	public MensagemResp getOperacao(EstMensagem msg) throws StructException, DbException, EstruturaException
 	{
 		
 		MensagemResp resp = null;

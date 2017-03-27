@@ -96,6 +96,14 @@ public class ControleServer implements NetListener, ListenerCtrlCadastraCenario,
 			resp.setMensagem("1");
 			logger.error("Erro ao processar mensagem:", e);
 		}
+		catch (EstruturaException e)
+		{
+			resp = new MensagemResp();
+			resp.setOperacao(msg.getOperacao());
+			resp.setIp(msg.getIp());
+			resp.setMensagem("1");
+			logger.error("Erro ao processar mensagem:", e);
+		} 
 		finally
 		{
 			if(resp != null)

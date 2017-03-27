@@ -9,7 +9,7 @@ public class TetaEstMonitora {
 	{	
 		try 
 		{
-			EstMonitora est = new EstMonitora("2#99#1#22#1#23#1#33#04");
+			EstMonitora est = new EstMonitora("2#4#1#9#1#23#1#9#3");
 			
 			System.out.println("operacao:" + est.getOperacao());
 			System.out.println("id Arduino:" + est.getIdArduino());
