@@ -2,44 +2,40 @@ package common;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import dao.Atuador;
 import dao.Sensor;
 
-public class EstCadastra extends EstMensagem {
+public class EstMonitora extends EstMensagem {
 
-	private String descricaoArduino;
+	public EstMonitora(String str) throws EstruturaException {
+		super(str);
+	}
+
 	private int qtdSensor;
 	private List<Sensor> sensores;
 	private int qtdAtuador;
 	private List<Atuador> atuadores;
 
-	public EstCadastra(String str) throws EstruturaException {
-		super(str);
-	}
-
 	@Override
 	protected void quebra() throws EstruturaException {
 		super.quebra();
 
-		descricaoArduino = getString();
 		qtdSensor = getInt();
 		sensores = new ArrayList<Sensor>();
 		for (int i = 0; i < qtdSensor; i++) {
 			Sensor buf = new Sensor();
 			buf.setId(getInt());
 			buf.setCod(getInt());
-			buf.setDescricao(getString());
+			buf.setValor(getInt());
 			sensores.add(buf);
 		}
-		
+
 		qtdAtuador = getInt();
 		atuadores = new ArrayList<Atuador>();
 		for (int i = 0; i < qtdAtuador; i++) {
 			Atuador buf = new Atuador();
 			buf.setId(getInt());
 			buf.setCod(getInt());
-			buf.setDescricao(getString());
 			atuadores.add(buf);
 		}
 	}
@@ -48,28 +44,18 @@ public class EstCadastra extends EstMensagem {
 	protected void montaStr() throws EstruturaException {
 		super.montaStr();
 
-		put(descricaoArduino);	
 		put(qtdSensor);
 		for (int i = 0; i < qtdSensor; i++) {
 			put(sensores.get(i).getId());
 			put(sensores.get(i).getCod());
-			put(sensores.get(i).getDescricao());
+			put(sensores.get(i).getValor());
 		}
 
 		put(qtdAtuador);
 		for (int i = 0; i < qtdAtuador; i++) {
 			put(atuadores.get(i).getId());
 			put(atuadores.get(i).getCod());
-			put(atuadores.get(i).getDescricao());
 		}
-	}
-
-	public String getDescricaoArduino() {
-		return descricaoArduino;
-	}
-
-	public void setDescricaoArduino(String descricaoArduino) {
-		this.descricaoArduino = descricaoArduino;
 	}
 
 	public int getQtdSensor() {
