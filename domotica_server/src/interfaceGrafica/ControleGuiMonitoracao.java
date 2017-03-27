@@ -417,7 +417,8 @@ public class ControleGuiMonitoracao extends AbstractControleGui implements Liste
 						} 
 			        	catch (DbException e)
 			        	{
-							e.printStackTrace();
+			        		atuailza = false;
+			        		e.printStackTrace();
 						}
 			        }
 				 };

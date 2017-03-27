@@ -281,14 +281,12 @@ public class GuiMonitoracao extends JPanel
 				}
 			}
 		});
-		btnSalvar.setEnabled(false);
+		btnSalvar.setEnabled(true);
 		btnSalvar.setForeground(SystemColor.windowBorder);
 		btnSalvar.setFont(new Font("Calibri", Font.BOLD, 12));
 		btnSalvar.setBackground(new Color(169, 169, 169));
 		btnSalvar.setBounds(309, 512, 89, 23);
 		add(btnSalvar);
-		
-		btnSalvar.setEnabled(false);
 		
 		btnSair = new JButton("SAIR");
 		btnSair.addActionListener(new ActionListener() {
