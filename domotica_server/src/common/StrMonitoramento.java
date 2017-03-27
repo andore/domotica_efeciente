@@ -19,9 +19,12 @@ public class StrMonitoramento extends AbstractStruct
 		quebra();
 	}
 	
+	public StrMonitoramento(){}
+	
 	private void quebra() throws StructException
 	{
 		sensores = new ArrayList<Sensor>();
+		qtdSensor = getInt(2);
 		for(int i=0; i< qtdSensor; i++)
 		{
 			Sensor s = new Sensor();
@@ -47,22 +50,27 @@ public class StrMonitoramento extends AbstractStruct
 	public String getString() throws StructException
 	{
 		put(qtdSensor, 2);
-		for(Sensor s: sensores)
+		if(sensores != null)
 		{
-			put(s.getId(), 2);
-			put(s.getCod(), 2);
-			put(s.getValor(), 6);
+			for(Sensor s: sensores)
+			{
+				put(s.getId(), 2);
+				put(s.getCod(), 2);
+				put(s.getValor(), 6);
+			}
 		}
 		
 		put(qtdAtuador, 2);
-		
-		for(Atuador s: atuadores)
+		if(atuadores!=null)
 		{
-			put(s.getId(), 2);
-			put(s.getCod(), 2);
-			put(s.getDescricao(), 10);
+			for(Atuador s: atuadores)
+			{
+				put(s.getId(), 2);
+				put(s.getCod(), 2);
+				put(s.getDescricao(), 10);
+			}
 		}
-		
+
 		return super.out.toString();
 	}
 

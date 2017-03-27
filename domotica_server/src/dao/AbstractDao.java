@@ -45,7 +45,7 @@ public abstract class AbstractDao
 		
 	}
 	
-	protected void update(Object obj) throws DbException
+	public void update(Object obj) throws DbException
 	{
 		
 		try

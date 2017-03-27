@@ -1,5 +1,7 @@
 package main;
 
+import java.util.List;
+
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.xml.transform.Source;
@@ -18,6 +20,7 @@ import interfaceGrafica.ListenerGuiMensagem;
 import interfaceGrafica.ListenerGuiPrincipal;
 
 import org.apache.log4j.Logger;
+import org.apache.log4j.spi.ThrowableRendererSupport;
 import org.hibernate.Session;
 
 import common.Mensagem;
@@ -40,6 +43,7 @@ public class ControleServer implements NetListener, ListenerCtrlCadastraCenario,
 	private int janelaProx;
 	final static Logger logger = Logger.getLogger(ControleServer.class);
 	final static int TEMPO_ESPERA_TELA_MESAGEM = 1000;
+	private static Cenario cenarioAtual;
 	JFrame j;
 	
 	
@@ -47,6 +51,20 @@ public class ControleServer implements NetListener, ListenerCtrlCadastraCenario,
 	{
 		net = new NetService(this);
 		roteador = new RoteadorOperacao();
+		carregaCearioInicial();
+	}
+	
+	private void carregaCearioInicial()
+	{
+		try
+		{
+			CenarioDao cenDao = new CenarioDao();
+			cenarioAtual = cenDao.serachById(0);
+		} 
+		catch (DbException e)
+		{
+			e.printStackTrace();
+		}
 	}
 	
 	public void init()
@@ -255,6 +273,40 @@ public class ControleServer implements NetListener, ListenerCtrlCadastraCenario,
 
 	public void acaoMonitoracaoCenarioSalvar(Cenario cenario)
 	{
-		
+		try
+		{
+			CenarioDao dao = new CenarioDao();
+			List listCen = dao.loadCenario();			
+			Cenario load = dao.serachById(cenario.getId_cenario());
+			
+			if(load != null)
+			{
+				load.setValor_iluminacao(cenario.getValor_iluminacao());
+				load.setValor_temperatura(cenario.getValor_temperatura());
+				dao.update(load);
+				logger.debug("Cenario alterado com sucesso.");
+			}
+			else
+			{
+				throw new DbException("Falha ao salvar Cenario", null);
+			}
+			
+		} 
+		catch (DbException e)
+		{
+			logger.error("Falha ao salvar cenario", e);
+			JOptionPane.showMessageDialog(null,"Opa, tem alguma coisa errada =(\nFalha ao consultar banco de dados.","Ocorreu um Erro =(",JOptionPane.ERROR_MESSAGE);
+			mostraJanelaPrincipal();
+		}
 	}
+
+	public static Cenario getCenarioAtual() {
+		return cenarioAtual;
+	}
+
+	public static void setCenarioAtual(Cenario cenarioAtual) {
+		ControleServer.cenarioAtual = cenarioAtual;
+	}
+	
+	
 }
