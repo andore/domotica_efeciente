@@ -7,6 +7,7 @@ import tratador.TratadorCadastramento;
 import tratador.TratadorMonitoramento;
 import tratador.TratadorMonitoramentoHtml;
 import common.EstMensagem;
+import common.EstMensagemResp;
 import common.EstruturaException;
 import common.Mensagem;
 import common.MensagemResp;
@@ -30,10 +31,10 @@ public class RoteadorOperacao
 		
 	}
 	
-	public MensagemResp getOperacao(EstMensagem msg) throws StructException, DbException, EstruturaException
+	public EstMensagemResp getOperacao(EstMensagem msg) throws StructException, DbException, EstruturaException
 	{
 		
-		MensagemResp resp = null;
+		EstMensagemResp resp = null;
 		if(msg != null)
 		{
 			switch (msg.getOperacao())
@@ -47,15 +48,14 @@ public class RoteadorOperacao
 					} 
 					catch (InterruptedException e)
 					{
-					
+						resp.setResp("1");
 					}
 					resp = cadastra.processa(msg);
-					resp.setMensagem("+" + resp.getMensagem());
 					break;
 					
 				case 2:
 					logger.debug("Roteando mensagem para Tratador Monitoramento");
-					resp = monitora.processa(msg); 
+					//resp = monitora.processa(msg); 
 					break;
 	
 				default:
@@ -77,7 +77,7 @@ public class RoteadorOperacao
 		MensagemResp resp = null;
 		if(msg != null)
 		{
-			resp = monitoraHtml.processa(new EstMensagem(msg));
+			resp = monitoraHtml.processaHtml(new EstMensagem(msg));
 		}
 		else
 		{

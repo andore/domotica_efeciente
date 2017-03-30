@@ -21,6 +21,7 @@ import org.apache.log4j.Logger;
 import main.RoteadorOperacao;
 import common.CodigoSensores;
 import common.EstMensagem;
+import common.EstMensagemResp;
 import common.Mensagem;
 import common.EstruturaException;
 import common.MensagemResp;
@@ -199,10 +200,10 @@ public class NetService extends Thread
 		
 	}
 	
-	public void envia(MensagemResp resp)
+	public void envia(EstMensagemResp resp) throws EstruturaException
 	{
-		p.println(resp.getMensagem());
-		logger.debug("Enviando mensagem para " + resp.getIp() + ":[" + resp.getMensagem() + "]");
+		p.println(resp.toText());
+		logger.debug("Enviando mensagem para " + resp.getIp() + ":[" + resp.toText() + "]");
 		/*while(true)
 		{
 			try 
@@ -217,6 +218,11 @@ public class NetService extends Thread
 			}
 			
 		}*/
+	}
+	
+	public void enviaHtml(MensagemResp resp) {
+		p.println(resp.getMensagem());
+		logger.debug("Enviando mensagem para " + resp.getIp() + ":[" + resp.getMensagem()+ "]");
 	}
 	
 	public void timeOut()
@@ -244,5 +250,8 @@ public class NetService extends Thread
 		//SocketAddress end -
 		
 	}
+
+
+	
 	
 }

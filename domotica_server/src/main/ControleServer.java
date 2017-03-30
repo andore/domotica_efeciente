@@ -23,6 +23,7 @@ import org.apache.log4j.Logger;
 import org.apache.log4j.spi.ThrowableRendererSupport;
 import org.hibernate.Session;
 
+import common.EstMensagemResp;
 import common.EstMensagem;
 import common.EstruturaException;
 import common.Mensagem;
@@ -75,33 +76,33 @@ public class ControleServer implements NetListener, ListenerCtrlCadastraCenario,
 		mostraJanelaPrincipal();
 	}
 	
-	public void netRecebe(EstMensagem msg) {
-		MensagemResp resp =  null;
+	public void netRecebe(EstMensagem msg) throws EstruturaException {
+		EstMensagemResp resp =  null;
 		try
 		{
 			resp = roteador.getOperacao(msg);
 		}		
 		catch (StructException e)
 		{
-			resp = new MensagemResp();
+			resp = new EstMensagemResp();
 			resp.setOperacao(msg.getOperacao());
 			resp.setIp(msg.getIp());
-			resp.setMensagem("1");
+			resp.setResp("1");
 			logger.error("Erro ao processar mensagem:", e);
 		} 
 		catch (DbException e)
 		{
-			resp = new MensagemResp();
+			resp = new EstMensagemResp();
 			resp.setOperacao(msg.getOperacao());
-			resp.setMensagem("1");
+			resp.setResp("1");
 			logger.error("Erro ao processar mensagem:", e);
 		}
 		catch (EstruturaException e)
 		{
-			resp = new MensagemResp();
+			resp = new EstMensagemResp();
 			resp.setOperacao(msg.getOperacao());
 			resp.setIp(msg.getIp());
-			resp.setMensagem("1");
+			resp.setResp("1");
 			logger.error("Erro ao processar mensagem:", e);
 		} 
 		finally
@@ -140,7 +141,7 @@ public class ControleServer implements NetListener, ListenerCtrlCadastraCenario,
 		{
 			if(resp != null)
 			{
-				net.envia(resp);
+				net.enviaHtml(resp);
 			}
 		}
 	}

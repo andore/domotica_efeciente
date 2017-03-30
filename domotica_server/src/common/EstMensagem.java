@@ -11,6 +11,10 @@ public class EstMensagem extends Estrutura{
 		super(str);
 	}
 
+	public EstMensagem() {
+		super();
+	}
+
 	@Override
 	protected void quebra() throws EstruturaException {
 		operacao = getInt();
@@ -22,8 +26,6 @@ public class EstMensagem extends Estrutura{
 		put(operacao);
 		put(idArduino);
 	}
-	
-	
 	
 	public String getIp() {
 		return ip;

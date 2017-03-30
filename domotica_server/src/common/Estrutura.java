@@ -9,7 +9,6 @@ public abstract class Estrutura {
 
 	public Estrutura() {
 		strIn = "";
-		strOut = new StringBuffer();
 	}
 
 	public Estrutura(String str) throws EstruturaException {
@@ -27,6 +26,7 @@ public abstract class Estrutura {
 	}
 
 	public String toText() throws EstruturaException {
+		strOut = new StringBuffer();
 		montaStr();
 		return strOut.toString().substring(0, strOut.length() - 1);
 	}

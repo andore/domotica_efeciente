@@ -6,6 +6,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 import common.EstMensagem;
+import common.EstMensagemResp;
 import common.EstMonitora;
 import common.EstruturaException;
 import common.Mensagem;
@@ -23,14 +24,14 @@ import main.ControleServer;
 public class TratadorMonitoramento extends AbstractTratador 
 {
 	final static Logger logger = Logger.getLogger(TratadorMonitoramento.class);
-	private MensagemResp resp = new MensagemResp();
+	private EstMonitora resp = new EstMonitora();
 	
 	public TratadorMonitoramento()
 	{
 		
 	}
 	
-	public MensagemResp processa(EstMensagem msg) throws StructException, DbException, EstruturaException
+	public EstMonitora processa(EstMensagem msg) throws StructException, DbException, EstruturaException
 	{
 		atualizaSensores(msg);
 		mantemIluminacao(ControleServer.getCenarioAtual());
@@ -82,7 +83,7 @@ public class TratadorMonitoramento extends AbstractTratador
 	
 	private void mantemIluminacao(Cenario cenario) throws DbException, StructException
 	{
-		StrMonitoramento resposta = new StrMonitoramento();
+		EstMonitora resposta = new EstMonitora();
 		List<Atuador> atuadores = new ArrayList<Atuador>();
 		AtuadorDao dao = new AtuadorDao();
 		
@@ -98,6 +99,12 @@ public class TratadorMonitoramento extends AbstractTratador
 		resposta.setQtdSensor(0);
 		resposta.setAtuadores(atuadores);
 		resposta.setQtdAtuador(atuadores.size());
-		resp.setMensagem(resposta.getString());
+		resp = resposta;
+	}
+
+	@Override
+	public MensagemResp processaHtml(EstMensagem msg) throws StructException, DbException, EstruturaException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

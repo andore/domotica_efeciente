@@ -7,6 +7,8 @@ import org.apache.log4j.Logger;
 
 import common.CodigoSensores;
 import common.EstMensagem;
+import common.EstMensagemResp;
+import common.EstruturaException;
 import common.Mensagem;
 import common.MensagemResp;
 import common.StructException;
@@ -29,13 +31,11 @@ public class TratadorMonitoramentoHtml extends AbstractTratador {
 	}
 	
 	@Override
-	public MensagemResp processa(EstMensagem msg) throws StructException, DbException
+	public MensagemResp processaHtml(EstMensagem msg) throws StructException, DbException
 	{
-		
 		MensagemResp resp = new MensagemResp();
 		resp.setOperacao(2);
 		resp.setMensagem(getHtmlMsgTeste());
-		
 		
 		return resp;
 	}
@@ -110,6 +110,12 @@ public class TratadorMonitoramentoHtml extends AbstractTratador {
 			return "";
 		}
 		return ia.getHostAddress();
+	}
+
+	@Override
+	public EstMensagemResp processa(EstMensagem msg) throws StructException, DbException, EstruturaException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

@@ -11,6 +11,10 @@ public class EstMonitora extends EstMensagem {
 		super(str);
 	}
 
+	public EstMonitora() {
+		super();
+	}
+
 	private int qtdSensor;
 	private List<Sensor> sensores;
 	private int qtdAtuador;

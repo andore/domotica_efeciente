@@ -3,6 +3,7 @@ package tratador;
 import org.apache.log4j.Logger;
 
 import common.EstCadastra;
+import common.EstMensagemResp;
 import common.EstMensagem;
 import common.EstruturaException;
 import common.Mensagem;
@@ -24,7 +25,7 @@ public class TratadorCadastramento extends AbstractTratador
 		
 	}
 	
-	public MensagemResp processa(EstMensagem msg) throws StructException, DbException, EstruturaException
+	public EstMensagemResp processa(EstMensagem msg) throws StructException, DbException, EstruturaException
 	{
 		if(msg==null)
 		{
@@ -34,8 +35,7 @@ public class TratadorCadastramento extends AbstractTratador
 		EstCadastra cadastra = new EstCadastra(msg.getStrIn());
 		Arduino arduino = new Arduino();
 		ArduinoDao dao = new ArduinoDao();
-		MensagemResp resp = new MensagemResp();
-		
+		EstMensagemResp resp = new EstMensagemResp();
 		
 		if(cadastra!=null)
 		{
@@ -69,8 +69,14 @@ public class TratadorCadastramento extends AbstractTratador
 		
 		resp.setOperacao(msg.getOperacao());
 		resp.setIp(msg.getIp());
-		resp.setMensagem("0");
+		resp.setResp("0");
 		return resp;
+	}
+
+	@Override
+	public MensagemResp processaHtml(EstMensagem msg) throws StructException, DbException, EstruturaException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 }
