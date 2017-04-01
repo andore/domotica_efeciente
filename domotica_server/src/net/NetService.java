@@ -157,21 +157,22 @@ public class NetService extends Thread
 		}
 		finally
 		{
+			time.stop();
 			
-			try
-			{
-				time.stop();
-				logger.debug("Fechando Socket Cliente");
-				cliente.close();
-			}
-			catch (IOException x)
-		    {
-				logger.warn("Erro fechando socket");
-			}    
-			catch(Exception e)
-			{
-				logger.debug("Erro timeout");
-			}
+//			try
+//			{
+//				time.stop();
+//				logger.debug("Fechando Socket Cliente");
+//				//cliente.close();
+//			}
+//			catch (IOException x)
+//		    {
+//				logger.warn("Erro fechando socket");
+//			}    
+//			catch(Exception e)
+//			{
+//				logger.debug("Erro timeout");
+//			}
 			
 		}
 	}
