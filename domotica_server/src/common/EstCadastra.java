@@ -14,6 +14,9 @@ public class EstCadastra extends EstMensagem {
 	private int qtdAtuador;
 	private List<Atuador> atuadores;
 
+	public EstCadastra() 
+	{}
+	
 	public EstCadastra(String str) throws EstruturaException {
 		super(str);
 	}

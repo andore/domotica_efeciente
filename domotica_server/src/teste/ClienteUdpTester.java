@@ -85,9 +85,7 @@ public class ClienteUdpTester
 				   System.out.println("Erro ao tentar fechar socket:\n" + e.getMessage());
 			   }
 		   }
-	   }
-	   
-	   
+	   } 
    }
    
    public String criaMensagem()

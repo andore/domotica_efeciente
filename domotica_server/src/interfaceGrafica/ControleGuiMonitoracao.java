@@ -106,25 +106,31 @@ public class ControleGuiMonitoracao extends AbstractControleGui implements Liste
 				}
 			}
 			
-			janela.tempAtual.setText(buscaValorSensor(this.arduinoSelecionado, CodigoSensores.TEMPERATURA));
-			janela.iluAtual.setText(buscaValorSensor(this.arduinoSelecionado, CodigoSensores.LUZ));
+			janela.tempAtual.setText(getValorMediaSensores(this.arduinoSelecionado, CodigoSensores.TEMPERATURA));
+			janela.iluAtual.setText(getValorMediaSensores(this.arduinoSelecionado, CodigoSensores.LUZ));
 		}
 	}
 	
-	private String buscaValorSensor(Arduino ardu, int codSensor)
+	private String getValorMediaSensores(Arduino ardu, int codSensor)
 	{
 		int pos = 0;
+		int media=0;
+		int qtd = 0;
 		
 		for(Sensor s: ardu.getSensores())
 		{
 			if(s.getCod() == codSensor)
 			{
-				return String.valueOf(s.getValor());
+				qtd++;
+				media += s.getValor();
 			}
 			
 			pos++;
 		}
-		return "?";
+		if(qtd == 0)
+			return "?";
+		else
+			return String.valueOf(media/qtd);
 	}
 	
 	private void setDispositivos(Arduino arduino)
@@ -269,8 +275,8 @@ public class ControleGuiMonitoracao extends AbstractControleGui implements Liste
 		setDispositivos(this.arduinos.get(index));
 		setLampadas(lampadas);
 		
-		janela.tempAtual.setText(buscaValorSensor(this.arduinoSelecionado, CodigoSensores.TEMPERATURA));
-		janela.iluAtual.setText(buscaValorSensor(this.arduinoSelecionado, CodigoSensores.LUZ));
+		janela.tempAtual.setText(getValorMediaSensores(this.arduinoSelecionado, CodigoSensores.TEMPERATURA));
+		janela.iluAtual.setText(getValorMediaSensores(this.arduinoSelecionado, CodigoSensores.LUZ));
 		
 	}
 
