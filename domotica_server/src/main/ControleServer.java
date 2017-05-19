@@ -1,12 +1,7 @@
 package main;
 
-import java.util.List;
-
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.xml.transform.Source;
-
-import hbn.ControleHbn;
 import interfaceGrafica.AbstractControleGui;
 import interfaceGrafica.ControleGuiCadastraCenario;
 import interfaceGrafica.ControleGuiMensagem;
@@ -16,17 +11,12 @@ import interfaceGrafica.ListenerCtrlCadastraCenario;
 import interfaceGrafica.ListenerCtrlCadastraMonitoracao;
 import interfaceGrafica.ListenerCtrlGuiMensagem;
 import interfaceGrafica.ListenerCtrlGuiPrincipal;
-import interfaceGrafica.ListenerGuiMensagem;
-import interfaceGrafica.ListenerGuiPrincipal;
 
 import org.apache.log4j.Logger;
-import org.apache.log4j.spi.ThrowableRendererSupport;
-import org.hibernate.Session;
 
 import common.EstMensagemResp;
 import common.EstMensagem;
 import common.EstruturaException;
-import common.Mensagem;
 import common.MensagemResp;
 import common.StructException;
 import dao.ArduinoDao;
@@ -285,8 +275,7 @@ public class ControleServer implements NetListener, ListenerCtrlCadastraCenario,
 	{
 		try
 		{
-			CenarioDao dao = new CenarioDao();
-			List listCen = dao.loadCenario();			
+			CenarioDao dao = new CenarioDao();	
 			Cenario load = dao.serachById(cenario.getId_cenario());
 			
 			if(load != null)

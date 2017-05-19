@@ -5,6 +5,7 @@ import java.util.StringTokenizer;
 
 public class FileReader {
 	public static final String PATH_TO_DATA_FILE = "playtennis.data";
+	private static FileInputStream fis;
 
     public static ArrayList<Record> buildRecords() {
 		BufferedReader reader = null;
@@ -13,7 +14,7 @@ public class FileReader {
 
         try { 
            File f = new File(PATH_TO_DATA_FILE);
-           FileInputStream fis = new FileInputStream(f); 
+           fis = new FileInputStream(f); 
            reader = new BufferedReader(new InputStreamReader(fis));;
            
            // read the first record of the file
@@ -83,7 +84,6 @@ public class FileReader {
 			  r.setAttributes(attributes);
 			  records.add(r);
            }
-
         } 
         catch (IOException e) { 
            System.out.println("Uh oh, got an IOException error: " + e.getMessage()); 
@@ -99,6 +99,7 @@ public class FileReader {
                  System.out.println("IOException error trying to close the file: " + ioe.getMessage()); 
               }
            }
+           
         }
 		return records;
 	}

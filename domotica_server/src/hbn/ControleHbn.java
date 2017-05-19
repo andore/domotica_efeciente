@@ -6,7 +6,6 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
 import dao.DbException;
-import teste.TesteLog;
 
 public class ControleHbn {
 	private static SessionFactory factory;

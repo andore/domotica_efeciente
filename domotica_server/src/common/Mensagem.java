@@ -1,12 +1,9 @@
 package common;
 
-import net.NetService;
-
 public class Mensagem 
 {
 	private final int OPERACAO_SIZE = 2;
 	private final int IDARDUINO_SIZE = 3;
-	private final int POS_MENSAGEM = 1024; 
 
 	private StringBuffer pacote;
 	private String ip;

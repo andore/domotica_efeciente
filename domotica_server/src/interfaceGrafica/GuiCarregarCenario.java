@@ -7,11 +7,8 @@ import java.awt.Color;
 import javax.swing.JTextField;
 import java.awt.SystemColor;
 import javax.swing.SwingConstants;
-import javax.swing.JPasswordField;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.JSpinner;
-import javax.swing.JCheckBox;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -20,44 +17,42 @@ import javax.swing.JSlider;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
-import java.awt.event.ItemListener;
-import java.awt.event.ItemEvent;
-import javax.swing.event.CaretListener;
-import javax.swing.event.CaretEvent;
 import javax.swing.event.PopupMenuListener;
 import javax.swing.event.PopupMenuEvent;
 
 public class GuiCarregarCenario extends JPanel
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	protected JTextField textField_1;
 	protected JTextField textField_2;
 	protected JTextField lampPorcent;
 	public final JSlider lampSli;
 	private ListenerGuiCadastraCenario listener;
-	protected JComboBox arCond;
-	protected JComboBox ventilador;
-	protected JComboBox aquecedor;
-	protected JComboBox lampIndex;
-	protected JComboBox usuario;
-	protected JComboBox janela;
-	protected JComboBox comodo;
+	protected JComboBox<Object> arCond;
+	protected JComboBox<Object> ventilador;
+	protected JComboBox<Object> aquecedor;
+	protected JComboBox<Object> lampIndex;
+	protected JComboBox<Object> usuario;
+	protected JComboBox<Object> janela;
+	protected JComboBox<Object> comodo;
 	protected JButton btnCarregar;
 	protected JButton btnCancelar;
 	protected JSlider temp;
 	protected JSlider ilum;
-	protected JComboBox lampSta;
+	protected JComboBox<Object> lampSta;
 	private JLabel lblPerciana;
-	protected JComboBox perciana;
-	protected JComboBox cenarioBox;
+	protected JComboBox<Object> perciana;
+	protected JComboBox<Object> cenarioBox;
 
 	/**
 	 * Create the panel.
 	 */
 	public GuiCarregarCenario(final ListenerGuiCadastraCenario listener)
 	{
-		this.listener = listener;
+		this.setListener(listener);
 		
 		setBackground(Color.WHITE);
 		setLayout(null);
@@ -117,7 +112,7 @@ public class GuiCarregarCenario extends JPanel
 		lblArcondicionado.setBounds(162, 235, 116, 23);
 		add(lblArcondicionado);
 		
-		arCond = new JComboBox();
+		arCond = new JComboBox<Object>();
 		arCond.addPopupMenuListener(new PopupMenuListener() {
 			public void popupMenuCanceled(PopupMenuEvent arg0) {
 			}
@@ -131,7 +126,7 @@ public class GuiCarregarCenario extends JPanel
 		arCond.setEnabled(false);
 		arCond.setFont(new Font("Calibri", Font.BOLD, 13));
 		arCond.setForeground(SystemColor.textHighlight);
-		arCond.setModel(new DefaultComboBoxModel(Status.values()));
+		arCond.setModel(new DefaultComboBoxModel<Object>(Status.values()));
 		arCond.setSelectedIndex(2);
 		arCond.setBounds(349, 236, 77, 20);
 		add(arCond);
@@ -143,7 +138,7 @@ public class GuiCarregarCenario extends JPanel
 		lblVentilador.setBounds(162, 264, 116, 23);
 		add(lblVentilador);
 		
-		ventilador = new JComboBox();
+		ventilador = new JComboBox<Object>();
 		ventilador.addPopupMenuListener(new PopupMenuListener() {
 			public void popupMenuCanceled(PopupMenuEvent arg0) {
 			}
@@ -156,7 +151,7 @@ public class GuiCarregarCenario extends JPanel
 		});
 		ventilador.setEnabled(false);
 		ventilador.setFont(new Font("Calibri", Font.BOLD, 13));
-		ventilador.setModel(new DefaultComboBoxModel(Status.values()));
+		ventilador.setModel(new DefaultComboBoxModel<Object>(Status.values()));
 		ventilador.setSelectedIndex(2);
 		ventilador.setForeground(SystemColor.textHighlight);
 		ventilador.setBounds(349, 265, 77, 20);
@@ -169,7 +164,7 @@ public class GuiCarregarCenario extends JPanel
 		lblAquecedor.setBounds(162, 293, 116, 23);
 		add(lblAquecedor);
 		
-		aquecedor = new JComboBox();
+		aquecedor = new JComboBox<Object>();
 		aquecedor.addPopupMenuListener(new PopupMenuListener() {
 			public void popupMenuCanceled(PopupMenuEvent arg0) {
 			}
@@ -182,7 +177,7 @@ public class GuiCarregarCenario extends JPanel
 		});
 		aquecedor.setEnabled(false);
 		aquecedor.setFont(new Font("Calibri", Font.BOLD, 13));
-		aquecedor.setModel(new DefaultComboBoxModel(Status.values()));
+		aquecedor.setModel(new DefaultComboBoxModel<Object>(Status.values()));
 		aquecedor.setSelectedIndex(2);
 		aquecedor.setForeground(SystemColor.textHighlight);
 		aquecedor.setBounds(349, 294, 77, 20);
@@ -195,7 +190,7 @@ public class GuiCarregarCenario extends JPanel
 		lblLmpada.setBounds(162, 322, 69, 23);
 		add(lblLmpada);
 		
-		lampIndex = new JComboBox();
+		lampIndex = new JComboBox<Object>();
 		lampIndex.addPopupMenuListener(new PopupMenuListener() {
 			public void popupMenuCanceled(PopupMenuEvent arg0) {
 			}
@@ -208,7 +203,7 @@ public class GuiCarregarCenario extends JPanel
 		});
 		lampIndex.setEnabled(false);
 		lampIndex.setFont(new Font("Calibri", Font.BOLD, 13));
-		lampIndex.setModel(new DefaultComboBoxModel(new String[] {"Principal", "Abajur", "Escrivaninha"}));
+		lampIndex.setModel(new DefaultComboBoxModel<Object>(new String[] {"Principal", "Abajur", "Escrivaninha"}));
 		lampIndex.setForeground(SystemColor.textHighlight);
 		lampIndex.setBounds(241, 323, 99, 20);
 		add(lampIndex);
@@ -234,7 +229,7 @@ public class GuiCarregarCenario extends JPanel
 		lblPrivado.setBounds(162, 457, 62, 23);
 		add(lblPrivado);
 		
-		usuario = new JComboBox();
+		usuario = new JComboBox<Object>();
 		usuario.addPopupMenuListener(new PopupMenuListener() {
 			public void popupMenuCanceled(PopupMenuEvent arg0) {
 			}
@@ -247,13 +242,13 @@ public class GuiCarregarCenario extends JPanel
 		});
 		usuario.setEnabled(false);
 		usuario.setToolTipText("Caso marcado como \"Privado\", somente o usu\u00E1rio criador poder\u00E1 alterar o cen\u00E1rio");
-		usuario.setModel(new DefaultComboBoxModel(new String[] {"N\u00E3o", "Sim"}));
+		usuario.setModel(new DefaultComboBoxModel<Object>(new String[] {"N\u00E3o", "Sim"}));
 		usuario.setForeground(SystemColor.textHighlight);
 		usuario.setFont(new Font("Calibri", Font.BOLD, 13));
 		usuario.setBounds(349, 458, 50, 20);
 		add(usuario);
 		
-		janela = new JComboBox();
+		janela = new JComboBox<Object>();
 		janela.addPopupMenuListener(new PopupMenuListener() {
 			public void popupMenuCanceled(PopupMenuEvent arg0) {
 			}
@@ -265,7 +260,7 @@ public class GuiCarregarCenario extends JPanel
 			}
 		});
 		janela.setEnabled(false);
-		janela.setModel(new DefaultComboBoxModel(Status.values()));
+		janela.setModel(new DefaultComboBoxModel<Object>(Status.values()));
 		janela.setSelectedIndex(2);
 		janela.setForeground(SystemColor.textHighlight);
 		janela.setFont(new Font("Calibri", Font.BOLD, 13));
@@ -286,7 +281,7 @@ public class GuiCarregarCenario extends JPanel
 		lblCmodo.setBounds(164, 73, 108, 23);
 		add(lblCmodo);
 		
-		comodo = new JComboBox();
+		comodo = new JComboBox<Object>();
 		comodo.setEnabled(false);
 		comodo.addPopupMenuListener(new PopupMenuListener() {
 			public void popupMenuCanceled(PopupMenuEvent arg0) 
@@ -418,7 +413,7 @@ public class GuiCarregarCenario extends JPanel
 		lampPorcent.setBounds(532, 322, 32, 23);
 		add(lampPorcent);
 		
-		lampSta = new JComboBox();
+		lampSta = new JComboBox<Object>();
 		lampSta.addPopupMenuListener(new PopupMenuListener() {
 			public void popupMenuCanceled(PopupMenuEvent arg0) {
 			}
@@ -430,7 +425,7 @@ public class GuiCarregarCenario extends JPanel
 			}
 		});
 		lampSta.setEnabled(false);
-		lampSta.setModel(new DefaultComboBoxModel(Status.values()));
+		lampSta.setModel(new DefaultComboBoxModel<Object>(Status.values()));
 		lampSta.setSelectedIndex(2);
 		lampSta.setForeground(SystemColor.textHighlight);
 		lampSta.setFont(new Font("Calibri", Font.BOLD, 13));
@@ -444,7 +439,7 @@ public class GuiCarregarCenario extends JPanel
 		lblPerciana.setBounds(162, 378, 116, 23);
 		add(lblPerciana);
 		
-		perciana = new JComboBox();
+		perciana = new JComboBox<Object>();
 		perciana.addPopupMenuListener(new PopupMenuListener() {
 			public void popupMenuCanceled(PopupMenuEvent arg0) {
 			}
@@ -456,14 +451,14 @@ public class GuiCarregarCenario extends JPanel
 			}
 		});
 		perciana.setEnabled(false);
-		perciana.setModel(new DefaultComboBoxModel(Status.values()));
+		perciana.setModel(new DefaultComboBoxModel<Object>(Status.values()));
 		perciana.setSelectedIndex(2);
 		perciana.setForeground(SystemColor.textHighlight);
 		perciana.setFont(new Font("Calibri", Font.BOLD, 13));
 		perciana.setBounds(349, 379, 77, 20);
 		add(perciana);
 		
-		cenarioBox = new JComboBox();
+		cenarioBox = new JComboBox<Object>();
 		cenarioBox.setToolTipText("");
 		cenarioBox.setForeground(SystemColor.textHighlight);
 		cenarioBox.setFont(new Font("Calibri", Font.BOLD, 13));
@@ -471,5 +466,13 @@ public class GuiCarregarCenario extends JPanel
 		cenarioBox.setBounds(353, 102, 97, 20);
 		add(cenarioBox);
 
+	}
+
+	public ListenerGuiCadastraCenario getListener() {
+		return listener;
+	}
+
+	public void setListener(ListenerGuiCadastraCenario listener) {
+		this.listener = listener;
 	}
 }

@@ -1,7 +1,6 @@
 package dao;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -32,6 +31,10 @@ public class Arduino  implements Serializable{
 	@OneToMany (cascade=CascadeType.ALL, fetch=FetchType.EAGER)
 	@JoinColumn (name="id_arduino")
 	private List <Atuador>atuadores ;
+	
+	@OneToMany (cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+	@JoinColumn (name="id_arduino")
+	private List <Historico>historico ;
 	
 	public int getId() {
 		return id_arduino;
@@ -80,8 +83,12 @@ public class Arduino  implements Serializable{
 	}
 	public void setId_cenario_ativo(int id_cenario_ativo) {
 		this.id_cenario_ativo = id_cenario_ativo;
+	}	
+	public List<Historico> getHistorico() {
+		return historico;
 	}
-	
-	
+	public void setHistorico(List<Historico> historico) {
+		this.historico = historico;
+	}
 
 }

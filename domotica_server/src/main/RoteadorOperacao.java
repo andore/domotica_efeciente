@@ -1,7 +1,6 @@
 package main;
 
 import org.apache.log4j.Logger;
-import org.hibernate.Session;
 
 import tratador.TratadorCadastramento;
 import tratador.TratadorMonitoramento;
@@ -9,7 +8,6 @@ import tratador.TratadorMonitoramentoHtml;
 import common.EstMensagem;
 import common.EstMensagemResp;
 import common.EstruturaException;
-import common.Mensagem;
 import common.MensagemResp;
 import common.StructException;
 import dao.DbException;
@@ -34,7 +32,7 @@ public class RoteadorOperacao
 	public EstMensagemResp getOperacao(EstMensagem msg) throws StructException, DbException, EstruturaException
 	{
 		
-		EstMensagemResp resp = null;
+		EstMensagemResp resp = new EstMensagemResp();
 		if(msg != null)
 		{
 			switch (msg.getOperacao())
@@ -55,7 +53,7 @@ public class RoteadorOperacao
 					
 				case 2:
 					logger.debug("Roteando mensagem para Tratador Monitoramento");
-					//resp = monitora.processa(msg); 
+					resp.setResp(monitora.processa(msg).toText()); 
 					break;
 	
 				default:

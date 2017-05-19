@@ -1,7 +1,6 @@
 package tratador;
 
 import common.EstMensagem;
-import common.EstMensagemResp;
 import common.Estrutura;
 import common.EstruturaException;
 import common.MensagemResp;

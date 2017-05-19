@@ -78,6 +78,7 @@ public class ControleGuiMonitoracao extends AbstractControleGui implements Liste
 		janela.repaint();
 	}
 	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public void setDados(List <Arduino> arduinos)
 	{
 		
@@ -113,7 +114,6 @@ public class ControleGuiMonitoracao extends AbstractControleGui implements Liste
 	
 	private String getValorMediaSensores(Arduino ardu, int codSensor)
 	{
-		int pos = 0;
 		int media=0;
 		int qtd = 0;
 		
@@ -124,8 +124,6 @@ public class ControleGuiMonitoracao extends AbstractControleGui implements Liste
 				qtd++;
 				media += s.getValor();
 			}
-			
-			pos++;
 		}
 		if(qtd == 0)
 			return "?";
@@ -133,6 +131,7 @@ public class ControleGuiMonitoracao extends AbstractControleGui implements Liste
 			return String.valueOf(media/qtd);
 	}
 	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private void setDispositivos(Arduino arduino)
 	{
 		this.arduinoSelecionado = arduino;
@@ -193,6 +192,7 @@ public class ControleGuiMonitoracao extends AbstractControleGui implements Liste
 		
 	}
 	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private void setLampadas(List <Atuador> lampadas)
 	{
 		if(lampadas!=null && lampadas.size()>0)
@@ -254,18 +254,6 @@ public class ControleGuiMonitoracao extends AbstractControleGui implements Liste
 		}
 		
 		return buf;
-	}
-	
-	private void setCompDisable()
-	{
-		janela.arCond.setEnabled(false);
-		janela.ventilador.setEnabled(false);
-		janela.aquecedor.setEnabled(false);
-		janela.lampSta.setEnabled(false);
-		janela.janela.setEnabled(false);
-		janela.temp.setEnabled(false);
-		janela.ilum.setEnabled(false);
-		janela.lampSli.setEnabled(false);
 	}
 
 	public void setComodo(int index)

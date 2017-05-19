@@ -16,7 +16,6 @@ import javax.swing.JOptionPane;
  */
 public class ClienteUdpTester
 {
-   private final static int PACKETSIZE = 100 ;
    private final static String enderecoServidor = "127.0.0.1";
    private final static int portaServidor = 9994;
    private static int contSensor = 0;

@@ -1,12 +1,14 @@
 package dao;
 
 import java.io.Serializable;
+import java.util.List;
 
-import javax.persistence.Column;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
-
-import common.Status;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 
 
 @Entity
@@ -18,6 +20,16 @@ public class Atuador implements Serializable{
 	private String descricao;
 	private int status;
 		
+	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+	@JoinColumn(name="id_Atuador")
+	private List <Historico> historico;
+	
+	public List<Historico> getHistoricoAtuador() {
+		return historico;
+	}
+	public void setHistoricoAtuador(List<Historico> historico) {
+		this.historico = historico;
+	}
 	public int getId() {
 		return id_Atuador;
 	}

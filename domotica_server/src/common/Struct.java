@@ -1,6 +1,5 @@
 package common;
 
-import java.text.DecimalFormat;
 
 public abstract class Struct 
 {

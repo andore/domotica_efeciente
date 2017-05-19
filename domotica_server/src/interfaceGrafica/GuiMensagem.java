@@ -15,6 +15,7 @@ import java.awt.Color;
 
 
 public class GuiMensagem extends JPanel{
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * Create the panel.
@@ -26,7 +27,7 @@ public class GuiMensagem extends JPanel{
 	private int tempoEspera;
 	public GuiMensagem(final ListenerGuiMensagem listener, final String texto, int tempoEspera) {
 		this.listener = listener;
-		this.tempoEspera = tempoEspera;
+		this.setTempoEspera(tempoEspera);
 		setBackground(new Color(255, 255, 255));
 		setForeground(new Color(255, 255, 255));
 		setLayout(null);
@@ -54,5 +55,13 @@ public class GuiMensagem extends JPanel{
 	{	
 		listener.timeOut();
 		time.stop();
+	}
+
+	public int getTempoEspera() {
+		return tempoEspera;
+	}
+
+	public void setTempoEspera(int tempoEspera) {
+		this.tempoEspera = tempoEspera;
 	}
 }

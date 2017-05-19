@@ -9,14 +9,12 @@ import common.CodigoSensores;
 import common.EstMensagem;
 import common.EstMensagemResp;
 import common.EstruturaException;
-import common.Mensagem;
 import common.MensagemResp;
 import common.StructException;
 import dao.Arduino;
 import dao.ArduinoDao;
 import dao.DbException;
 import dao.Sensor;
-import net.NetService;
 
 public class TratadorMonitoramentoHtml extends AbstractTratador {
 

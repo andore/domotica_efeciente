@@ -10,6 +10,7 @@ import javax.swing.JPasswordField;
 import java.awt.Color;
 
 public class GuiLogin extends JPanel {
+	private static final long serialVersionUID = 1L;
 	private JTextField textField_1;
 	private JPasswordField passwordField;
 

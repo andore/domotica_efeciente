@@ -3,16 +3,10 @@ package dao;
 import java.util.List;
 
 import org.firebirdsql.jdbc.FBSQLException;
-import org.firebirdsql.jdbc.parser.JaybirdSqlParser.nextValueExpression_return;
-import org.firebirdsql.jdbc.parser.JaybirdSqlParser.returningClause_return;
-import org.hibernate.Query;
 import org.hibernate.SQLQuery;
-import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.exception.ConstraintViolationException;
 import org.hibernate.exception.SQLGrammarException;
-
-import hbn.ControleHbn;
 
 public class CenarioDao extends AbstractDao {
 	
@@ -136,9 +130,10 @@ public class CenarioDao extends AbstractDao {
 		}
 	}
 	
+	@SuppressWarnings("rawtypes")
 	public Cenario serachById(int id_cenario)
 	{
-		String sql = "from " + Cenario.class.getSimpleName() + " C WHERE C.id_cenario = :id_cenario";
+		String sql = "from " + Cenario.class.getSimpleName() + " C WHERE C.id_cenario = :id_cenario";		
 		List cenarios = sessao.createQuery(sql).setParameter("id_cenario", id_cenario).list();
 		if( cenarios!=null && cenarios.size() > 0)
 		{

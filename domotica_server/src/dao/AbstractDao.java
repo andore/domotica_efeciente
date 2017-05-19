@@ -14,7 +14,7 @@ public abstract class AbstractDao
 {
 	public final Session sessao;
 	final static Logger logger = Logger.getLogger(AbstractDao.class);
-	private static ControleHbn hbn;
+	private ControleHbn hbn;
 	
 	public AbstractDao() throws DbException
 	{

@@ -9,7 +9,7 @@
         <property name="show_sql">false</property>
 		<property name="use_sql_comments">false</property>
         <property name="connection.driver_class">org.firebirdsql.jdbc.FBDriver</property>
-        <property name="connection.url">jdbc:firebirdsql:localhost/3050:D:\DOM.FDB</property>  
+        <property name="connection.url">jdbc:firebirdsql:localhost/3050:c:\DOM.FDB</property>  
         <property name="connection.username">sysdba</property>
         <property name="connection.password">masterkey</property>
         <property name="dialect">org.hibernate.dialect.FirebirdDialect</property>
@@ -22,5 +22,6 @@
         <mapping class = "dao.Atuador"/>
         <mapping class = "dao.Cenario"/>
         <mapping class = "dao.Usuario"/>
+        <mapping class = "dao.Historico"/>
     </session-factory>
 </hibernate-configuration>

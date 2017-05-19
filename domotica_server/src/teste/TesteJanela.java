@@ -4,7 +4,6 @@ import javax.swing.JFrame;
 
 import common.Status;
 import interfaceGrafica.GuiCadastraCenario;
-import interfaceGrafica.GuiLogin;
 import interfaceGrafica.ListenerGuiCadastraCenario;
 
 public class TesteJanela {

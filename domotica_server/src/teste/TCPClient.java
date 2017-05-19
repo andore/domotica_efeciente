@@ -2,7 +2,6 @@ package teste;
 
 import java.io.*;
 import java.net.*;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,16 +11,11 @@ import javax.swing.JOptionPane;
 import common.CodAtuador;
 import common.CodigoSensores;
 import common.EstCadastra;
-import common.EstruturaException;
 import dao.Atuador;
 import dao.Sensor;
 
 class TCPClient
 {
-	
-	   private static int contSensor = 0;
-	   private static int contAtuador = 0;
-	   private static int contArduino = 0;
 	   private static final int PORTA = 9994;
 	   private static final int OP_CADASTRA = 1;
 	
@@ -148,6 +142,7 @@ class TCPClient
 	}
 	
 	
+	@SuppressWarnings("rawtypes")
 	private String getDescricaoSensor(Class classe)
 	{
 		

@@ -4,37 +4,24 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.io.PrintStream;
-import java.net.DatagramPacket;
-import java.net.DatagramSocket;
-import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.net.SocketAddress;
-import java.net.SocketException;
-import java.net.UnknownHostException;
 import java.util.Scanner;
 
 import javax.swing.Timer;
 
 import org.apache.log4j.Logger;
 
-import main.RoteadorOperacao;
-import common.CodigoSensores;
 import common.EstMensagem;
 import common.EstMensagemResp;
-import common.Mensagem;
 import common.EstruturaException;
 import common.MensagemResp;
-import dao.Arduino;
-import dao.ArduinoDao;
-import dao.DbException;
-import dao.Sensor;
 
 public class NetService extends Thread  
 {
 	final static Logger logger = Logger.getLogger(NetService.class); 
 	private NetListener listener;
-	private int porta = 9994;
+	private int porta = 9995;
 	private Scanner s = null;
 	private PrintStream p = null;
 	private ServerSocket servidor = null;
@@ -81,7 +68,6 @@ public class NetService extends Thread
 			
 			timeOut();
 			
-			cliente.getInetAddress().getHostAddress();
 			s = new Scanner(cliente.getInputStream());
 			p = new PrintStream(cliente.getOutputStream());
 		    
@@ -243,15 +229,6 @@ public class NetService extends Thread
 		time = new Timer(tempoEspera, taskPerformer);
 		time.start();	
 	}
-	
-	
-	private void enviaCliente(String ip, int porta, String mensagem)
-	{
-		Socket soc = new Socket();
-		//SocketAddress end -
-		
-	}
-
 
 	
 	

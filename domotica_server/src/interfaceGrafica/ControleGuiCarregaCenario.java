@@ -29,6 +29,7 @@ public class ControleGuiCarregaCenario extends AbstractControleGui implements Li
 		lampadas = new ArrayList<Atuador>();
 	}
 	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public void setDados(List <Arduino> arduinos, List <Cenario> cenarios)
 	{
 		this.arduinos = arduinos;
@@ -46,6 +47,7 @@ public class ControleGuiCarregaCenario extends AbstractControleGui implements Li
 		}
 	}
 	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private void setDispositivos(Arduino arduino)
 	{
 		this.arduinoSelecionado = arduino;
@@ -101,6 +103,7 @@ public class ControleGuiCarregaCenario extends AbstractControleGui implements Li
 		
 	}
 	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private void setLampadas(List <Atuador> lampadas)
 	{
 		if(lampadas!=null && lampadas.size()>0)
@@ -148,20 +151,7 @@ public class ControleGuiCarregaCenario extends AbstractControleGui implements Li
 		}
 		
 		return buf;
-	}
-	
-	private String[] getNomeCenario(List <Cenario> cenario)
-	{
-		String [] buf = new String[cenario.size()];
-		
-		for(int i=0; i<buf.length; i++)
-		{
-			buf[i] = cenario.get(i).getNome_cenario();
-		}
-		
-		return buf;
-	}
-	
+	}	
 	
 	private void setCompDisable()
 	{

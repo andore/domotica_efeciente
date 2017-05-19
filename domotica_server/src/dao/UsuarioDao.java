@@ -1,7 +1,5 @@
 package dao;
 
-import org.hibernate.Session;
-
 public class UsuarioDao extends AbstractDao {
 
 	public UsuarioDao() throws DbException {

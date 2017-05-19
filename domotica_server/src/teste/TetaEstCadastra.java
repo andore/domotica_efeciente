@@ -26,9 +26,7 @@ public class TetaEstCadastra {
 			System.out.println("descricao Atuador:" + est.getAtuadores().get(0).getDescricao());
 			
 			
-			System.out.println(est.toText());
-			
-			EstCadastra estException = new EstCadastra("dadw#dadw");
+			System.out.println(est.toText());			
 			
 		} catch (EstruturaException e) {
 			// TODO Auto-generated catch block

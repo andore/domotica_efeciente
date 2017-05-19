@@ -2,8 +2,6 @@ package dao;
 
 import java.util.List;
 
-import org.hibernate.Session;
-
 public class ArduinoDao extends AbstractDao 
 {
 	public ArduinoDao() throws DbException 

@@ -2,10 +2,6 @@ package dao;
 
 import java.util.List;
 
-import org.hibernate.Session;
-
-import common.Status;
-
 public class SensorDao extends AbstractDao {
 
 	public SensorDao() throws DbException {
@@ -22,7 +18,7 @@ public class SensorDao extends AbstractDao {
 		super.update(sensor);
 	}
 	
-	
+	@SuppressWarnings("rawtypes")
 	public Sensor serachById(int id)
 	{
 		String sql = "from " + Sensor.class.getSimpleName() + " C WHERE C.id_sensor = :id_sensor";

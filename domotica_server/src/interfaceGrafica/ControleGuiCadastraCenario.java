@@ -46,6 +46,7 @@ public class ControleGuiCadastraCenario extends AbstractControleGui implements L
 		
 	}*/
 	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public void setDados(List <Arduino> arduinos)
 	{
 		this.arduinos = arduinos;
@@ -63,6 +64,7 @@ public class ControleGuiCadastraCenario extends AbstractControleGui implements L
 		}
 	}
 	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private void setDispositivos(Arduino arduino)
 	{
 		this.arduinoSelecionado = arduino;
@@ -118,6 +120,7 @@ public class ControleGuiCadastraCenario extends AbstractControleGui implements L
 		
 	}
 	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private void setLampadas(List <Atuador> lampadas)
 	{
 		if(lampadas!=null && lampadas.size()>0)

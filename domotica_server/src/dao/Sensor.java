@@ -1,12 +1,15 @@
 package dao;
 
 import java.io.Serializable;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
-
-import common.Status;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 
 
 @Entity
@@ -19,7 +22,17 @@ public class Sensor implements Serializable{
 	
 	@Column(name="valor", columnDefinition="int default 0")
 	private int valor;
-		
+	
+	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+	@JoinColumn(name="id_sensor")
+	private List <Historico> historico;
+	
+	public List<Historico> getHistorico() {
+		return historico;
+	}
+	public void setHistorico(List<Historico> historico) {
+		this.historico = historico;
+	}		
 	public int getId() {
 		return id_sensor;
 	}

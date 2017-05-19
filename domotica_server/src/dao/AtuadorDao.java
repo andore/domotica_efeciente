@@ -2,10 +2,6 @@ package dao;
 
 import java.util.List;
 
-import org.hibernate.Session;
-
-import common.Status;
-
 public class AtuadorDao extends AbstractDao {
 
 	public AtuadorDao() throws DbException {
@@ -22,9 +18,10 @@ public class AtuadorDao extends AbstractDao {
 		super.update(atuador);	
 	}
 	
+	@SuppressWarnings("rawtypes")
 	public Atuador serachById(int id)
 	{
-		String sql = "from " + Atuador.class.getSimpleName() + " C WHERE C.id_atuador = :id_atuador";
+		String sql = "from " + Atuador.class.getSimpleName() + " C WHERE C.id_atuador = :id_atuador";		
 		List atuadores = sessao.createQuery(sql).setParameter("id_atuador", id).list();
 		if( atuadores!=null && atuadores.size() > 0)
 		{

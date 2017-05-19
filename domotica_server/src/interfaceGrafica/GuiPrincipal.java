@@ -2,17 +2,14 @@ package interfaceGrafica;
 
 import javax.swing.JPanel;
 import javax.swing.JButton;
-import javax.swing.JTextField;
 import javax.swing.JLabel;
-import javax.swing.SwingConstants;
 import java.awt.Font;
-import javax.swing.JPasswordField;
 import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 public class GuiPrincipal extends JPanel{
-
+	private static final long serialVersionUID = 1L;
 	/**
 	 * Create the panel.
 	 */
