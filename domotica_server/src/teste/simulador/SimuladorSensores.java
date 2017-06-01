@@ -1,0 +1,110 @@
+package teste.simulador;
+
+import interfaceGrafica.AbstractControleGui;
+
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.swing.JFrame;
+
+import common.EstMonitora;
+import common.EstruturaException;
+import dao.Arduino;
+import dao.Sensor;
+import teste.simulador.gui.ControleGuiSimuladorSensor;
+import teste.simulador.gui.ListenerControleGuisimuladorSensor;
+
+public class SimuladorSensores implements ListenerControleGuisimuladorSensor {
+	private static final String IP_SERV = "localhost";
+	private static final int PORTA_SERV = 9994;
+	private JFrame j;
+	private static final int OP_MONITORA = 2;
+	
+	public static void main(String[] args) {
+		SimuladorSensores s =  new SimuladorSensores();
+		s.mostraJanelaSimuladorSensor();
+	}
+
+	private String enviaMsg(String msg) throws IOException {
+		Socket clientSocket = null;
+		DataOutputStream outToServer = null;
+		BufferedReader inFromServer = null;
+		String resposta = null;
+
+		try {
+			System.out.println("Conectando com:" + IP_SERV + ":" + PORTA_SERV);
+			clientSocket = new Socket(IP_SERV, PORTA_SERV);
+			inFromServer = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+			outToServer = new DataOutputStream(clientSocket.getOutputStream());
+
+			System.out.println("ENVIANDO MENSAGEM:[" + msg + "]");
+			outToServer.writeBytes(msg + '\n');
+
+			resposta = inFromServer.readLine();
+			System.out.println("RESPOSTA SERVIDOR:[" + msg + "]");
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			inFromServer.close();
+			outToServer.close();
+			clientSocket.close();
+		}
+		return resposta;
+	}
+	
+	private void mostraJanelaSimuladorSensor()
+	{
+		ControleGuiSimuladorSensor janelaSimulaSens = new ControleGuiSimuladorSensor(this);
+		setJanela(janelaSimulaSens);	
+	}
+	
+	public void setJanela(AbstractControleGui gui)
+	{
+		System.out.println("Setando Janela: " + gui.getJanela().getClass().getSimpleName());
+
+		int posXAnt = 0;
+		int posYAnt = 0;
+		
+		if(j!=null)
+		{
+			posXAnt = j.getX();
+			posYAnt = j.getY();
+			j.removeAll();
+			j.dispose();
+		}
+		j = new JFrame();
+		j.setBounds(posXAnt, posYAnt, 800, 600);
+		j.add(gui.getJanela());
+		j.setVisible(true);
+		j.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	}
+
+	public void alteraValor(Arduino arduino, int indexSensor) {
+		EstMonitora msg = new EstMonitora();
+		msg.setIdArduino(arduino.getId());
+		msg.setOperacao(OP_MONITORA);
+		msg.setQtdSensor(1);
+		
+		List<Sensor> sensores = new ArrayList<Sensor>();
+		sensores.add(arduino.getSensores().get(indexSensor));
+		msg.setSensores(sensores);
+		
+		try
+		{
+			enviaMsg(msg.toText());
+		} 
+		catch (IOException e)
+		{
+			e.printStackTrace();
+		} 
+		catch (EstruturaException e)
+		{
+			e.printStackTrace();
+		}
+	}
+}

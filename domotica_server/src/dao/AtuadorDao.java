@@ -21,7 +21,7 @@ public class AtuadorDao extends AbstractDao {
 	@SuppressWarnings("rawtypes")
 	public Atuador serachById(int id)
 	{
-		String sql = "from " + Atuador.class.getSimpleName() + " C WHERE C.id_atuador = :id_atuador";		
+		String sql = "from " + Atuador.class.getSimpleName() + " C WHERE C.id_Atuador = :id_atuador";		
 		List atuadores = sessao.createQuery(sql).setParameter("id_atuador", id).list();
 		if( atuadores!=null && atuadores.size() > 0)
 		{
@@ -31,7 +31,7 @@ public class AtuadorDao extends AbstractDao {
 			}
 			else
 			{
-				logger.warn("Exeiste mais de um Atuador com ID:" + id);
+				logger.warn("Existe mais de um Atuador com ID:" + id);
 				return null;
 			}
 		}

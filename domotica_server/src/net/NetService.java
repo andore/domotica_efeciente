@@ -21,7 +21,7 @@ public class NetService extends Thread
 {
 	final static Logger logger = Logger.getLogger(NetService.class); 
 	private NetListener listener;
-	private int porta = 9995;
+	private int porta = 9994;
 	private Scanner s = null;
 	private PrintStream p = null;
 	private ServerSocket servidor = null;
