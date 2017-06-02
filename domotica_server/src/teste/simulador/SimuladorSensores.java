@@ -15,6 +15,7 @@ import javax.swing.JFrame;
 import common.EstMonitora;
 import common.EstruturaException;
 import dao.Arduino;
+import dao.Atuador;
 import dao.Sensor;
 import teste.simulador.gui.ControleGuiSimuladorSensor;
 import teste.simulador.gui.ListenerControleGuisimuladorSensor;
@@ -106,5 +107,30 @@ public class SimuladorSensores implements ListenerControleGuisimuladorSensor {
 		{
 			e.printStackTrace();
 		}
+	}
+
+	public void alteraStatus(Arduino arduino, int indexAtuador) {
+		EstMonitora msg = new EstMonitora();
+		msg.setIdArduino(arduino.getId());
+		msg.setOperacao(OP_MONITORA);
+		msg.setQtdAtuador(1);
+		
+		List<Atuador> atuadores = new ArrayList<Atuador>();
+		atuadores.add(arduino.getAtuadores().get(indexAtuador));
+		msg.setAtuadores(atuadores);
+		
+		try
+		{
+			enviaMsg(msg.toText());
+		} 
+		catch (IOException e)
+		{
+			e.printStackTrace();
+		} 
+		catch (EstruturaException e)
+		{
+			e.printStackTrace();
+		}
+		
 	}
 }

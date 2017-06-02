@@ -12,36 +12,49 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JTextField;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.event.PopupMenuEvent;
 import javax.swing.event.PopupMenuListener;
+
+import common.Status;
 
 public class GuiSimuladorSensor extends JPanel {
 
 	protected JComboBox comboBox;
 
-	private int posXCamp = 480;
+	private int posXCampSen = 180;
+	private int posXCampAtu = 480;
+	
 	private int posYCampIni = 141;
 	private int posYDist = 40;
 	
-	private int posXLab = 100;
+	private int posXLabSen = 0;
+	private int posXLabAtu = 100;
+	
 	private int posYLabIni = 141;
 	
-	private int contLinha = 0 ;
+	private int contLinhaSen = 0 ;
+	private int contLinhaAtu = 0 ;
 	
 	public ListenerGuiSimuladorSensor listener;
 	
-	List<JLabel> listaLabel = new ArrayList();
+	List<JLabel> descricaoSensores = new ArrayList();
 	List<JTextField> listaField = new ArrayList();
 	
-	public void setLinha(String descricao, String valor)
+	
+	List<JLabel> descricaoAtuadores = new ArrayList();
+	List<JComboBox> listaStatus = new ArrayList();
+	
+	
+	public void setSensor(String descricao, String valor)
 	{
 		JLabel d = new JLabel();
 		d.setText(descricao);
-		d.setHorizontalAlignment(SwingConstants.RIGHT);
+		d.setHorizontalAlignment(SwingConstants.LEADING);
 		d.setFont(new Font("Segoe UI", Font.BOLD, 20));
-		d.setBounds(posXLab, posYLabIni + posYDist * contLinha, 360,30);
-		listaLabel.add(d);
+		d.setBounds(posXLabSen, posYLabIni + posYDist * contLinhaSen, 360,30);
+		descricaoSensores.add(d);
 		add(d);
 		
 		final JTextField v = new JTextField();
@@ -54,33 +67,43 @@ public class GuiSimuladorSensor extends JPanel {
 		v.setText(valor);
 		v.setHorizontalAlignment(SwingConstants.CENTER);
 		v.setFont(new Font("Segoe UI", Font.BOLD, 20));
-		v.setBounds(posXCamp, posYCampIni + posYDist * contLinha, 78, 30);
-		
-		
-		
-		
-		
-		
-//		.addActionListener(new ActionListener() {
-//			
-//			public void actionPerformed(ActionEvent arg0) {
-//				// TODO Auto-generated method stub
-//				
-//			}
-//			
-//			public void keyReleased(KeyEvent e)
-//			{
-//				if(e.getKeyCode() == e.VK_ENTER)
-//				{
-//					listener.alteraValor(contLinha, listaField.get(contLinha).getText());
-//				}
-//			}
-//		});
-		
-		
+		v.setBounds(posXCampSen, posYCampIni + posYDist * contLinhaSen, 78, 30);
 		add(v);
+		contLinhaSen ++;
+	}
+	
+	public void setAtuador(String descricao, int status)
+	{
+		JLabel d = new JLabel();
+		d.setText(descricao);
+		d.setHorizontalAlignment(SwingConstants.RIGHT);
+		d.setFont(new Font("Segoe UI", Font.BOLD, 20));
+		d.setBounds(posXLabAtu, posYLabIni + posYDist * contLinhaAtu, 360,30);
+		descricaoAtuadores.add(d);
+		add(d);
 		
-		contLinha ++;
+		final JComboBox v = new JComboBox();
+		listaStatus.add(v);
+		v.addPopupMenuListener(new PopupMenuListener() {
+			public void popupMenuCanceled(PopupMenuEvent arg0)
+			{
+			
+			}
+			public void popupMenuWillBecomeInvisible(PopupMenuEvent arg0) 
+			{
+				listener.setStatus(listaStatus.indexOf(v),(Status)v.getSelectedItem());
+			}
+			public void popupMenuWillBecomeVisible(PopupMenuEvent arg0)
+			{
+			
+			}
+		});
+		v.setModel(new DefaultComboBoxModel<Object>(Status.values()));
+		v.setSelectedIndex(status);
+		v.setFont(new Font("Calibri", Font.BOLD, 13));
+		v.setBounds(posXCampAtu, posYCampIni + posYDist * contLinhaAtu, 78, 30);
+		add(v);
+		contLinhaAtu ++;
 	}
 	
 	public GuiSimuladorSensor(final ListenerGuiSimuladorSensor listener) {
@@ -120,7 +143,7 @@ public class GuiSimuladorSensor extends JPanel {
 		
 	public void reset()
 	{
-		for(JLabel j: listaLabel)
+		for(JLabel j: descricaoSensores)
 		{
 			remove(j);
 		}
@@ -130,7 +153,18 @@ public class GuiSimuladorSensor extends JPanel {
 			remove(j);
 		}
 		
+		for(JLabel j: descricaoAtuadores)
+		{
+			remove(j);
+		}
+		
+		for(JComboBox j: listaStatus)
+		{
+			remove(j);
+		}
+		
 		repaint();
-		contLinha = 0;
+		contLinhaSen = 0;
+		contLinhaAtu = 0;
 	}
 }

@@ -40,6 +40,7 @@ public class EstMonitora extends EstMensagem {
 			Atuador buf = new Atuador();
 			buf.setId(getInt());
 			buf.setCod(getInt());
+			buf.setStatus(getInt());
 			atuadores.add(buf);
 		}
 	}
@@ -59,6 +60,7 @@ public class EstMonitora extends EstMensagem {
 		for (int i = 0; i < qtdAtuador; i++) {
 			put(atuadores.get(i).getId());
 			put(atuadores.get(i).getCod());
+			put(atuadores.get(i).getStatus());
 		}
 	}
 

@@ -8,6 +8,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
+import common.Status;
 import dao.Arduino;
 import dao.ArduinoDao;
 import dao.Atuador;
@@ -30,6 +31,7 @@ public class ControleGuiSimuladorSensor extends AbstractControleGui implements L
 		{
 			setArduinos();
 			setSensores();
+			setAtuadores();
 		} 
 		catch (DbException e)
 		{
@@ -70,7 +72,15 @@ public class ControleGuiSimuladorSensor extends AbstractControleGui implements L
 	{
 		for(Sensor s: arduinos.get(indexArduino).getSensores())
 		{
-			janela.setLinha(s.getDescricao(), String.valueOf(s.getValor()));
+			janela.setSensor(s.getDescricao(), String.valueOf(s.getValor()));
+		}
+	}
+	
+	private void setAtuadores()
+	{
+		for(Atuador s: arduinos.get(indexArduino).getAtuadores())
+		{
+			janela.setAtuador(s.getDescricao(), s.getStatus());
 		}
 	}
 
@@ -87,6 +97,7 @@ public class ControleGuiSimuladorSensor extends AbstractControleGui implements L
 		this.indexArduino = index;
 		janela.reset();
 		setSensores();
+		setAtuadores();
 	}
 
 	public void alteraValor(int index, String valor) {
@@ -95,21 +106,27 @@ public class ControleGuiSimuladorSensor extends AbstractControleGui implements L
 		listener.alteraValor(arduinos.get(indexArduino), index);
 	}
 	
-	private void alteraBanco(int index, String valor)
-	{
-		arduinos.get(indexArduino).getSensores().get(index).setValor(Integer.parseInt(valor));
-		try 
-		{
-			if(sensorDao == null){
-				sensorDao = new SensorDao();
-			}
-			sensorDao.update(arduinos.get(indexArduino).getSensores().get(index));
-			getArduinos();
-			
-		} catch (DbException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		System.out.println("Alterado com SUCESSO");	
+//	private void alteraBanco(int index, String valor)
+//	{
+//		arduinos.get(indexArduino).getSensores().get(index).setValor(Integer.parseInt(valor));
+//		try 
+//		{
+//			if(sensorDao == null){
+//				sensorDao = new SensorDao();
+//			}
+//			sensorDao.update(arduinos.get(indexArduino).getSensores().get(index));
+//			getArduinos();
+//			
+//		} catch (DbException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		System.out.println("Alterado com SUCESSO");	
+//	}
+
+	public void setStatus(int index, Status s) {
+		System.out.println("ALTERA ARDUINO" + arduinos.get(indexArduino).getAtuadores().get(index).getDescricao() + " VALOR:" + s.name());
+		arduinos.get(indexArduino).getAtuadores().get(index).setStatus(s.ordinal());
+		listener.alteraStatus(arduinos.get(indexArduino), index);
 	}
 }
