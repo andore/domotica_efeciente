@@ -32,7 +32,6 @@ public abstract class AbstractDao
 			
 			logger.debug("Inserindo no banco:" + obj.toString());
 			trans.commit();
-			
 		}
 		catch(ConstraintViolationException e)
 		{

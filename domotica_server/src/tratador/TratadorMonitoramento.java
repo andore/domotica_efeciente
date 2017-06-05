@@ -60,21 +60,29 @@ public class TratadorMonitoramento extends AbstractTratador
 	
 	private void incluirHistorico(EstMensagem msg) throws EstruturaException, DbException{
 		EstMonitora mon = new EstMonitora(msg.getStrIn());		
-		Historico hist = new Historico();
+		Historico hist;
 		HistoricoDao histDao = new HistoricoDao();
-		
-		hist.setId_historico(histDao.getNextId());
-		hist.setData_criacao(new Date());
+		int idHist = histDao.getNextId();
+		Date data = new Date();		
 		
 		for(Sensor sensor: mon.getSensores()){
+			hist = new Historico();
 			hist.setValor_sensor(sensor.getValor());
+			hist.setId_sensor(sensor.getId());
+			hist.setId_arduino(mon.getIdArduino());			
+			hist.setData_criacao(data);
 			histDao.insere(hist);
 		}
 		
 		for(Atuador atuador: mon.getAtuadores()){
+			hist = new Historico();
 			hist.setStatus_atuador(atuador.getStatus());
+			hist.setId_atuador(atuador.getId());
+			hist.setId_arduino(mon.getIdArduino());			
+			hist.setId_historico(idHist);
+			hist.setData_criacao(data);
 			histDao.insere(hist);
-		}		
+		}
 	}
 	
 	private void updateSensor(Sensor sensor) throws DbException
