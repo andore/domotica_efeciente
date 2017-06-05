@@ -2,10 +2,15 @@ package dao;
 
 import java.io.Serializable;
 import java.util.Date;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.TableGenerator;
 
 @Entity
@@ -26,11 +31,11 @@ public class Historico implements Serializable{
 	private int valor_sensor;
 	private int status_atuador;
 	
-	//@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
-	//@JoinColumn(name="id_arduino")
+	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+	@JoinColumn(name="id_arduino")
 	private int id_arduino;	
-	//@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
-	//@JoinColumn(name="id_atuador")
+	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+	@JoinColumn(name="id_atuador")
 	private int id_sensor;	
 	private int id_atuador;
 		
