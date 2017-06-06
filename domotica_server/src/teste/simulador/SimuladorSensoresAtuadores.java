@@ -20,14 +20,14 @@ import dao.Sensor;
 import teste.simulador.gui.ControleGuiSimuladorSensor;
 import teste.simulador.gui.ListenerControleGuisimuladorSensor;
 
-public class SimuladorSensores implements ListenerControleGuisimuladorSensor {
+public class SimuladorSensoresAtuadores implements ListenerControleGuisimuladorSensor {
 	private static final String IP_SERV = "localhost";
 	private static final int PORTA_SERV = 9994;
 	private JFrame j;
 	private static final int OP_MONITORA = 2;
 	
 	public static void main(String[] args) {
-		SimuladorSensores s =  new SimuladorSensores();
+		SimuladorSensoresAtuadores s =  new SimuladorSensoresAtuadores();
 		s.mostraJanelaSimuladorSensor();
 	}
 

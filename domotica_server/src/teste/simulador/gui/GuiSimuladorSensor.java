@@ -166,5 +166,10 @@ public class GuiSimuladorSensor extends JPanel {
 		repaint();
 		contLinhaSen = 0;
 		contLinhaAtu = 0;
+		descricaoSensores = new ArrayList();
+		listaField = new ArrayList();
+		descricaoAtuadores = new ArrayList();
+		listaStatus = new ArrayList();
+		
 	}
 }

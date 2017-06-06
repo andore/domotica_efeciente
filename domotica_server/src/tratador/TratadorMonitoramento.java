@@ -35,8 +35,9 @@ public class TratadorMonitoramento extends AbstractTratador
 	
 	public EstMonitora processa(EstMensagem msg) throws StructException, DbException, EstruturaException
 	{
-		atualizaSensores(msg);
 		incluirHistorico(msg);
+		atualizaSensores(msg);
+		
 		mantemIluminacao(ControleServer.getCenarioAtual());
 		mantemTemperatura(ControleServer.getCenarioAtual(), msg);
 		
@@ -67,6 +68,7 @@ public class TratadorMonitoramento extends AbstractTratador
 		
 		for(Sensor sensor: mon.getSensores()){
 			hist = new Historico();
+			hist.setId_historico(idHist);
 			hist.setValor_sensor(sensor.getValor());
 			hist.setId_sensor(sensor.getId());
 			hist.setId_arduino(mon.getIdArduino());			
@@ -88,13 +90,18 @@ public class TratadorMonitoramento extends AbstractTratador
 	private void updateSensor(Sensor sensor) throws DbException
 	{
 		SensorDao dao = new SensorDao();
-		dao.update(sensor);
+		Sensor sb = dao.serachById(sensor.getId());
+		sb.setValor(sensor.getValor());
+		dao.update(sb);
 	}
 	
 	private void updateAtuador(Atuador atuador) throws DbException
 	{
 		AtuadorDao dao = new AtuadorDao();
-		dao.update(atuador);
+		Atuador ab = dao.serachById(atuador.getId());
+		ab.setStatus(atuador.getStatus());
+		
+		dao.update(ab);
 	}
 	
 	private void mantemTemperatura(Cenario cenario, EstMensagem msg) throws EstruturaException, DbException

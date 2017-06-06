@@ -1,4 +1,4 @@
-package teste;
+package teste.simulador;
 
 import java.io.*;
 import java.net.*;
@@ -14,14 +14,14 @@ import common.EstCadastra;
 import dao.Atuador;
 import dao.Sensor;
 
-class TCPClient
+class SimulaodorCadastraArduino
 {
 	   private static final int PORTA = 9994;
 	   private static final int OP_CADASTRA = 1;
 	
 	public static void main(String argv[]) throws Exception
 	{	
-		TCPClient teste = new TCPClient();
+		SimulaodorCadastraArduino teste = new SimulaodorCadastraArduino();
 		String msg = "-1";
 		
 		while(true)

@@ -31,11 +31,11 @@ public class Historico implements Serializable{
 	private int valor_sensor;
 	private int status_atuador;
 	
-	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
-	@JoinColumn(name="id_arduino")
+	//@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+	//@JoinColumn(name="id_arduino")
 	private int id_arduino;	
-	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
-	@JoinColumn(name="id_atuador")
+	//@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+	//@JoinColumn(name="id_atuador")
 	private int id_sensor;	
 	private int id_atuador;
 		
