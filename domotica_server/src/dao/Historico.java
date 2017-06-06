@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -28,16 +29,15 @@ public class Historico implements Serializable{
 	@GeneratedValue(strategy = GenerationType.AUTO, generator="HISTORICO_GENERATOR")
 	private int id_historico;
 	private Date data_criacao;
-	private int valor_sensor;
-	private int status_atuador;
-	
-	//@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
-	//@JoinColumn(name="id_arduino")
+	private Integer valor_sensor;
+	private Integer status_atuador;
 	private int id_arduino;	
-	//@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
-	//@JoinColumn(name="id_atuador")
-	private int id_sensor;	
-	private int id_atuador;
+
+	@Column(nullable = true)
+	private Integer id_sensor;	
+	
+	@Column(nullable = true)
+	private Integer id_atuador;
 		
 	public int getId_historico() {
 		return id_historico;
@@ -54,13 +54,13 @@ public class Historico implements Serializable{
 	public int getValor_sensor() {
 		return valor_sensor;
 	}
-	public void setValor_sensor(int valor_sensor) {
+	public void setValor_sensor(Integer valor_sensor) {
 		this.valor_sensor = valor_sensor;
 	}
 	public int getStatus_atuador() {
 		return status_atuador;
 	}
-	public void setStatus_atuador(int status_atuador) {
+	public void setStatus_atuador(Integer status_atuador) {
 		this.status_atuador = status_atuador;
 	}
 	public int getId_arduino() {
@@ -72,13 +72,13 @@ public class Historico implements Serializable{
 	public int getId_sensor() {
 		return id_sensor;
 	}
-	public void setId_sensor(int id_sensor) {
+	public void setId_sensor(Integer id_sensor) {
 		this.id_sensor = id_sensor;
 	}
 	public int getId_atuador() {
 		return id_atuador;
 	}
-	public void setId_atuador(int id_atuador) {
+	public void setId_atuador(Integer id_atuador) {
 		this.id_atuador = id_atuador;
 	}	
 	

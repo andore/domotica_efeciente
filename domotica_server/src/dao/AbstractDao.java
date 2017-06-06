@@ -39,6 +39,7 @@ public abstract class AbstractDao
 		}
 		catch(Exception e)
 		{
+			logger.error(e);
 			throw new DbException ("Erro ao inserir no banco.",e.getMessage());
 		}
 		

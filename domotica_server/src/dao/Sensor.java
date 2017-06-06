@@ -24,7 +24,7 @@ public class Sensor implements Serializable{
 	private int valor;
 	
 	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
-	@JoinColumn(name="id_sensor")
+	@JoinColumn(name="id_sensor", nullable = true)
 	private List <Historico> historico;
 	
 	public List<Historico> getHistorico() {

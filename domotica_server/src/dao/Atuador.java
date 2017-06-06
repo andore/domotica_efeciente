@@ -21,7 +21,7 @@ public class Atuador implements Serializable{
 	private int status;
 		
 	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
-	@JoinColumn(name="id_Atuador")
+	@JoinColumn(name="id_Atuador", nullable = true)
 	private List <Historico> historico;
 	
 	public List<Historico> getHistoricoAtuador() {
