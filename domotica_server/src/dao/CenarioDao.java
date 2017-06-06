@@ -48,7 +48,10 @@ public class CenarioDao extends AbstractDao {
 		try
 		{
 			String sql = "INSERT INTO " + Cenario.class.getSimpleName() + 
-			         " VALUES (:id_cenario,:id_arduino,:nome_cenario,:privado,:valor_iluminacao,:valor_temperatura,:id_usuario) ";
+			         " (id_cenario,id_arduino,nome_cenario,privado,valor_iluminacao,valor_temperatura,id_usuario) VALUES (:id_cenario,:id_arduino,:nome_cenario,:privado,:valor_iluminacao,:valor_temperatura,:id_usuario) ";
+			
+			//String sql = "INSERT INTO " + Cenario.class.getSimpleName() + 
+	         //" (id_cenario,id_arduino,nome_cenario,privado,valor_iluminacao,valor_temperatura,id_usuario) select b.id_cenario, b.id_arduino,b.nome_cenario,b.privado,b.valor_iluminacao,b.valor_temperatura,b.id_usuario from b ";
 			
 			SQLQuery query = super.sessao.createSQLQuery(sql);
 			query.setParameter("id_cenario", cenario.getId_cenario());
@@ -99,7 +102,7 @@ public class CenarioDao extends AbstractDao {
 			{
 				for(Atuador a:cenario.getAtuadores())
 				{
-					String sql = "INSERT INTO " + "cenario_atuador" + 
+					String sql = "INSERT INTO " + "cenario_atuador (id_cenario,id_atuador,sta_atuador)" + 
 					         " VALUES (:id_cenario,:id_atuador,:sta_atuador) ";
 					
 					SQLQuery query = super.sessao.createSQLQuery(sql);
