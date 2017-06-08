@@ -106,10 +106,47 @@ public class ControleGuiMonitoracao extends AbstractControleGui implements Liste
 					arduinoSelecionado = a;
 				}
 			}
-			
-			janela.tempAtual.setText(getValorMediaSensores(this.arduinoSelecionado, CodigoSensores.TEMPERATURA));
-			janela.iluAtual.setText(getValorMediaSensores(this.arduinoSelecionado, CodigoSensores.LUZ));
+			atualizaDados();
 		}
+	}
+	
+	private void atualizaDados()
+	{
+		janela.tempAtual.setText(getValorMediaSensores(this.arduinoSelecionado, CodigoSensores.TEMPERATURA));
+		janela.iluAtual.setText(getValorMediaSensores(this.arduinoSelecionado, CodigoSensores.LUZ));
+		
+		for(Atuador a:arduinoSelecionado.getAtuadores())
+		{
+			if(a.getCod() == CodAtuador.LAMPADA)
+			{
+				janela.lampSta.setSelectedIndex(a.getStatus());
+			}
+			if(a.getCod() == CodAtuador.LAMPADA_DIMERIZAVEL)
+			{
+				//janela.lampIndex.setSelectedIndex(a.getStatus());
+			}			
+			if(a.getCod() == CodAtuador.AQUECEDOR)
+			{
+				janela.aquecedor.setSelectedIndex(a.getStatus());
+			}
+			if(a.getCod() == CodAtuador.AR_CONDICIONADO)
+			{
+				janela.arCond.setSelectedIndex(a.getStatus());
+			}
+			if(a.getCod() == CodAtuador.JANELA)
+			{
+				janela.janela.setSelectedIndex(a.getStatus());
+			}
+			if(a.getCod() == CodAtuador.PERCIANA)
+			{
+				janela.perciana.setSelectedIndex(a.getStatus());
+			}
+			if(a.getCod() == CodAtuador.VENTILADOR)
+			{
+				janela.ventilador.setSelectedIndex(a.getStatus());
+			}
+		}
+		
 	}
 	
 	private String getValorMediaSensores(Arduino ardu, int codSensor)
