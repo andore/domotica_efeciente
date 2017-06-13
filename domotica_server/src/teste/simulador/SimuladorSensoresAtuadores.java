@@ -113,12 +113,16 @@ public class SimuladorSensoresAtuadores implements ListenerControleGuisimuladorS
 		EstMonitora msg = new EstMonitora();
 		msg.setIdArduino(arduino.getId());
 		msg.setOperacao(OP_MONITORA);
-		msg.setQtdAtuador(1);
+		msg.setQtdAtuador(arduino.getAtuadores().size());
+		msg.setQtdSensor(arduino.getSensores().size());
 		
-		List<Atuador> atuadores = new ArrayList<Atuador>();
-		atuadores.add(arduino.getAtuadores().get(indexAtuador));
-		msg.setAtuadores(atuadores);
 		
+		
+		
+		//List<Atuador> atuadores = new ArrayList<Atuador>();
+		//atuadores.add(arduino.getAtuadores().get(indexAtuador));
+		msg.setAtuadores(arduino.getAtuadores());
+		msg.setSensores(arduino.getSensores());
 		try
 		{
 			enviaMsg(msg.toText());

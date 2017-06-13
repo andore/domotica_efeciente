@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.StringTokenizer;
 
 public class FileReader {
-	public static final String PATH_TO_DATA_FILE = "playtennis.data";
+	public static final String PATH_TO_DATA_FILE = "C:\\Users\\kyosh\\Desktop\\Tetes\\pTennis.txt";
 	private static FileInputStream fis;
 
     public static ArrayList<Record> buildRecords() {
@@ -74,10 +74,10 @@ public class FileReader {
 
 			  }
 			  
-			  if(playTennis.equalsIgnoreCase("no")) {
+			  if(playTennis.trim().equalsIgnoreCase("no")) {
 				  attributes.add(new DiscreteAttribute("PlayTennis", DiscreteAttribute.PlayNo));
 			  }
-			  else if(playTennis.equalsIgnoreCase("yes")) {
+			  else if(playTennis.trim().equalsIgnoreCase("yes")) {
 				  attributes.add(new DiscreteAttribute("PlayTennis", DiscreteAttribute.PlayYes));
 			  }
 			    		    

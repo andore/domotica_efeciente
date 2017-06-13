@@ -4,12 +4,12 @@ abstract public class Atributo {
 	private String nome;
 	private double valor;
 	private boolean isConhecido;
-	private double surrogate;
+	private double substituto;
 	
 	public Atributo(String nome, double valor) {
 		this.nome = nome;
 		this.valor = valor;
-		surrogate = -1;
+		substituto = -1;
 		isConhecido = false;
 	}
 	
@@ -25,7 +25,7 @@ abstract public class Atributo {
 			this.isConhecido = true;
 		}
 		
-		surrogate = -1;
+		substituto = -1;
 	}
 	
 	public void setName(String nome) {
@@ -35,7 +35,7 @@ abstract public class Atributo {
 		return nome;
 	}
 	
-	public void setValue(double valor) {
+	public void setValor(double valor) {
 		this.valor = valor;
 	}
 
@@ -43,12 +43,12 @@ abstract public class Atributo {
 		return valor;
 	}
 
-	public void setSurrogate(double surrogate) {
-		this.surrogate = surrogate;
+	public void setSubstituto(double surrogate) {
+		this.substituto = surrogate;
 	}
 
 	public double getSurrogate() {
-		return surrogate;
+		return substituto;
 	}
 
 	public void setDesconhedico(boolean isConhecido) {

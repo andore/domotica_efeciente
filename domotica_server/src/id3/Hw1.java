@@ -24,34 +24,41 @@ public class Hw1 {
 		
 		t.buildTree(records, root, learningSet);
 		traverseTree(records.get(12), root);
+		
+		System.out.print("Prediction for Play Tennis: ");
+		
+		if(traverseTree(records.get(12), root) == 0)
+		{
+			System.out.println("No");
+		} 
+		else
+		{
+			System.out.println("yes");
+		}
+		
 		return;
 	}
 	
-	public static void traverseTree(Record r, Node root) {
-		while(root.children != null) {
-			double nodeValue = 0;
-			for(int i = 0; i < r.getAttributes().size(); i++) {
-				if(r.getAttributes().get(i).getNome().equalsIgnoreCase(root.getTestAttribute().getNome())) {
-					nodeValue = r.getAttributes().get(i).getValor();
-					break;
-				}
-			}
-			for(int i = 0; i < root.getChildren().length; i++) {
-				if(nodeValue == root.children[i].getTestAttribute().getValor()) {
-					traverseTree(r, root.children[i]);
-				}
-			}
-		}
+	public static Double traverseTree(Record r, Node root) {
+		if (root.children == null)
+			return root.getTestAttribute().getValor();
 		
-		System.out.print("Prediction for Play Tennis: ");
-		if(root.getTestAttribute().getValor() == 0) {
-			System.out.println("No");
+		double nodeValue = 0;
+		
+		for (int i = 0; i < r.getAttributes().size(); i++)
+		{
+			if (r.getAttributes().get(i).getNome().equalsIgnoreCase(root.getTestAttribute().getNome()))
+			{
+				nodeValue = r.getAttributes().get(i).getValor();
+				break;
+			}
 		}
-		else if(root.getTestAttribute().getValor() == 0) {
-			System.out.println("Yes");
+		for (int i = 0; i < root.getChildren().length; i++) {
+			if (nodeValue == root.children[i].getTestAttribute().getValor()) {
+				traverseTree(r, root.children[i]);
+			}
 		}
-
-		return;
+		return root.getTestAttribute().getValor();
 	}
 	
 	public static boolean isAttributeUsed(int attribute) {

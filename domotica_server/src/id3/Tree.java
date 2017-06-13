@@ -47,7 +47,7 @@ public class Tree {
 				root.children[j].setParent(root);
 				root.children[j].setData(subset(root, bestAttribute, j));
 				root.children[j].getTestAttribute().setName(Hw1.getLeafNames(bestAttribute, j));
-				root.children[j].getTestAttribute().setValue(j);
+				root.children[j].getTestAttribute().setValor(j);
 			}
 
 			for (int j = 0; j < setSize; j++) {

@@ -67,12 +67,13 @@ public class TratadorMonitoramento extends AbstractTratador
 		Date data = new Date();		
 		
 		for(Sensor sensor: mon.getSensores()){
-			hist = new Historico();
+			hist = new Historico();	
 			hist.setId_historico(idHist);
 			hist.setValor_sensor(sensor.getValor());
 			hist.setId_sensor(sensor.getId());
 			hist.setId_arduino(mon.getIdArduino());			
 			hist.setData_criacao(data);
+			hist.setRegistro(idHist);
 			histDao.insere(hist);
 		}
 		
@@ -83,6 +84,7 @@ public class TratadorMonitoramento extends AbstractTratador
 			hist.setId_arduino(mon.getIdArduino());			
 			hist.setId_historico(idHist);
 			hist.setData_criacao(data);
+			hist.setRegistro(idHist);
 			histDao.insere(hist);
 		}
 	}

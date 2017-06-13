@@ -32,6 +32,7 @@ public class Historico implements Serializable{
 	private Integer valor_sensor;
 	private Integer status_atuador;
 	private int id_arduino;	
+	private Integer registro;
 
 	@Column(nullable = true)
 	private Integer id_sensor;	
@@ -51,13 +52,13 @@ public class Historico implements Serializable{
 	public void setData_criacao(Date data_criacao) {
 		this.data_criacao = data_criacao;
 	}
-	public int getValor_sensor() {
+	public Integer getValor_sensor() {
 		return valor_sensor;
 	}
 	public void setValor_sensor(Integer valor_sensor) {
 		this.valor_sensor = valor_sensor;
 	}
-	public int getStatus_atuador() {
+	public Integer getStatus_atuador() {
 		return status_atuador;
 	}
 	public void setStatus_atuador(Integer status_atuador) {
@@ -69,17 +70,22 @@ public class Historico implements Serializable{
 	public void setId_arduino(int id_arduino) {
 		this.id_arduino = id_arduino;
 	}
-	public int getId_sensor() {
+	public Integer getId_sensor() {
 		return id_sensor;
 	}
 	public void setId_sensor(Integer id_sensor) {
 		this.id_sensor = id_sensor;
 	}
-	public int getId_atuador() {
+	public Integer getId_atuador() {
 		return id_atuador;
 	}
 	public void setId_atuador(Integer id_atuador) {
 		this.id_atuador = id_atuador;
+	}
+	public Integer getRegistro() {
+		return registro;
+	}
+	public void setRegistro(int registro) {
+		this.registro = registro;
 	}	
-	
 }
