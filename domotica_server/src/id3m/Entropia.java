@@ -46,6 +46,20 @@ public class Entropia {
 			
 		}
 		
+		
+		if(contNegativo==0 && contPositivo==0)
+		{
+			System.err.println("SENSOR " + atributos.get(0).getS().getDescricao() + " COM VALOR: " + valorSen + "NAO TEM DADO");
+		}
+		else if(contNegativo==0)
+		{
+			System.err.println("SENSOR " + atributos.get(0).getS().getDescricao() + " COM VALOR: " + valorSen + " SEMPRE VAI SER STATUS " + valAtu);
+		}
+		else if(contPositivo==0)
+		{
+			System.err.println("SENSOR " + atributos.get(0).getS().getDescricao() + " COM VALOR: " + valorSen + " SEMPRE VAI SER STATUS " + 1);
+		}
+			
 		return equacaoEntropia(contPositivo, contNegativo);
 	}
 	
