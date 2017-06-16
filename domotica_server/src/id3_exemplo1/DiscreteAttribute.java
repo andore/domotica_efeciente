@@ -1,4 +1,4 @@
-package id3;
+package id3_exemplo1;
 public class DiscreteAttribute extends Atributo {
 	public static final int Sunny = 0;
 	public static final int Overcast = 1;

@@ -1,5 +1,7 @@
 package main;
 
+import java.util.List;
+
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import interfaceGrafica.AbstractControleGui;
@@ -15,14 +17,21 @@ import interfaceGrafica.ListenerCtrlGuiPrincipal;
 import org.apache.log4j.Logger;
 
 import common.EstMensagemResp;
+import common.CodigoModulo;
 import common.EstMensagem;
 import common.EstruturaException;
 import common.MensagemResp;
 import common.StructException;
 import dao.ArduinoDao;
+import dao.Atuador;
+import dao.AtuadorDao;
 import dao.Cenario;
 import dao.CenarioDao;
 import dao.DbException;
+import id3.Id3;
+import id3.No;
+import id3.RepositorioArvores;
+import id3.VerificaArvore;
 import net.NetListener;
 import net.NetService;
 
@@ -37,6 +46,7 @@ public class ControleServer implements NetListener, ListenerCtrlCadastraCenario,
 	final static Logger logger = Logger.getLogger(ControleServer.class);
 	final static int TEMPO_ESPERA_TELA_MESAGEM = 1000;
 	private static Cenario cenarioAtual;
+	private Id3 id3 = new Id3();
 	JFrame j;
 	
 	
@@ -45,6 +55,27 @@ public class ControleServer implements NetListener, ListenerCtrlCadastraCenario,
 		net = new NetService(this);
 		roteador = new RoteadorOperacao();
 		carregaCearioInicial();
+	}
+	
+	public void geraArvores()
+	{
+		AtuadorDao dao;
+		try {
+			dao = new AtuadorDao();
+			List <Atuador> lista = dao.load(Atuador.class.getSimpleName());
+			
+			for(Atuador a: lista)
+			{
+				No no = id3.getArvore(a.getId(), CodigoModulo.getModuloAtuador(a.getCod()));
+				if(no!=null)
+				{
+					RepositorioArvores.getInstance().adiciona(no);
+				}
+			}
+		} catch (DbException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	
 	}
 	
 	private void carregaCearioInicial()
@@ -64,6 +95,7 @@ public class ControleServer implements NetListener, ListenerCtrlCadastraCenario,
 	{
 		net.start();
 		mostraJanelaPrincipal();
+		geraArvores();
 	}
 	
 	public void netRecebe(EstMensagem msg) throws EstruturaException {

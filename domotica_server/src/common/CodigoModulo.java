@@ -26,4 +26,23 @@ public class CodigoModulo {
 				return -1;
 		}
 	}
+	
+	public static int getModuloAtuador(int cod)
+	{
+		switch (cod) {
+		case CodAtuador.AQUECEDOR:
+		case CodAtuador.AR_CONDICIONADO:
+		case CodAtuador.JANELA:
+		case CodAtuador.VENTILADOR:
+			return TEMPERATURA;
+		
+		case CodAtuador.LAMPADA:
+		case CodAtuador.LAMPADA_DIMERIZAVEL:
+		case CodAtuador.PERCIANA:
+			return ILUMINACAO;
+			
+		default:
+			return-1;
+		}
+	}
 }

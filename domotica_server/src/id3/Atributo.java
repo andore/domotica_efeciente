@@ -1,61 +1,51 @@
 package id3;
 
-abstract public class Atributo {
-	private String nome;
-	private double valor;
-	private boolean isConhecido;
-	private double substituto;
-	
-	public Atributo(String nome, double valor) {
-		this.nome = nome;
-		this.valor = valor;
-		substituto = -1;
-		isConhecido = false;
-	}
-	
-	public Atributo(String nome, String valor) {
-		this.nome = nome;
-		try {
-			this.valor = Double.valueOf(valor);
-			this.isConhecido = false;
+import dao.Atuador;
+import dao.Sensor;
 
-		}
-		catch(NumberFormatException nfe) {
-			this.valor = -1;
-			this.isConhecido = true;
-		}
-		
-		substituto = -1;
+public class Atributo
+{	
+	private Sensor s;
+	private Atuador a;
+	private int valSen;
+	private int valAtu;
+	private int reg;
+	
+	
+	public Atributo()
+	{
+		valAtu = -99;
+		valSen = -99;
 	}
 	
-	public void setName(String nome) {
-		this.nome = nome;
+	public Sensor getS() {
+		return s;
 	}
-	public String getNome() {
-		return nome;
+	public void setS(Sensor s) {
+		this.s = s;
 	}
-	
-	public void setValor(double valor) {
-		this.valor = valor;
+	public int getValSen() {
+		return valSen;
 	}
-
-	public double getValor() {
-		return valor;
+	public void setValSen(int valSen) {
+		this.valSen = valSen;
 	}
-
-	public void setSubstituto(double surrogate) {
-		this.substituto = surrogate;
+	public int getValAtu() {
+		return valAtu;
 	}
-
-	public double getSurrogate() {
-		return substituto;
+	public void setValAtu(int valAtu) {
+		this.valAtu = valAtu;
 	}
-
-	public void setDesconhedico(boolean isConhecido) {
-		this.isConhecido = isConhecido;
+	public int getReg() {
+		return reg;
 	}
-
-	public boolean isConhecido() {
-		return isConhecido;
+	public void setReg(int reg) {
+		this.reg = reg;
+	}
+	public Atuador getA() {
+		return a;
+	}
+	public void setA(Atuador a) {
+		this.a = a;
 	}
 }

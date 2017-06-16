@@ -1,4 +1,4 @@
-package id3;
+package id3_exemplo1;
 public class RealAttribute extends Atributo {
 
 	public RealAttribute() {

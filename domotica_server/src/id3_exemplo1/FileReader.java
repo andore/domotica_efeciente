@@ -1,4 +1,4 @@
-package id3;
+package id3_exemplo1;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.StringTokenizer;

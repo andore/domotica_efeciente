@@ -1,4 +1,4 @@
-package id3m;
+package id3;
 
 import java.util.List;
 

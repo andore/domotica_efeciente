@@ -1,4 +1,4 @@
-package main;
+package id3_exemplo3;
 
 import java.io.BufferedReader;
 import java.io.FileReader;

@@ -7,6 +7,9 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 import common.CodAtuador;
+import common.CodigoModulo;
+import common.CodigoSensores;
+import common.ConversorValoreDiscreto;
 import common.EstMensagem;
 import common.EstMonitora;
 import common.EstruturaException;
@@ -21,13 +24,14 @@ import dao.Historico;
 import dao.HistoricoDao;
 import dao.Sensor;
 import dao.SensorDao;
+import id3.VerificaArvore;
 import main.ControleServer;
 
 public class TratadorMonitoramento extends AbstractTratador 
 {
 	final static Logger logger = Logger.getLogger(TratadorMonitoramento.class);
-	private EstMonitora resp = new EstMonitora();
-	
+	private EstMonitora resp = new EstMonitora(); 
+
 	public TratadorMonitoramento()
 	{
 		
@@ -38,7 +42,7 @@ public class TratadorMonitoramento extends AbstractTratador
 		incluirHistorico(msg);
 		atualizaSensores(msg);
 		
-		mantemIluminacao(ControleServer.getCenarioAtual());
+		mantemIluminacao(ControleServer.getCenarioAtual(), msg);
 		mantemTemperatura(ControleServer.getCenarioAtual(), msg);
 		
 		return resp;
@@ -69,7 +73,7 @@ public class TratadorMonitoramento extends AbstractTratador
 		for(Sensor sensor: mon.getSensores()){
 			hist = new Historico();	
 			hist.setId_historico(idHist);
-			hist.setValor_sensor(sensor.getValor());
+			hist.setValor_sensor(ConversorValoreDiscreto.getValorDiscretoSensor(sensor));
 			hist.setId_sensor(sensor.getId());
 			hist.setId_arduino(mon.getIdArduino());			
 			hist.setData_criacao(data);
@@ -108,37 +112,70 @@ public class TratadorMonitoramento extends AbstractTratador
 	
 	private void mantemTemperatura(Cenario cenario, EstMensagem msg) throws EstruturaException, DbException
 	{
-		EstMonitora vo = new EstMonitora(msg.getStrIn());		
+		EstMonitora vo = new EstMonitora(msg.getStrIn());
+		VerificaArvore verificaId3 = new VerificaArvore();
 		
 		for(Atuador a : vo.getAtuadores())
 		{
-			if(a.getCod() == CodAtuador.JANELA)
-				a.setStatus(Status.ON_);
+			if(CodigoModulo.getModuloAtuador(a.getCod()) == CodigoModulo.TEMPERATURA)
+			{
+				for(Atuador atuCen :cenario.getAtuadores())
+				{
+					if(atuCen.getId() == a.getId())
+					{
+						if(atuCen.getStatus() == Status.AUTO_)
+						{
+							int status = verificaId3.verifica(a.getId(), vo.getSensores());
+							if(status != -1)
+							{
+								a.setStatus(status);
+							}
+						}
+						else 
+						{
+							a.setStatus(atuCen.getStatus());
+						}
+					}
+				}
+			}
 		}
-		
+			
 		resp.setAtuadores(vo.getAtuadores());
 		resp.setQtdAtuador(vo.getQtdAtuador());
 	}
 	
-	private void mantemIluminacao(Cenario cenario) throws DbException, StructException
+	private void mantemIluminacao(Cenario cenario, EstMensagem msg) throws DbException, StructException, EstruturaException
 	{
-		EstMonitora resposta = new EstMonitora();
-		List<Atuador> atuadores = new ArrayList<Atuador>();
-		AtuadorDao dao = new AtuadorDao();
+		EstMonitora vo = new EstMonitora(msg.getStrIn());
+		VerificaArvore verificaId3 = new VerificaArvore();
 		
-		for(Atuador atuCen: cenario.getAtuadores())
+		for(Atuador a : vo.getAtuadores())
 		{
-			Atuador atu = dao.serachById(atuCen.getId());
-			
-			if(atu.getStatus() != atuCen.getStatus())
+			if(CodigoModulo.getModuloAtuador(a.getCod()) == CodigoModulo.ILUMINACAO)
 			{
-				atuadores.add(atuCen);
+				for(Atuador atuCen :cenario.getAtuadores())
+				{
+					if(atuCen.getId() == a.getId())
+					{
+						if(atuCen.getStatus() == Status.AUTO_)
+						{
+//							int status = verificaId3.verifica(a.getId(), vo.getSensores());
+//							if(status != -1)
+//							{
+//								a.setStatus(status);
+//							}
+						}
+						else 
+						{
+							a.setStatus(atuCen.getStatus());
+						}
+					}
+				}
 			}
 		}
-		resposta.setQtdSensor(0);
-		resposta.setAtuadores(atuadores);
-		resposta.setQtdAtuador(atuadores.size());
-		resp = resposta;
+			
+		resp.setAtuadores(vo.getAtuadores());
+		resp.setQtdAtuador(vo.getQtdAtuador());
 	}
 
 	@Override

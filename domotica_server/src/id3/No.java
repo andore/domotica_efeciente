@@ -1,9 +1,10 @@
-package id3m;
+package id3;
 
 import java.util.List;
 
 public class No {
 	private No pai;
+	private int idAtuador;
 	private List<No> filhos;
 	private List<Registro> reg;
 	private Atributo atr;
@@ -45,6 +46,12 @@ public class No {
 	}
 	public void setValFolha(Integer valFolha) {
 		this.valFolha = valFolha;
+	}
+	public int getIdAtuador() {
+		return idAtuador;
+	}
+	public void setIdAtuador(int idAtuador) {
+		this.idAtuador = idAtuador;
 	}
 	
 }

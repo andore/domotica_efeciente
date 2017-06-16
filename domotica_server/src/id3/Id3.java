@@ -1,4 +1,4 @@
-package id3m;
+package id3;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,12 +14,12 @@ import dao.HistoricoDao;
 import dao.Sensor;
 import dao.SensorDao;
 
-public class ID3<E> {
+public class Id3 {
 
-	final static Logger logger = Logger.getLogger(ID3.class);
+	final static Logger logger = Logger.getLogger(Id3.class);
 	List<Atributo> atributoAtuador = new ArrayList<Atributo>();
 	List<Integer> atributosUtilizados = new ArrayList<Integer>();
-	No raiz = new No();
+	
 	private double entropia=0;
 	
 	private List<Registro> getRegistrosBanco(int atuadorId, int modulo) throws DbException
@@ -114,9 +114,10 @@ public class ID3<E> {
 		return registros;
 	}
 	
-	public Status start(int idAtuador, int modulo)
+	public No getArvore(int idAtuador, int modulo)
 	{
 		List<Registro> registros;
+		No raiz = new No();
 		try 
 		{
 			registros = getRegistrosBanco(idAtuador, modulo);	
@@ -130,7 +131,7 @@ public class ID3<E> {
 				logger.info("\n\n\nINICIANDO ID3 - "+ atributoAtuador.get(0).getA().getDescricao());
 				entropia = Entropia.cauculo(atributoAtuador, 0);
 				logger.info("Entropia:" + entropia);
-				
+				raiz.setIdAtuador(idAtuador);
 				raiz.setReg(registros);
 				criaArvore(raiz);
 			}
@@ -142,7 +143,7 @@ public class ID3<E> {
 			return null;
 		}
 			
-		return null;
+		return raiz;
 	}
 	
 	private boolean isAtributoUsado(int id)
@@ -326,9 +327,8 @@ public class ID3<E> {
 	}
 
 	public static void main(String[] args) {
-		ID3 teste = new ID3();
-		teste.start(3, CodigoModulo.TEMPERATURA);
-		teste.imprimeArvore(teste.raiz);
+		Id3 teste = new Id3();
+		teste.imprimeArvore(teste.getArvore(3, CodigoModulo.TEMPERATURA));
 		logger.info("SUCESSO");
 		System.exit(0);
 	}
@@ -360,8 +360,7 @@ public class ID3<E> {
 				{
 					System.err.print(n.getValFolha() + "   ");
 				}
-			}
-			
+			}	
 		}
 		
 		System.out.println("\n");
