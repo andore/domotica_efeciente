@@ -109,7 +109,7 @@ public class ControleServer implements NetListener, ListenerCtrlCadastraCenario,
 		{
 			resp = new EstMensagemResp();
 			resp.setOperacao(msg.getOperacao());
-			resp.setIp(msg.getIp());
+			//resp.setIp(msg.getIp());
 			resp.setResp("1");
 			logger.error("Erro ao processar mensagem:", e);
 		} 
@@ -124,7 +124,7 @@ public class ControleServer implements NetListener, ListenerCtrlCadastraCenario,
 		{
 			resp = new EstMensagemResp();
 			resp.setOperacao(msg.getOperacao());
-			resp.setIp(msg.getIp());
+			//resp.setIp(msg.getIp());
 			resp.setResp("1");
 			logger.error("Erro ao processar mensagem:", e);
 		} 

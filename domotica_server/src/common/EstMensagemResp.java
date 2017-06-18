@@ -1,6 +1,6 @@
 package common;
 
-public class EstMensagemResp extends EstMensagem {
+public class EstMensagemResp extends Estrutura {
 
 	public EstMensagemResp(String str) throws EstruturaException {
 		super(str);
@@ -12,16 +12,18 @@ public class EstMensagemResp extends EstMensagem {
 	}
 
 	String resp;
+	int operacao;
 	
 	@Override
 	protected void quebra() throws EstruturaException {
-		super.quebra();
+		
+		operacao = getInt();
 		resp = getString();
 	}
 	
 	@Override
 	protected void montaStr() throws EstruturaException {
-		super.montaStr();
+		put(operacao);
 		put(resp);
 	}
 
@@ -32,7 +34,13 @@ public class EstMensagemResp extends EstMensagem {
 	public void setResp(String resp) {
 		this.resp = resp;
 	}
-	
-	
 
+	public int getOperacao() {
+		return operacao;
+	}
+
+	public void setOperacao(int operacao) {
+		this.operacao = operacao;
+	}
+	
 }

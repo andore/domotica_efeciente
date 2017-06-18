@@ -12,8 +12,12 @@ import java.util.List;
 
 import javax.swing.JFrame;
 
+import common.EstMensagem;
+import common.EstMensagemResp;
 import common.EstMonitora;
+import common.EstRespMonitora;
 import common.EstruturaException;
+import common.MensagemResp;
 import dao.Arduino;
 import dao.Atuador;
 import dao.Sensor;
@@ -25,6 +29,7 @@ public class SimuladorSensoresAtuadores implements ListenerControleGuisimuladorS
 	private static final int PORTA_SERV = 9994;
 	private JFrame j;
 	private static final int OP_MONITORA = 2;
+	private ControleGuiSimuladorSensor janelaSimulaSens;
 	
 	public static void main(String[] args) {
 		SimuladorSensoresAtuadores s =  new SimuladorSensoresAtuadores();
@@ -47,7 +52,8 @@ public class SimuladorSensoresAtuadores implements ListenerControleGuisimuladorS
 			outToServer.writeBytes(msg + '\n');
 
 			resposta = inFromServer.readLine();
-			System.out.println("RESPOSTA SERVIDOR:[" + msg + "]");
+			System.out.println("RESPOSTA SERVIDOR:[" + resposta + "]");
+			trataResposta(resposta);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -58,9 +64,15 @@ public class SimuladorSensoresAtuadores implements ListenerControleGuisimuladorS
 		return resposta;
 	}
 	
+	private void trataResposta(String msg) throws EstruturaException
+	{
+		EstRespMonitora resp = new EstRespMonitora(msg);
+		janelaSimulaSens.atualizaTelaAtuadores(resp.getAtuadores());
+	}
+	
 	private void mostraJanelaSimuladorSensor()
 	{
-		ControleGuiSimuladorSensor janelaSimulaSens = new ControleGuiSimuladorSensor(this);
+		janelaSimulaSens = new ControleGuiSimuladorSensor(this);
 		setJanela(janelaSimulaSens);	
 	}
 	
@@ -109,7 +121,7 @@ public class SimuladorSensoresAtuadores implements ListenerControleGuisimuladorS
 	}
 
 	public void alteraStatus(Arduino arduino) {
-		EstMonitora msg = new EstMonitora();
+		EstMonitora msg = new EstMonitora(true);
 		msg.setIdArduino(arduino.getId());
 		msg.setOperacao(OP_MONITORA);
 		msg.setQtdAtuador(arduino.getAtuadores().size());
@@ -119,7 +131,12 @@ public class SimuladorSensoresAtuadores implements ListenerControleGuisimuladorS
 		
 		try
 		{
-			enviaMsg(msg.toText());
+			EstMensagem envia = new EstMensagem();
+			envia.setOperacao(OP_MONITORA);
+			envia.setIdArduino(arduino.getId());
+			envia.setMsg(msg.toText());
+			
+			enviaMsg(envia.toText());
 		} 
 		catch (IOException e)
 		{

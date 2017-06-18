@@ -122,7 +122,7 @@ public class GuiMonitoracao extends JPanel
 		arCond.setForeground(SystemColor.textHighlight);
 		arCond.setModel(new DefaultComboBoxModel<Object>(Status.values()));
 		arCond.setSelectedIndex(2);
-		arCond.setBounds(349, 311, 77, 20);
+		arCond.setBounds(349, 339, 77, 20);
 		add(arCond);
 		
 		JLabel lblVentilador = new JLabel("Ventilador");
@@ -148,7 +148,7 @@ public class GuiMonitoracao extends JPanel
 		ventilador.setModel(new DefaultComboBoxModel<Object>(Status.values()));
 		ventilador.setSelectedIndex(2);
 		ventilador.setForeground(SystemColor.textHighlight);
-		ventilador.setBounds(349, 340, 77, 20);
+		ventilador.setBounds(349, 310, 77, 20);
 		add(ventilador);
 		
 		JLabel lblAquecedor = new JLabel("Aquecedor");

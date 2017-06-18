@@ -6,6 +6,7 @@ public class EstMensagem extends Estrutura{
 	
 	private int operacao;
 	private int idArduino;
+	private String msg;
 	
 	public EstMensagem(String str) throws EstruturaException {
 		super(str);
@@ -25,6 +26,7 @@ public class EstMensagem extends Estrutura{
 	protected void montaStr() throws EstruturaException {
 		put(operacao);
 		put(idArduino);
+		put(msg);
 	}
 	
 	public String getIp() {
@@ -49,5 +51,13 @@ public class EstMensagem extends Estrutura{
 
 	public void setIdArduino(int idArduino) {
 		this.idArduino = idArduino;
+	}
+
+	public String getMsg() {
+		return msg;
+	}
+
+	public void setMsg(String msg) {
+		this.msg = msg;
 	}
 }

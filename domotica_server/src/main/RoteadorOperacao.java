@@ -48,11 +48,13 @@ public class RoteadorOperacao
 					{
 						resp.setResp("1");
 					}
+					resp.setOperacao(1);
 					resp = cadastra.processa(msg);
 					break;
 					
 				case 2:
 					logger.debug("Roteando mensagem para Tratador Monitoramento");
+					resp.setOperacao(2);
 					resp.setResp(monitora.processa(msg).toText()); 
 					break;
 	

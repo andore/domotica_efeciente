@@ -40,6 +40,12 @@ public class Id3 {
 			{
 				int valAtuadorAtual = h.getStatus_atuador();
 				
+				if(h.getRegistro() == null)
+				{
+					logger.warn("Não há historico para atuador ID = " + atuadorId);
+					return null;
+				}
+				
 				/** pega os historicos por registro */
 				List<Historico> histReg = dao.getByRegId(h.getRegistro());
 				

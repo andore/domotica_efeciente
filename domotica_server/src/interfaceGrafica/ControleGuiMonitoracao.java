@@ -129,7 +129,7 @@ public class ControleGuiMonitoracao extends AbstractControleGui implements Liste
 			}
 			if(a.getCod() == CodAtuador.LAMPADA_DIMERIZAVEL)
 			{
-				//janela.lampIndex.setSelectedIndex(a.getStatus());
+				janela.lampIndex.setSelectedIndex(a.getStatus());
 			}			
 			if(a.getCod() == CodAtuador.AQUECEDOR)
 			{

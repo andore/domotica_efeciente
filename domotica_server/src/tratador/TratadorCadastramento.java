@@ -66,7 +66,7 @@ public class TratadorCadastramento extends AbstractTratador
 		}
 		
 		resp.setOperacao(msg.getOperacao());
-		resp.setIp(msg.getIp());
+		//resp.setIp(msg.getIp());
 		resp.setResp("0");
 		return resp;
 	}

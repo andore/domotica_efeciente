@@ -190,7 +190,7 @@ public class NetService extends Thread
 	public void envia(EstMensagemResp resp) throws EstruturaException
 	{
 		p.println(resp.toText());
-		logger.debug("Enviando mensagem para " + resp.getIp() + ":[" + resp.toText() + "]");
+		//logger.debug("Enviando mensagem para " + resp.getIp() + ":[" + resp.toText() + "]");
 		/*while(true)
 		{
 			try 

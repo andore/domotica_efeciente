@@ -99,6 +99,25 @@ public class ControleGuiSimuladorSensor extends AbstractControleGui implements L
 		setSensores();
 		setAtuadores();
 	}
+	
+	public void atualizaTelaAtuadores(List<Atuador> atuadores)
+	{
+		for(Atuador a: arduinos.get(indexArduino).getAtuadores())
+		{
+			for(Atuador b: atuadores)
+			{
+				if(a.getId() == b.getId())
+				{
+					a.setStatus(b.getStatus());
+					break;
+				}
+			}
+		}
+		
+		janela.reset();
+		setSensores();
+		setAtuadores();
+	}
 
 	public void alteraValor(int index, String valor) {
 		System.out.println("ALTERA SENSOR" + arduinos.get(indexArduino).getSensores().get(index).getDescricao() + " VALOR:" + valor);

@@ -32,6 +32,7 @@ public class TratadorMonitoramento extends AbstractTratador
 	final static Logger logger = Logger.getLogger(TratadorMonitoramento.class);
 	private EstMonitora resp = new EstMonitora(); 
 	private boolean isSalvaHistorico;
+	EstMonitora vo;
 	public TratadorMonitoramento()
 	{
 		
@@ -121,7 +122,10 @@ public class TratadorMonitoramento extends AbstractTratador
 	
 	private void mantemTemperatura(Cenario cenario, EstMensagem msg) throws EstruturaException, DbException
 	{
-		EstMonitora vo = new EstMonitora(msg.getStrIn());
+		if(vo == null)
+		{
+			vo = new EstMonitora(msg.getStrIn());
+		}
 		VerificaArvore verificaId3 = new VerificaArvore();
 		
 		for(Atuador a : vo.getAtuadores())
@@ -155,7 +159,10 @@ public class TratadorMonitoramento extends AbstractTratador
 	
 	private void mantemIluminacao(Cenario cenario, EstMensagem msg) throws DbException, StructException, EstruturaException
 	{
-		EstMonitora vo = new EstMonitora(msg.getStrIn());
+		if(vo == null)
+		{
+			vo = new EstMonitora(msg.getStrIn());
+		}
 		VerificaArvore verificaId3 = new VerificaArvore();
 		
 		for(Atuador a : vo.getAtuadores())
