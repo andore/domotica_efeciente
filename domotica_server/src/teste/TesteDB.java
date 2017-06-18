@@ -150,6 +150,12 @@ public class TesteDB
 		}
 	}
 	
+	public void maxHist() throws DbException
+	{
+		HistoricoDao h = new HistoricoDao();
+		h.getUltimoHistorico(5);
+	}
+	
 	public static void main(String[] args) 
 	{	
 		
@@ -164,7 +170,13 @@ public class TesteDB
 //		resp.setIdArduino(0);
 //		teste.testeInsere(resp);
 		
-		teste.testeHistoricoReg();
+		//teste.testeHistoricoReg();
+		try {
+			teste.maxHist();
+		} catch (DbException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }

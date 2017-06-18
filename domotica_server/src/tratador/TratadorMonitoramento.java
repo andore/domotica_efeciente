@@ -119,6 +119,11 @@ public class TratadorMonitoramento extends AbstractTratador
 		{
 			ab.setStatus(atuador.getStatus());
 			dao.update(ab);
+		}
+		
+		HistoricoDao h = new HistoricoDao();
+		if(h.getUltimoHistorico(atuador.getId()).getStatus_atuador() != atuador.getStatus())
+		{
 			isSalvaHistorico = true;
 		}
 	}
