@@ -89,14 +89,17 @@ public class TratadorMonitoramento extends AbstractTratador
 		}
 		
 		for(Atuador atuador: mon.getAtuadores()){
-			hist = new Historico();
-			hist.setStatus_atuador(atuador.getStatus());
-			hist.setId_atuador(atuador.getId());
-			hist.setId_arduino(mon.getIdArduino());			
-			hist.setId_historico(idHist);
-			hist.setData_criacao(data);
-			hist.setRegistro(idHist);
-			histDao.insere(hist);
+			if(atuador.getStatus() != Status.AUTO_)
+			{
+				hist = new Historico();
+				hist.setStatus_atuador(atuador.getStatus());
+				hist.setId_atuador(atuador.getId());
+				hist.setId_arduino(mon.getIdArduino());			
+				hist.setId_historico(idHist);
+				hist.setData_criacao(data);
+				hist.setRegistro(idHist);
+				histDao.insere(hist);
+			}
 		}
 	}
 	
