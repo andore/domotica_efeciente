@@ -31,7 +31,7 @@ public class TratadorMonitoramento extends AbstractTratador
 {
 	final static Logger logger = Logger.getLogger(TratadorMonitoramento.class);
 	private EstMonitora resp = new EstMonitora(); 
-
+	private boolean isSalvaHistorico;
 	public TratadorMonitoramento()
 	{
 		
@@ -39,8 +39,12 @@ public class TratadorMonitoramento extends AbstractTratador
 	
 	public EstMonitora processa(EstMensagem msg) throws StructException, DbException, EstruturaException
 	{
-		incluirHistorico(msg);
-		atualizaSensores(msg);
+		atualiza(msg);
+		
+		if(isSalvaHistorico)
+		{
+			incluirHistorico(msg);
+		}
 		
 		mantemIluminacao(ControleServer.getCenarioAtual(), msg);
 		mantemTemperatura(ControleServer.getCenarioAtual(), msg);
@@ -48,7 +52,7 @@ public class TratadorMonitoramento extends AbstractTratador
 		return resp;
 	}
 	
-	private void atualizaSensores(EstMensagem msg) throws StructException, DbException, EstruturaException
+	private void atualiza(EstMensagem msg) throws StructException, DbException, EstruturaException
 	{
 		EstMonitora vo = new EstMonitora(msg.getStrIn());
 		
@@ -56,6 +60,8 @@ public class TratadorMonitoramento extends AbstractTratador
 		{
 			updateSensor(sensor);
 		}
+		
+		isSalvaHistorico = false;
 		
 		for(Atuador atuador: vo.getAtuadores())
 		{
@@ -105,9 +111,12 @@ public class TratadorMonitoramento extends AbstractTratador
 	{
 		AtuadorDao dao = new AtuadorDao();
 		Atuador ab = dao.serachById(atuador.getId());
-		ab.setStatus(atuador.getStatus());
-		
-		dao.update(ab);
+		if(ab.getStatus() != atuador.getStatus())
+		{
+			ab.setStatus(atuador.getStatus());
+			dao.update(ab);
+			isSalvaHistorico = true;
+		}
 	}
 	
 	private void mantemTemperatura(Cenario cenario, EstMensagem msg) throws EstruturaException, DbException
