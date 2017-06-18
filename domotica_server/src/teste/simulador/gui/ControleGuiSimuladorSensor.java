@@ -103,7 +103,7 @@ public class ControleGuiSimuladorSensor extends AbstractControleGui implements L
 	public void alteraValor(int index, String valor) {
 		System.out.println("ALTERA SENSOR" + arduinos.get(indexArduino).getSensores().get(index).getDescricao() + " VALOR:" + valor);
 		arduinos.get(indexArduino).getSensores().get(index).setValor(Integer.parseInt(valor));
-		listener.alteraValor(arduinos.get(indexArduino), index);
+		//listener.alteraValor(arduinos.get(indexArduino));
 	}
 	
 //	private void alteraBanco(int index, String valor)
@@ -123,10 +123,14 @@ public class ControleGuiSimuladorSensor extends AbstractControleGui implements L
 //		}
 //		System.out.println("Alterado com SUCESSO");	
 //	}
-
 	public void setStatus(int index, Status s) {
+
 		System.out.println("ALTERA ARDUINO" + arduinos.get(indexArduino).getAtuadores().get(index).getDescricao() + " VALOR:" + s.name());
 		arduinos.get(indexArduino).getAtuadores().get(index).setStatus(s.ordinal());
-		listener.alteraStatus(arduinos.get(indexArduino), index);
+	}
+	
+	public void salva()
+	{
+		listener.alteraStatus(arduinos.get(indexArduino));
 	}
 }

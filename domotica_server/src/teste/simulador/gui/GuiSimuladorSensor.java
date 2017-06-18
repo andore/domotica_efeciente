@@ -8,6 +8,8 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,6 +20,8 @@ import javax.swing.event.PopupMenuEvent;
 import javax.swing.event.PopupMenuListener;
 
 import common.Status;
+import javax.swing.JButton;
+import java.awt.Button;
 
 public class GuiSimuladorSensor extends JPanel {
 
@@ -45,7 +49,6 @@ public class GuiSimuladorSensor extends JPanel {
 	
 	List<JLabel> descricaoAtuadores = new ArrayList();
 	List<JComboBox> listaStatus = new ArrayList();
-	
 	
 	public void setSensor(String descricao, String valor)
 	{
@@ -118,6 +121,19 @@ public class GuiSimuladorSensor extends JPanel {
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setBounds(253, 38, 118, 44);
 		add(lblNewLabel);
+		
+		Button botao = new Button("SALVAR");
+		botao.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseReleased(MouseEvent arg0) 
+			{
+				listener.salva();
+			}
+		});
+		botao.setFont(new Font("Segoe UI", Font.BOLD, 15));
+		botao.setBounds(250, 450, 118, 44);
+		add(botao);
+		
 		
 		comboBox = new JComboBox();
 		comboBox.setFont(new Font("MS UI Gothic", Font.PLAIN, 24));

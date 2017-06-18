@@ -85,15 +85,14 @@ public class SimuladorSensoresAtuadores implements ListenerControleGuisimuladorS
 		j.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 
-	public void alteraValor(Arduino arduino, int indexSensor) {
+	public void alteraValor(Arduino arduino) {
 		EstMonitora msg = new EstMonitora();
 		msg.setIdArduino(arduino.getId());
 		msg.setOperacao(OP_MONITORA);
-		msg.setQtdSensor(1);
-		
-		List<Sensor> sensores = new ArrayList<Sensor>();
-		sensores.add(arduino.getSensores().get(indexSensor));
-		msg.setSensores(sensores);
+		msg.setQtdAtuador(arduino.getAtuadores().size());
+		msg.setQtdSensor(arduino.getSensores().size());
+		msg.setAtuadores(arduino.getAtuadores());
+		msg.setSensores(arduino.getSensores());
 		
 		try
 		{
@@ -109,20 +108,15 @@ public class SimuladorSensoresAtuadores implements ListenerControleGuisimuladorS
 		}
 	}
 
-	public void alteraStatus(Arduino arduino, int indexAtuador) {
+	public void alteraStatus(Arduino arduino) {
 		EstMonitora msg = new EstMonitora();
 		msg.setIdArduino(arduino.getId());
 		msg.setOperacao(OP_MONITORA);
 		msg.setQtdAtuador(arduino.getAtuadores().size());
 		msg.setQtdSensor(arduino.getSensores().size());
-		
-		
-		
-		
-		//List<Atuador> atuadores = new ArrayList<Atuador>();
-		//atuadores.add(arduino.getAtuadores().get(indexAtuador));
 		msg.setAtuadores(arduino.getAtuadores());
 		msg.setSensores(arduino.getSensores());
+		
 		try
 		{
 			enviaMsg(msg.toText());
