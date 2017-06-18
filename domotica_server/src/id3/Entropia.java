@@ -3,8 +3,13 @@ package id3;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
+import common.ConversorValoreDiscreto;
+import common.Status;
+
 public class Entropia {
-	
+	final static Logger logger = Logger.getLogger(Entropia.class);
 	public static double cauculo(List<Atributo> atributos, int valorAtuador) 
 	{
 		int contPositivo = 0;
@@ -49,15 +54,15 @@ public class Entropia {
 		
 		if(contNegativo==0 && contPositivo==0)
 		{
-			System.err.println("SENSOR " + atributos.get(0).getS().getDescricao() + " COM VALOR: " + valorSen + "NAO TEM DADO");
+			logger.info("SENSOR " + atributos.get(0).getS().getDescricao() + " COM VALOR: [" + ConversorValoreDiscreto.getDescricaoValorSensor(atributos.get(0).getS().getCod(), valorSen) + "] NAO TEM DADO\n");
 		}
 		else if(contNegativo==0)
 		{
-			System.err.println("SENSOR " + atributos.get(0).getS().getDescricao() + " COM VALOR: " + valorSen + " SEMPRE VAI SER STATUS " + valAtu);
+			logger.info("SENSOR " + atributos.get(0).getS().getDescricao() + " COM VALOR: [" + ConversorValoreDiscreto.getDescricaoValorSensor(atributos.get(0).getS().getCod(), valorSen) + "] VAI SER STATUS " + Status.getStatus(valAtu) + '\n');
 		}
 		else if(contPositivo==0)
 		{
-			System.err.println("SENSOR " + atributos.get(0).getS().getDescricao() + " COM VALOR: " + valorSen + " SEMPRE VAI SER STATUS " + 1);
+			logger.info("SENSOR " + atributos.get(0).getS().getDescricao() + " COM VALOR: [" + ConversorValoreDiscreto.getDescricaoValorSensor(atributos.get(0).getS().getCod(), valorSen) + "] VAI SER STATUS " + Status.getStatus(1) + '\n');
 		}
 			
 		return equacaoEntropia(contPositivo, contNegativo);

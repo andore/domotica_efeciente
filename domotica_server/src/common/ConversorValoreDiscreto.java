@@ -66,6 +66,64 @@ public class ConversorValoreDiscreto {
 		return 0;
 	}
 	
+	public static String getDescricaoValorSensor(int codSensor, int valor)
+	{
+		switch (codSensor) {
+		case CodigoSensores.TEMPERATURA:
+		case CodigoSensores.TEMPERATURA_EXTERNO:
+			if(Math.abs(ControleServer.getCenarioAtual().getValor_temperatura() - valor) > MARGEM_TEMPERATURA)
+			{
+				if(valor > ControleServer.getCenarioAtual().getValor_temperatura())
+				{
+					return "ALTA";
+				}
+				else
+				{
+					return "BAIXA";
+				}
+			}
+			else
+			{
+				return "IDEAL";
+			}
+		
+		case CodigoSensores.LUZ:
+		case CodigoSensores.LUZ_EXTERNO:
+			if(Math.abs(ControleServer.getCenarioAtual().getValor_iluminacao() - valor) > MARGEM_ILUMINACAO)
+			{
+				if(valor > ControleServer.getCenarioAtual().getValor_iluminacao())
+				{
+					return "ALTA";
+				}
+				else
+				{
+					return "BAIXA";
+				}
+			}
+			else
+			{
+				return "IDEAL";
+			}
+			
+		case CodigoSensores.CHUVA:
+		case CodigoSensores.UMIDADE:
+		case CodigoSensores.MOVIMENTO:
+			if(valor==0)
+			{
+				return "NAO";
+			}
+			else
+			{
+				return "SIM";
+			}
+		
+		default:
+			break;
+		}
+		
+		return "DESCONHECIDO";
+	}
+	
 	
 	public static void main(String[] args) {
 		Sensor s = new Sensor();

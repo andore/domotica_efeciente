@@ -118,6 +118,7 @@ public class Id3 {
 	{
 		List<Registro> registros;
 		No raiz = new No();
+		
 		try 
 		{
 			registros = getRegistrosBanco(idAtuador, modulo);	
@@ -128,7 +129,7 @@ public class Id3 {
 			}
 			else
 			{
-				logger.info("\n\n\nINICIANDO ID3 - "+ atributoAtuador.get(0).getA().getDescricao());
+				logger.info("\n\n\nINICIANDO ID3 - "+ new AtuadorDao().serachById(idAtuador).getDescricao());
 				entropia = Entropia.cauculo(atributoAtuador, 0);
 				logger.info("Entropia:" + entropia);
 				raiz.setIdAtuador(idAtuador);

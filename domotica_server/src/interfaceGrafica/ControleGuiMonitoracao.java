@@ -20,6 +20,7 @@ import dao.Cenario;
 import dao.CenarioDao;
 import dao.DbException;
 import dao.Sensor;
+import main.ControleServer;
 
 public class ControleGuiMonitoracao extends AbstractControleGui implements ListenerGuiMonitoracao
 {
@@ -41,21 +42,21 @@ public class ControleGuiMonitoracao extends AbstractControleGui implements Liste
 		lampadas = new ArrayList<Atuador>();
 		primeiraVez = true;
 		
-		CenarioDao cenarioDao = new CenarioDao();
+		//CenarioDao cenarioDao = new CenarioDao();
 		
-		if(cenarioDao.loadCenario()!= null && !cenarioDao.loadCenario().isEmpty() )
-		{
-			cenarioPadrao = new CenarioDao().loadCenario().get(0);
-		}	
-		else
-		{
-			cenarioPadrao = new Cenario();
-			cenarioPadrao.setId_arduino(0);
-			cenarioPadrao.setNome_cenario("Cenario Padrao");
-			cenarioPadrao.setValor_iluminacao(100);
-			cenarioPadrao.setValor_temperatura(24);
-			cenarioDao.insere(cenarioPadrao);
-		}
+		//if(cenarioDao.loadCenario()!= null && !cenarioDao.loadCenario().isEmpty() )
+		//{
+			cenarioPadrao = ControleServer.getCenarioAtual();
+		//}	
+		//else
+		//{
+//			cenarioPadrao = new Cenario();
+//			cenarioPadrao.setId_arduino(0);
+//			cenarioPadrao.setNome_cenario("Cenario Padrao");
+//			cenarioPadrao.setValor_iluminacao(100);
+//			cenarioPadrao.setValor_temperatura(24);
+//			cenarioDao.insere(cenarioPadrao);
+		//}
 		
 		atuailza = true;
 		atualizaMonitoramento = new AtualizaJanelaMonitoracao();
@@ -96,6 +97,7 @@ public class ControleGuiMonitoracao extends AbstractControleGui implements Liste
 				
 				habilitaDesabilitaCampo(janela.temp, true);
 				habilitaDesabilitaCampo(janela.ilum, true);
+				atualizaAtuadores();
 			}
 				
 			
@@ -114,8 +116,12 @@ public class ControleGuiMonitoracao extends AbstractControleGui implements Liste
 	{
 		janela.tempAtual.setText(getValorMediaSensores(this.arduinoSelecionado, CodigoSensores.TEMPERATURA));
 		janela.iluAtual.setText(getValorMediaSensores(this.arduinoSelecionado, CodigoSensores.LUZ));
-		
-		for(Atuador a:arduinoSelecionado.getAtuadores())
+	}
+	
+	
+	public void atualizaAtuadores()
+	{
+		for(Atuador a:ControleServer.getCenarioAtual().getAtuadores())
 		{
 			if(a.getCod() == CodAtuador.LAMPADA)
 			{
@@ -146,8 +152,8 @@ public class ControleGuiMonitoracao extends AbstractControleGui implements Liste
 				janela.ventilador.setSelectedIndex(a.getStatus());
 			}
 		}
-		
 	}
+	
 	
 	private String getValorMediaSensores(Arduino ardu, int codSensor)
 	{
@@ -325,11 +331,11 @@ public class ControleGuiMonitoracao extends AbstractControleGui implements Liste
 
 	public void setArCond(Status s)
 	{
-		for(Atuador a: arduinoSelecionado.getAtuadores())
+		for(Atuador a: cenarioPadrao.getAtuadores())
 		{
 			if(a.getCod()==CodAtuador.AR_CONDICIONADO)
 			{
-				//a.setStatus(s);
+				a.setStatus(s.s);
 			}
 		}
 		
@@ -337,22 +343,22 @@ public class ControleGuiMonitoracao extends AbstractControleGui implements Liste
 
 	public void setVentilador(Status s)
 	{
-		for(Atuador a: arduinoSelecionado.getAtuadores())
+		for(Atuador a: cenarioPadrao.getAtuadores())
 		{
 			if(a.getCod()==CodAtuador.VENTILADOR)
 			{
-				//a.setStatus(s);
+				a.setStatus(s.s);
 			}
 		}
 	}
 
 	public void setAquecedor(Status s)
 	{
-		for(Atuador a: arduinoSelecionado.getAtuadores())
+		for(Atuador a: cenarioPadrao.getAtuadores())
 		{
 			if(a.getCod()==CodAtuador.AQUECEDOR)
 			{
-				//a.setStatus(s);
+				a.setStatus(s.s);
 			}
 		}
 		
@@ -361,7 +367,16 @@ public class ControleGuiMonitoracao extends AbstractControleGui implements Liste
 	public void setLampada(int index, Status s, int value)
 	{
 		
-		//lampadas.get(index).setStatus(s);
+		//lampadas.get(index).setStatus(s.s);
+		
+		for(Atuador a:cenarioPadrao.getAtuadores())
+		{
+			if(a.getId() == lampadas.get(index).getId())
+			{
+				a.setStatus(s.s);
+			}
+		}
+		
 		if(lampadas.get(index).getCod() == CodAtuador.LAMPADA_DIMERIZAVEL)
 		{
 			habilitaDesabilitaCampo(janela.lampSli, true);
@@ -377,11 +392,11 @@ public class ControleGuiMonitoracao extends AbstractControleGui implements Liste
 
 	public void setJanela(Status s)
 	{
-		for(Atuador a: arduinoSelecionado.getAtuadores())
+		for(Atuador a: cenarioPadrao.getAtuadores())
 		{
 			if(a.getCod()==CodAtuador.JANELA)
 			{
-				//a.setStatus(s);
+				a.setStatus(s.s);
 			}
 		}
 		
@@ -389,11 +404,11 @@ public class ControleGuiMonitoracao extends AbstractControleGui implements Liste
 	
 	public void setPerciana(Status s)
 	{
-		for(Atuador a: arduinoSelecionado.getAtuadores())
+		for(Atuador a: cenarioPadrao.getAtuadores())
 		{
 			if(a.getCod()==CodAtuador.PERCIANA)
 			{
-				//a.setStatus(s);
+				a.setStatus(s.s);
 			}
 		}
 		
@@ -408,10 +423,10 @@ public class ControleGuiMonitoracao extends AbstractControleGui implements Liste
 	{
 		logger.debug("Update Monitoracao");
 		atuailza = false;
-		cenarioPadrao.setId_arduino(arduinoSelecionado.getId());
+		//cenarioPadrao.setId_arduino(arduinoSelecionado.getId());
 		cenarioPadrao.setValor_iluminacao(janela.ilum.getValue());
 		cenarioPadrao.setValor_temperatura(janela.temp.getValue());
-		cenarioPadrao.setAtuadores(arduinoSelecionado.getAtuadores());
+		//cenarioPadrao.setAtuadores(arduinoSelecionado.getAtuadores());
 		listener.acaoMonitoracaoCenarioSalvar(cenarioPadrao);
 	}
 

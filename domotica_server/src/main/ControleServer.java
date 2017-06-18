@@ -46,6 +46,7 @@ public class ControleServer implements NetListener, ListenerCtrlCadastraCenario,
 	final static Logger logger = Logger.getLogger(ControleServer.class);
 	final static int TEMPO_ESPERA_TELA_MESAGEM = 1000;
 	private static Cenario cenarioAtual;
+	private CenarioDao cenDao;
 	private Id3 id3 = new Id3();
 	JFrame j;
 	
@@ -82,7 +83,7 @@ public class ControleServer implements NetListener, ListenerCtrlCadastraCenario,
 	{
 		try
 		{
-			CenarioDao cenDao = new CenarioDao();
+			cenDao = new CenarioDao();
 			cenarioAtual = cenDao.serachById(0);
 		} 
 		catch (DbException e)
@@ -307,20 +308,21 @@ public class ControleServer implements NetListener, ListenerCtrlCadastraCenario,
 	{
 		try
 		{
-			CenarioDao dao = new CenarioDao();	
-			Cenario load = dao.serachById(cenario.getId_cenario());
+			cenDao.update(cenario);
+			logger.debug("Cenario alterado com sucesso.");
 			
-			if(load != null)
-			{
-				load.setValor_iluminacao(cenario.getValor_iluminacao());
-				load.setValor_temperatura(cenario.getValor_temperatura());
-				dao.update(load);
-				logger.debug("Cenario alterado com sucesso.");
-			}
-			else
-			{
-				throw new DbException("Falha ao salvar Cenario", null);
-			}
+			//Cenario load = dao.serachById(cenario.getId_cenario());
+			
+			//if(load != null)
+			//{
+				//load.setValor_iluminacao(cenario.getValor_iluminacao());
+				//load.setValor_temperatura(cenario.getValor_temperatura());
+				
+//			}
+//			else
+//			{
+//				throw new DbException("Falha ao salvar Cenario", null);
+//			}
 			
 		} 
 		catch (DbException e)
