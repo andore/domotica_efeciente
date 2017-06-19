@@ -57,8 +57,14 @@ public class HistoricoDao extends AbstractDao{
 		
 		String sql = "from " + Historico.class.getSimpleName() + " C WHERE C.id_atuador = :id_atuador order by C.id_atuador";		
 		List historicos = sessao.createQuery(sql).setParameter("id_atuador", id).list();
-		
-		return (Historico) historicos.get(historicos.size()-1);
+		if(historicos.size()>0)
+		{
+			return (Historico) historicos.get(historicos.size()-1);
+		}
+		else
+		{
+			return null;
+		}
 	}
 	
 	public List<Historico> getByRegId(int id)

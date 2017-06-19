@@ -97,6 +97,13 @@ public class ControleGuiMonitoracao extends AbstractControleGui implements Liste
 				
 				habilitaDesabilitaCampo(janela.temp, true);
 				habilitaDesabilitaCampo(janela.ilum, true);
+				
+				janela.temp.setValue((int)ControleServer.getCenarioAtual().getValor_temperatura());
+				janela.textField_1.setText(String.valueOf((int)ControleServer.getCenarioAtual().getValor_temperatura()));
+				
+				janela.ilum.setValue((int)ControleServer.getCenarioAtual().getValor_iluminacao());
+				janela.textField_2.setText(String.valueOf((int)ControleServer.getCenarioAtual().getValor_iluminacao()));
+			
 				atualizaAtuadores();
 			}
 				

@@ -114,26 +114,43 @@ public class TratadorMonitoramento extends AbstractTratador
 	private void updateAtuador(Atuador atuador) throws DbException
 	{
 		AtuadorDao dao = new AtuadorDao();
-		Atuador ab = dao.serachById(atuador.getId());
-		if(ab.getStatus() != atuador.getStatus())
-		{
-			ab.setStatus(atuador.getStatus());
-			dao.update(ab);
-		}
 		
 		HistoricoDao h = new HistoricoDao();
-		if(h.getUltimoHistorico(atuador.getId()).getStatus_atuador() != atuador.getStatus())
+		Historico hist = h.getUltimoHistorico(atuador.getId());
+		if(hist!=null)
+		{
+			if(hist.getStatus_atuador() != atuador.getStatus() && atuador.getStatus() != 2)
+			{
+				isSalvaHistorico = true;
+			}
+		}
+		else
 		{
 			isSalvaHistorico = true;
+		}
+		
+		
+		Atuador ab = dao.serachById(atuador.getId());
+		
+		if(ab.getStatus() == 2)
+		{
+			isSalvaHistorico = false;
+		}
+		else
+		{
+			if(ab.getStatus() != atuador.getStatus())
+			{
+				ab.setStatus(atuador.getStatus());
+				dao.update(ab);
+			}
 		}
 	}
 	
 	private void mantemTemperatura(Cenario cenario, EstMensagem msg) throws EstruturaException, DbException
 	{
-		if(vo == null)
-		{
-			vo = new EstMonitora(msg.getStrIn());
-		}
+		
+		vo = new EstMonitora(msg.getStrIn());
+		
 		VerificaArvore verificaId3 = new VerificaArvore();
 		
 		for(Atuador a : vo.getAtuadores())
