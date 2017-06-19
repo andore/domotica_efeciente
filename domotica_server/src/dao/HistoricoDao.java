@@ -67,6 +67,21 @@ public class HistoricoDao extends AbstractDao{
 		}
 	}
 	
+	public Integer getUltimoRegistro()
+	{
+		
+		String sql = "from " + Historico.class.getSimpleName() + " C order by C.registro";		
+		List historicos = sessao.createQuery(sql).list();
+		if(historicos.size()>0)
+		{
+			return ((Historico) historicos.get(historicos.size()-1)).getRegistro();
+		}
+		else
+		{
+			return null;
+		}
+	}
+	
 	public List<Historico> getByRegId(int id)
 	{
 		String sql = "from " + Historico.class.getSimpleName() + " C WHERE C.registro = :registro order by C.id_sensor";		

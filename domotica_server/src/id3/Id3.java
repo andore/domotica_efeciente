@@ -17,13 +17,15 @@ import dao.SensorDao;
 public class Id3 {
 
 	final static Logger logger = Logger.getLogger(Id3.class);
-	List<Atributo> atributoAtuador = new ArrayList<Atributo>();
-	List<Integer> atributosUtilizados = new ArrayList<Integer>();
+	List<Atributo> atributoAtuador;
+	List<Integer> atributosUtilizados;
 	
 	private double entropia=0;
 	
 	private List<Registro> getRegistrosBanco(int atuadorId, int modulo) throws DbException
 	{
+		atributosUtilizados = new ArrayList<Integer>();
+		atributoAtuador = new ArrayList<Atributo>();
 		HistoricoDao dao = new HistoricoDao();
 		List<Historico> historicos = dao.getByAtuId(atuadorId);
 		SensorDao daoSen = new SensorDao();
