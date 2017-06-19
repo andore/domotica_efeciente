@@ -18,7 +18,7 @@ public class VerificaArvore {
 	
 	public int verifica(int idAtuador, List<Sensor> sensores)
 	{		
-		int status = -1;
+		status = -1;
 		Atuador atuador;
 		try 
 		{
@@ -35,11 +35,18 @@ public class VerificaArvore {
 			if(raiz.getIdAtuador() == idAtuador)
 			{
 				navegaArvore(raiz, sensores);
+				break;
 			}
 		}
 		
-		logger.info("Arvore resultou em STATUS:" + Status.getStatus(status).toString());
-		
+		if(status != -1)
+		{
+			logger.info("Arvore resultou em STATUS:" + Status.getStatus(status).toString());
+		}	
+		else
+		{
+			logger.info("Arvore NÂO resultou em decisao");
+		}
 		return status;
 	}
 	
