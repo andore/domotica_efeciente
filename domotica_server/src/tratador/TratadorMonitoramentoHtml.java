@@ -6,6 +6,7 @@ import java.net.UnknownHostException;
 import org.apache.log4j.Logger;
 
 import common.CodigoSensores;
+import common.ConversorValoreDiscreto;
 import common.EstMensagem;
 import common.EstMensagemResp;
 import common.EstruturaException;
@@ -60,33 +61,26 @@ public class TratadorMonitoramentoHtml extends AbstractTratador {
 				{
 					infSensores += "<p>Temperarura = " + s.getValor() + "°C</p>\r\n";
 				}
-				else if(s.getCod() == CodigoSensores.UMIDADE)
+				else if(s.getCod() == CodigoSensores.TEMPERATURA_EXTERNO)
 				{
-					infSensores += "<p>Umidade = " + s.getValor() + "</p>\r\n";
-				}
-				else if(s.getCod() == CodigoSensores.MOVIMENTO)
-				{
-					infSensores += "<p>Presença = " + s.getValor() + "</p>\r\n";
-				}
-				else if(s.getCod() == CodigoSensores.CHUVA)
-				{
-					infSensores += "<p>Chuva = " + s.getValor() + "</p>\r\n";
+					infSensores += "<p>" + s.getDescricao() + " = " + s.getValor() + "°C</p>\r\n";
 				}
 				else
 				{
-					infSensores += "<p>Sensor Desconhecido = " + s.getValor() + "%</p>\r\n";
+					infSensores += "<p>" + s.getDescricao() + " = " + ConversorValoreDiscreto.getDescricaoValorSensor(s.getCod(), s.getValor()) + "</p>\r\n";
 				}
 			}
 					
 			buf = "HTTP/1.1 200 OK\r\nContent-Type: text/html\r\n\r\n<!DOCTYPE HTML>\r\n<html>\r\n";
 			buf += "<font size=\"20\"><h3>Domotica Web Service</h3>";
-			buf += "<p>Lampada <a href=\"?function=led4_on\"><button style=\"height:60px;width:150px\"><font size=\"20\">ON</button></a><a href=\"?function=led4_off\"><button style=\"height:60px;width:150px\"><font size=\"20\">OFF</button></a></p>";
-			buf += "<p>Ar-Condicionado <a href=\"?function=led5_on\"><button style=\"height:60px;width:150px\"><font size=\"20\">ON</button></a><a href=\"?function=led5_off\"><button style=\"height:60px;width:150px\"><font size=\"20\">OFF</button></a></p>";
+			buf += "<hr />";
+			//buf += "<p>Lampada <a href=\"?function=led4_on\"><button style=\"height:60px;width:150px\"><font size=\"20\">ON</button></a><a href=\"?function=led4_off\"><button style=\"height:60px;width:150px\"><font size=\"20\">OFF</button></a></p>";
+			//buf += "<p>Ar-Condicionado <a href=\"?function=led5_on\"><button style=\"height:60px;width:150px\"><font size=\"20\">ON</button></a><a href=\"?function=led5_off\"><button style=\"height:60px;width:150px\"><font size=\"20\">OFF</button></a></p>";
 				
 			if(infSensores.trim().length() > 0)
 			{
-				buf += "<br>";
-				buf += "<h3>Monitoração</h3>";
+				//buf += "<br>";
+				//buf += "<h3>Monitoração</h3>";
 				buf += infSensores;
 			}
 		}

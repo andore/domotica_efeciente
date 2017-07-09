@@ -151,7 +151,15 @@ public class ControleServer implements NetListener, ListenerCtrlCadastraCenario,
 			resp.setIp("");
 			resp.setMensagem("<HTML><font size=\"5\">Ops, ocorreu uma falha -_-' <BR>Detalhes:<i> " + e.getMessage());
 			logger.error("Erro ao processar mensagem:", e);
-		} 
+		}
+		catch (EstruturaException e) 
+		{
+			resp = new MensagemResp();
+			resp.setOperacao(0);
+			resp.setIp("");
+			resp.setMensagem("<html>aaa</HTML>");
+			logger.error("Erro ao processar mensagem:", e);
+		}
 		catch (DbException e)
 		{
 			resp = new MensagemResp();

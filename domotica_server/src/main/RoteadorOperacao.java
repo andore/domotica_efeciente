@@ -77,7 +77,7 @@ public class RoteadorOperacao
 		MensagemResp resp = null;
 		if(msg != null)
 		{
-			resp = monitoraHtml.processaHtml(new EstMensagem(msg));
+			resp = monitoraHtml.processaHtml(null);
 		}
 		else
 		{

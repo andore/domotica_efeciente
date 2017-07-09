@@ -62,9 +62,9 @@ public class NetService extends Thread
 			}
 			timeOut = false;
 			
-			logger.debug("Abrindo Socket Cliente e Aguardando conexao");
+			//logger.debug("Abrindo Socket Cliente e Aguardando conexao");
 			cliente = servidor.accept();
-			logger.debug("Conectado com:" + cliente.getInetAddress().getHostAddress());
+			//logger.debug("Conectado com:" + cliente.getInetAddress().getHostAddress());
 			
 			timeOut();
 			
@@ -77,12 +77,12 @@ public class NetService extends Thread
 		    {
 				time.restart();
 				msgStr = s.nextLine();		    	
-		    	logger.debug("Mensagem recebida de " + cliente.getInetAddress().getHostAddress() + " :[" + msgStr + "]");
+		    	//logger.debug("Mensagem recebida de " + cliente.getInetAddress().getHostAddress() + " :[" + msgStr + "]");
 		    	
 		    	if(msgStr.contains("GET / HTTP/1.1") || msgStr.contains("GET /favicon.ico HTTP/1.1") )
 				{
 		    		isRequisicaoHtml = true;
-		    		logger.info("Requisicao HTML");
+		    		//logger.info("Requisicao HTML");
 				}
 		    	else if(msgStr.equals("") && isRequisicaoHtml)
 		    	{
@@ -109,7 +109,7 @@ public class NetService extends Thread
 				}
 				else
 				{
-					logger.debug("Mensagem nao tratada");
+					//logger.debug("Mensagem nao tratada");
 				}
 		    }
 		}
@@ -209,7 +209,7 @@ public class NetService extends Thread
 	
 	public void enviaHtml(MensagemResp resp) {
 		p.println(resp.getMensagem());
-		logger.debug("Enviando mensagem para " + resp.getIp() + ":[" + resp.getMensagem()+ "]");
+		//logger.debug("Enviando mensagem para " + resp.getIp() + ":[" + resp.getMensagem()+ "]");
 	}
 	
 	public void timeOut()

@@ -21,7 +21,7 @@ public class ControleHbn {
 	{		
 		if(s==null)
 		{
-			logger.debug("Abrindo Sessão no Banco.");
+			//logger.debug("Abrindo Sessão no Banco.");
 			if(factory == null)
 			{
 				factory = new Configuration().configure().buildSessionFactory();
